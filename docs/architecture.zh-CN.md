@@ -64,6 +64,7 @@ Growware 应该补的是 OpenClaw 和 Codex 之间缺失的那层项目级控制
 - 每个项目先配一个轻量 `project daemon / sidecar`
 - 项目级规则、合同和记忆落在目标项目根目录下的 `.growware/`
 - `Codex` 作为按需拉起的执行器，而不是每项目常驻会话
+- `growware` agent 的自然语言 feedback intake 和 close-out provenance 也落在项目本地 `.growware/`，而不是散落在全局 prompt
 
 ## Pilot 拓扑
 
@@ -188,6 +189,34 @@ sequenceDiagram
 `A 窗口反馈 -> 更新 spec / rubric / detector / eval -> 改代码 -> 验证 -> 部署`
 
 这条流决定了 Growware 是“软件工厂 / 生长引擎”，而不是一次次聊天修 bug。
+
+## 执行完成的判定标准
+
+这条规则需要长期固定，不然系统会反复滑回“Codex 在终端里帮你做完一次”的模式。
+
+- `terminal takeover` 只能作为过渡手段
+- `我做完了` 不等于 `daemon 学会了`
+- 一次工作只有在能力被回灌进 daemon 侧资产后，才算真正完成
+
+这里的 daemon 侧资产至少包括一类：
+
+- 代码
+- 运行时规则
+- `.growware/` 合同
+- agent 工作约束
+- 测试
+- 部署与通知流程
+
+所以后续所有 close-out 都必须明确回答两件事：
+
+- 这次结果是 `daemon-owned`，还是 `terminal-takeover`
+- 如果是 `terminal-takeover`，哪些能力已经沉淀回 daemon，哪些还没有
+
+当前 pilot 的具体实现要求已经进一步收敛为：
+
+- `feishu6` 完成态通知必须由 daemon 主动回发
+- close-out 必须显式带上 `daemon-owned` 或 `terminal-takeover`
+- 自然语言 feedback 是否进入当前任务，必须由项目本地 classifier / policy 判定
 
 ## 为什么 `judge` 不能省
 

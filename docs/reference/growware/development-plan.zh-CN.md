@@ -30,7 +30,7 @@
 | 当前阶段 | Stage 3 baseline 已完成，进入真实反馈运行期。 | 来自当前 pilot 的实际执行状态 |
 | 当前切片 | `real-feishu6 pilot operation` | 当前执行线绑定的切片 |
 | 当前执行线 | 接收 `feishu6-chat` 的真实反馈，通过 `growware` agent 进入 `openclaw-task-system` 工作区，先本地验证再走 deploy baseline 和通知回发 | 当前这轮真正要持续推进的工作 |
-| 当前验证 | `.growware/`、OpenClaw 绑定、本地 deploy fallback、Gateway 重启、plugin smoke、install drift 已经落地并验证 | 当前线如何证明已经进入可运行状态 |
+| 当前验证 | `.growware/`、OpenClaw 绑定、本地 deploy fallback、Gateway 重启、plugin smoke、install drift、feedback classifier、close-out provenance 已落地并验证 | 当前线如何证明已经进入可运行状态 |
 
 ## 阶段总览
 
@@ -173,6 +173,9 @@
 - Growware 能在 `Project 1` 上证明端到端链路，但不夸大成“通用自治系统”
 - `feishu6` 能稳定承接反馈、通知和审批
 - `openclaw-task-system/.growware/` 能作为项目级 durable 控制面生效
+- `growware` agent 的完成态会主动回发 `feishu6`
+- close-out 会明确标记 `daemon-owned` / `terminal-takeover`
+- 自然语言反馈可以先经项目本地 classifier 进入 runtime-owned executable intake
 
 <a id="stage-3-detectors-gates-and-low-risk-automation"></a>
 ## Stage 3 - 检测器、门禁和低风险自动化

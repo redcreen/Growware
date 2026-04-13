@@ -2,32 +2,35 @@
 
 ## Current Phase
 
-Stage 1 planned; waiting for a user start command.
+Stage 0-3 pilot baseline active; converging terminal takeover work into daemon-owned execution.
 
 ## Current Execution Line
 
-- Objective: finish planning the long Stage 1 task for `Project 1`, including OpenClaw binding, daemon boundaries, and the first feedback/incident/judge/verifier/deploy contracts, while keeping execution paused until the user starts it
-- Plan Link: stage-1 project-1 pilot foundation
-- Runway: one planning-sized checkpoint that ends when the long task is explicit and start-ready
-- Progress: 0 / 7 tasks complete
+- Objective: make the first real `feishu6` feedback path produce durable code changes and then convert that path into daemon-owned behavior
+- Plan Link: single-project local semi-automatic loop
+- Runway: one execution-sized checkpoint ending when the same class of feedback no longer depends on manual terminal takeover
+- Progress: 2 / 5 tasks complete
 - Stop Conditions:
-  - `Project 1` is still ambiguous
-  - the Stage 1 deliverables are still incomplete
-  - the user has not yet issued a start command
+  - daemon still cannot own completion notification
+  - daemon still cannot distinguish and report `daemon-owned` vs `terminal-takeover`
+  - the natural-language feedback path still depends on manual intervention
 - Validation:
-  - `brief.md`, `plan.md`, and `status.md` all point to the same Stage 1 long task
-  - roadmap and development-plan describe the same Stage 1 workstreams and exit criteria
-  - the repo can pause cleanly without accidentally starting implementation
+  - `brief.md`, `plan.md`, and `status.md` point to the same active execution line
+  - the first real feedback change is represented in code, tests, and deploy flow
+  - daemon close-out behavior is explicit and user-visible
 
 ## Execution Tasks
 
-- [ ] EL-1 lock the recommended `Project 1` target for the Stage 1 plan
-- [ ] EL-2 define the OpenClaw static channel and log binding for `Project 1`
-- [ ] EL-3 define the `feedback adapter -> project daemon` boundary
-- [ ] EL-4 define feedback event and incident record v0
-- [ ] EL-5 define judge / verifier / deploy gate v0
-- [ ] EL-6 define the daemon interface and Stage 2 start-gate checklist
-- [ ] EL-7 keep execution paused until the user explicitly starts Stage 1
+- [x] EL-1 bind `feishu6` to `growware` and verify the route is live
+- [x] EL-2 use the first real feedback to drive one code change through test and local deploy
+- [ ] EL-3 add completion notification back to `feishu6`
+- [ ] EL-4 add execution provenance reporting: `daemon-owned` vs `terminal-takeover`
+- [ ] EL-5 convert the current manual execution path into daemon-owned intake and execution rules
+
+## Completion Rule
+
+- Manual terminal execution is a bridge, not the success condition.
+- The task is only complete when the capability has been written back into daemon-owned assets and can be reused without repeating the same manual takeover.
 
 ## Development Log Capture
 

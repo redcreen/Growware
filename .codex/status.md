@@ -7,32 +7,37 @@
 
 ## Current Phase
 
-Stage 1 long task planned; waiting for user start command.
+Stage 0-3 pilot baseline active; priority is closing the gap from terminal takeover to daemon-owned execution.
 
 ## Active Slice
 
-Stage-1 project-1 pilot foundation.
+Project-1 feedback-to-change closure for `feishu6 -> growware -> openclaw-task-system`.
 
 ## Current Execution Line
 
-- Objective: keep the Stage 1 long task fully specified for `Project 1`, including OpenClaw bindings, daemon boundaries, and the first operational contracts, while holding execution until the user explicitly starts it
-- Plan Link: stage-1 project-1 pilot foundation
-- Runway: one planning-sized checkpoint that ends when Stage 1 is start-ready
-- Progress: 0 / 7 tasks complete
+- Objective: make the first real feedback from `feishu6` trigger a durable code change path, then turn that path into daemon-owned capability instead of repeated terminal takeover
+- Plan Link: single-project local semi-automatic loop
+- Runway: one execution-sized checkpoint that ends when daemon can own intake, execution status, and completion notification for the same class of feedback
+- Progress: 2 / 5 tasks complete
 - Stop Conditions:
-  - `Project 1` remains ambiguous
-  - Stage 1 deliverables are still incomplete
-  - the user has not explicitly started Stage 1
+  - feedback still only produces conversational replies without durable code changes
+  - terminal takeover is not converted into daemon-owned capability
+  - completion still cannot be pushed back to `feishu6`
 
 ## Execution Tasks
 
-- [ ] EL-1 lock the recommended `Project 1` target
-- [ ] EL-2 define the OpenClaw channel, plugin, and log binding
-- [ ] EL-3 define the `feedback adapter -> project daemon` boundary
-- [ ] EL-4 define feedback event and incident record v0
-- [ ] EL-5 define judge / verifier / deploy gate v0
-- [ ] EL-6 define the daemon interface and Stage 2 start-gate checklist
-- [ ] EL-7 wait for the user's explicit start command
+- [x] EL-1 bind `feishu6` to the dedicated `growware` agent
+- [x] EL-2 turn the first real feedback into a code change, tests, and local deploy
+- [ ] EL-3 make daemon execution status explicit: `daemon-owned` vs `terminal-takeover`
+- [ ] EL-4 make completion notifications push back to `feishu6`
+- [ ] EL-5 promote the manual execution path into daemon-owned intake and execution rules
+
+## Execution Standard
+
+- Terminal takeover is allowed only as a temporary bridge.
+- A task is not considered complete just because Codex finished it manually in the terminal.
+- It counts as complete only after the new capability is written back into daemon-owned assets such as code, runtime rules, `.growware/` contracts, tests, or deployment flow.
+- Every close-out must make clear whether the result was `daemon-owned` or `terminal-takeover`.
 
 ## Development Log Capture
 
@@ -76,6 +81,6 @@ Stage-1 project-1 pilot foundation.
 - The local verification path, daemon interface, and deployment approval boundary are still pending final confirmation.
 
 ## Next 3 Actions
-1. Confirm `Project 1` and its OpenClaw bindings.
-2. Confirm the Stage 1 contracts and start-gate checklist.
-3. Wait for the user's explicit start instruction before executing Stage 1.
+1. Add daemon-owned completion notification to `feishu6`.
+2. Add explicit execution provenance: `daemon-owned` vs `terminal-takeover`.
+3. Convert the natural-language feedback handling path into daemon-owned intake logic instead of repeated manual takeover.
