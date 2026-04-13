@@ -241,28 +241,28 @@ Only when many projects share channels, logs, or deployment boundaries does a st
 
 For the first stage, I agree with storing the project-level Growware control surface inside the target project rather than only in the Growware meta-repo.
 
-For `Project 1`, the recommended shape is:
+For `Project 1`, the current landed shape is:
 
 ```text
 openclaw-task-system/
   .growware/
-    project.yaml
-    channels.yaml
+    project.json
+    channels.json
     contracts/
-    spec/
-    judge/
+    policies/
     ops/
-    memory/
+    runtime/
+    logs/
 ```
 
 Two categories should stay separate:
 
 Should be tracked in Git:
 
-- `project.yaml`
+- `project.json`
 - channel-binding config
-- `spec/`
-- `judge/`
+- `contracts/`
+- `policies/`
 - contract definitions
 - deploy / approval policy
 - durable rules learned from human feedback
@@ -274,15 +274,12 @@ Should not be tracked directly in Git:
 - raw log cache
 - one-off debug artifacts
 
-If those live under the project root, the recommended form is:
+This exact shape is now live in `openclaw-task-system` and has already passed preflight, safe OpenClaw config validation, the local deploy baseline, Gateway restart, plugin smoke, and install-drift checks.
 
-```text
-.growware/
-  runtime/   # gitignored
-  logs/      # gitignored
-```
+One real boundary remains:
 
-That keeps configuration versioned with the project while preventing runtime noise from polluting Git history.
+- `openclaw plugins install ./plugin` is still blocked by the current host dangerous-code check
+- the local deploy baseline therefore prefers normal install first and falls back to installed-runtime sync when install is blocked
 
 ## Minimal Event Contracts
 

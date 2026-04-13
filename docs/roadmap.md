@@ -13,9 +13,9 @@ For the detailed maintainer queue under these stages, use [reference/growware/de
 | Stage | Status | Goal | Unlocks | Exit Criteria |
 | --- | --- | --- | --- | --- |
 | [Stage 0 - Origin Capture and Feasibility](reference/growware/development-plan.md#stage-0-origin-capture-and-feasibility) | completed | preserve the starting conversation, align naming, and publish the baseline docs set | shared context and truthful docs | transcript archived, docs linked, active naming converged to Growware |
-| [Stage 1 - Project 1 Pilot Foundation Long Task](reference/growware/development-plan.md#stage-1-project-1-pilot-foundation-long-task) | planned / not started | define Project 1, `feishu6` wiring, `.growware/` boundaries, daemon responsibilities, contracts, and start conditions in one long task | Stage 2 implementation gate | target, channel binding, in-project `.growware/` structure, feedback/incident/judge/verifier/deploy contracts, and daemon interfaces are explicit |
-| [Stage 2 - Single-Project Local Semi-Automatic Loop](reference/growware/development-plan.md#stage-2-single-project-local-semi-automatic-loop) | queued | implement one local observe -> report -> repair -> verify -> deploy loop with human approval for Project 1 | first runnable Growware baseline | Project 1 runs through one repeatable local closed loop |
-| [Stage 3 - Detectors, Gates, and Low-Risk Automation](reference/growware/development-plan.md#stage-3-detectors-gates-and-low-risk-automation) | queued | add stronger judges, regression assets, gates, and low-risk automation | more stable loop | selected low-risk incidents can be auto-fixed behind explicit gates |
+| [Stage 1 - Project 1 Pilot Foundation Long Task](reference/growware/development-plan.md#stage-1-project-1-pilot-foundation-long-task) | completed | land Project 1, `feishu6` wiring, `.growware/` boundaries, daemon duties, contracts, and the start gate in the real project and host config | Stage 2 local loop | `openclaw-task-system/.growware/`, the `growware` agent, `feishu6-chat` binding, and v0 contracts are live |
+| [Stage 2 - Single-Project Local Semi-Automatic Loop](reference/growware/development-plan.md#stage-2-single-project-local-semi-automatic-loop) | completed | implement the local observe -> report -> repair -> verify -> deploy baseline on Project 1 | first runnable Growware baseline | local deploy, Gateway restart, plugin smoke, and install-drift checks have run successfully |
+| [Stage 3 - Detectors, Gates, and Low-Risk Automation](reference/growware/development-plan.md#stage-3-detectors-gates-and-low-risk-automation) | completed (baseline) | add the first judge, deploy-gate, and low-risk fallback automation layer | more stable loop | judge/deploy-gate v0 are versioned and installation-blocked deploys can fall back to runtime-sync safely |
 | [Stage 4 - Multi-Project Onboarding and Isolation](reference/growware/development-plan.md#stage-4-multi-project-onboarding-and-isolation) | later | support more than one target project without cross-project contamination | reusable control layer | multiple projects can share Growware without channel, state, queue, or deploy collisions |
 
 ## Recommended First Pilot
@@ -51,6 +51,4 @@ Before Stage 1 execution begins, the docs now assume these defaults:
 
 ## Current Focus
 
-The current focus is to fully define `Stage 1` as a long task without starting execution yet.
-
-The repo should move into actual Stage 1 execution only after an explicit user start command.
+The current focus is no longer planning. It is accepting real human feedback through the live `feishu6-chat` path and continuing the pilot.

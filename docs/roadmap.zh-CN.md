@@ -13,9 +13,9 @@
 | 阶段 | 状态 | 目标 | 解锁什么 | 退出条件 |
 | --- | --- | --- | --- | --- |
 | [Stage 0 - 起源归档与可行性基线](reference/growware/development-plan.zh-CN.md#stage-0-origin-capture-and-feasibility) | 已完成 | 保存起点对话、统一命名并发布基线文档集 | 共享上下文与真实文档基线 | transcript 已归档、文档已互链、活跃命名已收敛到 Growware |
-| [Stage 1 - 项目 1 Pilot 基础长任务](reference/growware/development-plan.zh-CN.md#stage-1-project-1-pilot-foundation-long-task) | 已规划 / 待启动 | 用一个长任务把项目 1 的目标、`feishu6` 接线、`.growware/` 边界、daemon 职责、合同和启动条件一次定清楚 | Stage 2 的实现进入门 | target、channel 绑定、项目内 `.growware/` 结构、feedback/incident/judge/verifier/deploy 合同、daemon 接口全部明确 |
-| [Stage 2 - 单项目本地半自动闭环](reference/growware/development-plan.zh-CN.md#stage-2-single-project-local-semi-automatic-loop) | 已排队 | 在项目 1 上实现一条带人工审批的本地 observe -> report -> repair -> verify -> deploy 链路 | 第一个可运行 Growware 基线 | 项目 1 能在本地按固定流程跑通一条真实闭环 |
-| [Stage 3 - 检测器、门禁和低风险自动化](reference/growware/development-plan.zh-CN.md#stage-3-detectors-gates-and-low-risk-automation) | 已排队 | 扩展 judge、回归资产、门禁和低风险自动化 | 更稳定的闭环 | 部分低风险 incident 可以在显式门禁下自动修复 |
+| [Stage 1 - 项目 1 Pilot 基础长任务](reference/growware/development-plan.zh-CN.md#stage-1-project-1-pilot-foundation-long-task) | 已完成 | 把项目 1、`feishu6` 接线、`.growware/` 边界、daemon 职责、合同和启动条件压实到真实项目和宿主配置 | Stage 2 本地闭环 | `openclaw-task-system/.growware/`、`growware` agent、`feishu6-chat` 绑定和 v0 合同已落地 |
+| [Stage 2 - 单项目本地半自动闭环](reference/growware/development-plan.zh-CN.md#stage-2-single-project-local-semi-automatic-loop) | 已完成 | 在项目 1 上实现一条本地 observe -> report -> repair -> verify -> deploy baseline 链路 | 第一个可运行 Growware 基线 | 本地 deploy、Gateway 重启、plugin smoke 和 install drift 校验已跑通 |
+| [Stage 3 - 检测器、门禁和低风险自动化](reference/growware/development-plan.zh-CN.md#stage-3-detectors-gates-and-low-risk-automation) | 已完成（baseline） | 补齐 judge、deploy gate 和低风险 fallback 自动化的第一版 | 更稳定的闭环 | judge/deploy gate v0 已落盘，安装受阻时可自动走 runtime sync fallback |
 | [Stage 4 - 多项目接入与隔离](reference/growware/development-plan.zh-CN.md#stage-4-multi-project-onboarding-and-isolation) | 更后 | 支持多个项目并保持 channel、日志、队列、部署的隔离 | Growware 变成可复用控制层 | 多项目并行接入时不发生状态与发布污染 |
 
 ## 推荐的第一条 Pilot
@@ -51,6 +51,10 @@
 
 ## 当前焦点
 
-当前焦点是：把 `Stage 1` 作为一个完整长任务规划好，但先不启动执行。
+当前焦点已经从“规划 Stage 1”切换到“接受真实人类反馈并继续迭代”。
 
-只有在你明确下达“开始”指令之后，仓库才进入这个长任务的实际推进。
+接下来默认入口已经变成：
+
+- 你直接在 `feishu6-chat` 提想法或反馈
+- Growware 通过 `growware` agent 进入 `openclaw-task-system` 工作区
+- 本地先验证，再走 deploy baseline 和回发通知

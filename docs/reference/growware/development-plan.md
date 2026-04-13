@@ -27,10 +27,10 @@ It answers one practical question:
 
 | Item | Current Value | Meaning |
 | --- | --- | --- |
-| Current Phase | Stage 1 planned and waiting for a start command. | Current maintainer-facing phase from `.codex/plan.md` |
-| Active Slice | `stage-1 project-1 pilot foundation` | The slice tied to the current execution line |
-| Current Execution Line | fully define Project 1 target, `feishu6` wiring, `.growware/` boundaries, daemon responsibility, and the feedback/incident/judge/verifier/deploy contracts before execution begins | What the repo is trying to finish now |
-| Validation | Stage 1 workstreams, deliverables, exit criteria, and start gate are explicit | How this line proves itself before moving on |
+| Current Phase | Stage 3 baseline is complete and the pilot is now live for real feedback. | Current maintainer-facing phase |
+| Active Slice | `real-feishu6 pilot operation` | The slice tied to the current execution line |
+| Current Execution Line | accept real `feishu6-chat` feedback, enter the `openclaw-task-system` workspace through the `growware` agent, verify locally, then run the deploy baseline and send notifications back | What the repo is trying to continue now |
+| Validation | `.growware/`, OpenClaw binding, local deploy fallback, Gateway restart, plugin smoke, and install drift are all live and verified | How this line proves itself now |
 
 ## Milestone Overview
 

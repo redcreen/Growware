@@ -43,7 +43,7 @@ The system is trying to automate three loops:
 
 ## Current Repository State
 
-This repository is still in the discussion and documentation baseline stage, not the runtime implementation stage.
+This repository has moved beyond the discussion-only baseline into a single-project pilot baseline.
 
 What exists now:
 
@@ -52,13 +52,18 @@ What exists now:
 - the extracted project definition lives in [docs/reference/growware/origin.md](docs/reference/growware/origin.md)
 - public docs have been reframed around `Growware`
 - feasibility, architecture, and roadmap are defined without prematurely locking the runtime stack
+- `openclaw-task-system` is locked as `Project 1`
+- the target project now contains a project-local `.growware/` control surface
+- `feishu6-chat` is safely rebound to a dedicated `growware` agent in OpenClaw
+- the local deploy baseline is real: if host install is blocked, deployment falls back to installed runtime sync, Gateway restart, smoke, and drift checks
+- the `growware` agent has been verified inside the `openclaw-task-system` workspace
 
-What remains intentionally open:
+What remains intentionally not overstated:
 
-- the first real pilot target
-- which judgments can be automated and which require humans
-- the minimum daemon, judge, and verifier contracts
-- the boundary for multi-project attachment and isolation
+- production-grade autonomous release
+- multi-project isolation
+- stronger detector / rubric / regression accumulation
+- proactive cross-channel notification without an active conversation context
 
 ## Quick Start
 

@@ -242,28 +242,28 @@ fallback_channels:
 
 第一阶段我同意把项目级 Growware 控制面放到目标项目目录里，而不是只放在 Growware 主仓库里。
 
-对 `Project 1` 来说，推荐形态是：
+对 `Project 1` 来说，当前已经落地成：
 
 ```text
 openclaw-task-system/
   .growware/
-    project.yaml
-    channels.yaml
+    project.json
+    channels.json
     contracts/
-    spec/
-    judge/
+    policies/
     ops/
-    memory/
+    runtime/
+    logs/
 ```
 
 这里建议区分两类内容：
 
 应该进 Git：
 
-- `project.yaml`
+- `project.json`
 - channel 绑定配置
-- `spec/`
-- `judge/`
+- `contracts/`
+- `policies/`
 - 合同定义
 - deploy / approval policy
 - 人工沉淀下来的 durable 规则
@@ -275,15 +275,21 @@ openclaw-task-system/
 - 原始日志缓存
 - 一次性的调试产物
 
-如果要放在项目目录下，建议形态是：
+现在这套形态已经实际被用于 `openclaw-task-system`，并通过了：
 
-```text
-.growware/
-  runtime/   # gitignore
-  logs/      # gitignore
-```
+- `growware_preflight.py`
+- OpenClaw config validate + safe rollback
+- `growware_local_deploy.py`
+- Gateway restart
+- `plugin_smoke.py`
+- `plugin_install_drift.py`
 
-这样就能同时满足：
+同时要注意一个现实边界：
+
+- `openclaw plugins install ./plugin` 当前会被宿主危险代码检查拦截
+- 所以本地 deploy baseline 现在走的是“优先正常安装，失败后回退到 installed runtime sync”的受控路径
+
+这样仍然能同时满足：
 
 - 项目配置跟着项目仓库走
 - Growware 的核心规则可以被代码审查和版本管理

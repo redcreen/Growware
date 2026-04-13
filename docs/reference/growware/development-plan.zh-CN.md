@@ -27,19 +27,19 @@
 
 | 项目 | 当前值 | 说明 |
 | --- | --- | --- |
-| 当前阶段 | Stage 1 已规划，等待开始指令。 | 来自 `.codex/plan.md` 的当前维护阶段 |
-| 当前切片 | `stage-1 project-1 pilot foundation` | 当前执行线绑定的切片 |
-| 当前执行线 | 把项目 1 的 target、`feishu6` 接线、`.growware/` 边界、daemon 职责、feedback/incident/judge/verifier/deploy 合同和启动条件一次规划完整，但先不执行 | 当前这轮真正要收口的工作 |
-| 当前验证 | Stage 1 长任务的 workstreams、交付件、退出条件和启动门都已经明确 | 继续前如何证明这条线已收口 |
+| 当前阶段 | Stage 3 baseline 已完成，进入真实反馈运行期。 | 来自当前 pilot 的实际执行状态 |
+| 当前切片 | `real-feishu6 pilot operation` | 当前执行线绑定的切片 |
+| 当前执行线 | 接收 `feishu6-chat` 的真实反馈，通过 `growware` agent 进入 `openclaw-task-system` 工作区，先本地验证再走 deploy baseline 和通知回发 | 当前这轮真正要持续推进的工作 |
+| 当前验证 | `.growware/`、OpenClaw 绑定、本地 deploy fallback、Gateway 重启、plugin smoke、install drift 已经落地并验证 | 当前线如何证明已经进入可运行状态 |
 
 ## 阶段总览
 
 | 阶段 | 状态 | 目标 | 依赖 | 退出条件 |
 | --- | --- | --- | --- | --- |
 | Stage 0 | 已完成 | 保存起源对话、把项目统一命名为 Growware、建立真实文档基线 | 共享对话 | 对话已归档、命名已统一、基线文档已落下 |
-| Stage 1 | 已规划 / 待启动 | 用一个长任务把项目 1 的基础合同和边界全部压实 | Stage 0 | target、channel 绑定、daemon 接口、核心合同和启动条件明确 |
-| Stage 2 | 已排队 | 在项目 1 上实现一条带人工审批门的本地半自动闭环 | Stage 1 | 一条本地 observe -> report -> repair -> verify -> deploy 链路可跑通 |
-| Stage 3 | 已排队 | 扩展检测器、回归资产、门禁和低风险自动化 | Stage 2 | 部分低风险 incident 可以在显式门禁下自动修复 |
+| Stage 1 | 已完成 | 把项目 1 的基础合同和边界全部压实到真实仓库和宿主配置 | Stage 0 | target、channel 绑定、daemon 接口、核心合同和启动条件已落地 |
+| Stage 2 | 已完成 | 在项目 1 上实现一条带人工审批门的本地半自动闭环 baseline | Stage 1 | 一条本地 observe -> report -> repair -> verify -> deploy 链路已实际跑通 |
+| Stage 3 | 已完成（baseline） | 扩展检测器、回归资产、门禁和低风险自动化的第一版 | Stage 2 | 部分低风险 fallback 自动化已可运行，并保留显式门禁 |
 | Stage 4 | 更后 | 支持多项目接入并保持隔离 | Stage 3 | 多项目并行时不发生 channel、状态、队列或部署污染 |
 
 ## 顺序执行队列
@@ -48,9 +48,9 @@
 | --- | --- | --- | --- | --- |
 | 1 | `bootstrap control surface` | 较早切片 | n/a | n/a |
 | 2 | `origin capture and feasibility baseline` | 较早切片 | 保存共享对话并发布真实文档基线 | 对话归档、文档互链、命名收敛 |
-| 3 | `stage-1 project-1 pilot foundation` | 当前 / 仅规划 | 把项目 1 的基础合同、OpenClaw 接线和 daemon 接口一次规划清楚 | Stage 1 长任务文档已明确，等待开始指令 |
-| 4 | `single-project local semi-automatic loop` | 下一步 / 已排队 | 在项目 1 上实现第一条本地 observe -> report -> repair -> verify -> deploy 链路，并保留人工审批 | 一条真实 pilot 能按固定路径本地跑通 |
-| 5 | `detectors, gates, and low-risk automation` | 更后 / 已排队 | 把重复的人类纠正沉淀成检测器、规则、门禁和回归资产 | 低风险自动化保持有显式门禁且可回滚 |
+| 3 | `stage-1 project-1 pilot foundation` | 已完成 | 把项目 1 的基础合同、OpenClaw 接线和 daemon 接口一次规划并落地 | `.growware/` 与 `growware` agent 已生效 |
+| 4 | `single-project local semi-automatic loop` | 已完成 | 在项目 1 上实现第一条本地 observe -> report -> repair -> verify -> deploy baseline 链路，并保留人工审批 | 本地 deploy、重启、smoke、drift 已验证 |
+| 5 | `detectors, gates, and low-risk automation` | 已完成（baseline） | 把重复的人类纠正先沉淀成 v0 judge、门禁和 fallback 自动化 | 低风险 fallback 自动化保持显式门禁且可回滚 |
 | 6 | `multi-project onboarding and isolation` | 更后 | 支持第二个及更多目标项目接入 | 多项目不会互相污染 |
 
 ## 里程碑细节
@@ -85,7 +85,13 @@
 - 所有默认挂载 `task system` 的使用 channel 都视为 `B` 面
 - 项目级 durable 配置与规则落在 `openclaw-task-system/.growware/`
 
-这个长任务的目的不是写运行时代码，而是把真正开工前必须压实的边界一次定义完整。
+这条长任务已经完成，相关结果已经落到：
+
+- `openclaw-task-system/.growware/`
+- `scripts/runtime/growware_preflight.py`
+- `scripts/runtime/growware_openclaw_binding.py`
+- `scripts/runtime/growware_local_deploy.py`
+- OpenClaw `feishu6-chat -> growware` 真实绑定
 
 ### Stage 1 的长任务目标
 
@@ -195,4 +201,4 @@
 
 | 下一步 | 为什么做 |
 | --- | --- |
-| 等待你的开始指令，然后启动 `Stage 1 - 项目 1 Pilot 基础长任务` | 这轮先把长任务规划完整，但不自动开工 |
+| 在 `feishu6-chat` 接收真实反馈并继续迭代 | 规划、接线和 deploy baseline 已经完成，接下来应进入真实人类反馈闭环 |
