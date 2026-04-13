@@ -2,58 +2,79 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> Growware is a document-first exploration of a closed-loop software evolution system that turns real-world usage, incidents, and feedback into reviewed fixes.
+> Growware is a feedback-driven engine that continuously evolves software from intent, use, and feedback. It is not "AI helps write code"; it is a software factory that keeps intent, judgment, and implementation in a live loop.
 
 ## What It Is
 
-Growware is not a finished tool or framework yet. This repository currently defines the project boundary for a local-first loop where software is used, observed, judged, repaired, verified, and only then deployed.
+Based on the full origin conversation, Growware is not just an AI coding helper and not just an automatic bug-fix loop.
 
-The starting point comes from a shared conversation about using Codex and OpenClaw-style channels to move from "human notices a problem and reports it" toward "the system notices, proposes, verifies, and improves with humans only at risk boundaries."
+It is more accurately:
 
-## Who This Is For
+- a feedback-driven software factory
+- a growth engine that connects the `A window`, the `B window`, and a hidden control plane
+- a project-level control layer that keeps `spec / judge / code` aligned over time
 
-- Maintainers building self-improving plugins, tools, or software around agent workflows
-- Operators who want incident-driven repair instead of chat-only debugging
-- Collaborators reviewing feasibility before implementation starts
+The core idea is not merely "code edits itself." The real shape is:
 
-## Current Project State
+- the `A window` defines intent, boundaries, and judgment
+- the `B window` provides evidence from real use
+- the hidden control plane turns that evidence into rules, tests, repairs, and deployment decisions
 
-This repo is in a discussion and documentation baseline, not an implementation baseline.
+## What It Is Not
 
-What exists today:
+- not another chat UI for asking an LLM to write code
+- not a log-watcher that guesses where things broke
+- not a rewrite of OpenClaw's gateway, channel, plugin, or task ecosystem
+- not a rewrite of Codex as a coding agent
 
-- the origin conversation archived in Markdown
-- a project-feasibility assessment
-- a stable architecture and roadmap baseline
-- a maintainer-facing development plan that stops before runtime implementation
+Growware should fill the missing middle layer: the project control plane that turns intent, use, and feedback into software evolution.
 
-What is still intentionally undecided:
+## Core Model
 
-- the first concrete pilot loop
-- the target software boundary
-- the runtime and stack
-- the machine-checkable incident and verification contracts
+- `A window`: the product control plane for requirements, feedback, judgment, and approvals
+- `B window`: the runtime surface where software is actually used and produces evidence
+- hidden control plane: the evolution engine that turns A/B signals into `spec`, `judge`, `tests`, `code changes`, deploy gates, and reusable memory
+
+The system is trying to automate three loops:
+
+1. build software: intent to spec, implementation, verification, deployment
+2. repair software: runtime evidence to incident, repair, verification, reply
+3. learn software: turn one-off feedback into durable judges, rules, and regression assets
+
+## Current Repository State
+
+This repository is still in the discussion and documentation baseline stage, not the runtime implementation stage.
+
+What exists now:
+
+- the full origin conversation is preserved in [docs/reference/growware/origin.pdf](docs/reference/growware/origin.pdf)
+- the PDF has also been archived as full Markdown in [docs/reference/growware/origin-raw-extract.zh-CN.md](docs/reference/growware/origin-raw-extract.zh-CN.md)
+- the extracted project definition lives in [docs/reference/growware/origin.md](docs/reference/growware/origin.md)
+- public docs have been reframed around `Growware`
+- feasibility, architecture, and roadmap are defined without prematurely locking the runtime stack
+
+What remains intentionally open:
+
+- the first real pilot target
+- which judgments can be automated and which require humans
+- the minimum daemon, judge, and verifier contracts
+- the boundary for multi-project attachment and isolation
 
 ## Quick Start
 
-1. Read the exact starting conversation in [docs/reference/growware/origin-transcript-2026-04-13.md](docs/reference/growware/origin-transcript-2026-04-13.md).
-2. Review the project-level judgment in [docs/reference/growware/feasibility.md](docs/reference/growware/feasibility.md).
-3. Read the stable system shape in [docs/architecture.md](docs/architecture.md).
-4. Check milestone order in [docs/roadmap.md](docs/roadmap.md).
-5. Use [docs/reference/growware/development-plan.md](docs/reference/growware/development-plan.md) when resuming detailed maintainer work.
-
-## Core Ideas
-
-- `A window`: where requirements, feedback, approvals, and human judgment arrive
-- `B window`: where real usage produces evidence, logs, incidents, and behavior traces
-- hidden control plane: where signals become incidents, repair tasks, verification steps, deployment decisions, and reusable memory
+1. Start from the canonical source: [docs/reference/growware/origin.pdf](docs/reference/growware/origin.pdf)
+2. Read the extracted project definition: [docs/reference/growware/origin.md](docs/reference/growware/origin.md)
+3. Review feasibility: [docs/reference/growware/feasibility.md](docs/reference/growware/feasibility.md)
+4. Read the current architecture: [docs/architecture.md](docs/architecture.md)
+5. Follow milestone order in [docs/roadmap.md](docs/roadmap.md)
 
 ## Documentation Map
 
 - [Docs Home](docs/README.md)
+- [Origin Summary](docs/reference/growware/origin.md)
 - [Feasibility](docs/reference/growware/feasibility.md)
 - [Architecture](docs/architecture.md)
 - [Roadmap](docs/roadmap.md)
 - [Development Plan](docs/reference/growware/development-plan.md)
 - [Test Plan](docs/test-plan.md)
-- [Origin Transcript](docs/reference/growware/origin-transcript-2026-04-13.md)
+- [Share Transcript Capture](docs/reference/growware/origin-transcript-2026-04-13.md)

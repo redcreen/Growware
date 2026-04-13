@@ -4,48 +4,62 @@
 
 ## Purpose
 
-This document explains the current recommended architecture for Growware based on the ongoing discussion.
+This document answers a more basic question before "how do we wire OpenClaw": what kind of system Growware actually is.
 
-It is intentionally opinionated about the first pilot:
+It is based on the full origin conversation, not only the incomplete share transcript. From that baseline, it then explains the currently recommended pilot architecture.
 
-- one real OpenClaw-connected project first
-- static channel binding instead of a dynamic routing engine
-- a lightweight project daemon or sidecar
-- Codex invoked on demand, not kept resident per project
+## What The Project Is
 
-For milestone order and readiness gates, see [roadmap.md](roadmap.md) and [reference/growware/development-plan.md](reference/growware/development-plan.md).
+Growware is not a chat tool for asking AI to write code, and it is not only an automatic repair daemon that watches logs and patches bugs.
 
-## Current Design Conclusion
+A more accurate system definition is:
 
-The current recommended pilot shape is:
+- the `A window` is the product control plane
+- the `B window` is the runtime surface and evidence source
+- the hidden control plane is the evolution engine
 
-- `A` is narrowed to a human feedback ingress first
-- `B` is the real use channel plus runtime evidence
-- `A/B routing` is replaced by explicit per-project channel binding
-- OpenClaw remains the host gateway and ecosystem surface
-- Growware adds the project-level control layer
-- Codex acts as an on-demand repair worker behind the control layer
+That evolution engine keeps three co-evolving artifacts aligned:
 
-## Responsibility Boundary
+1. `spec`: what the software should do
+2. `judge`: what counts as correct or wrong
+3. `code`: the current implementation
+
+So Growware is trying to automate more than "write code." It is trying to automate three loops:
+
+1. build software: intent to spec, implementation, verification, deployment
+2. repair software: runtime evidence to incident, repair, verification, reply
+3. learn software: turn one piece of feedback into rules, rubrics, regression tests, and constraints
+
+## What It Is Not
+
+- not a replacement for OpenClaw
+- not a replacement for Codex
+- not the short path of `A window sentence -> LLM edits code -> deploy`
+- not a bug-fix-only watchdog
+
+Growware should fill the missing project-level control plane between OpenClaw and Codex.
+
+## Current Recommended Layering
 
 | Layer | Owns | Does not own |
 | --- | --- | --- |
-| OpenClaw | channels, sessions, plugins, hooks, services, task/taskflow infrastructure, ecosystem integration | incident judgment policy, project-specific verification rules, repair memory |
-| Growware | project binding, feedback intake, observer, judge, incident queue, verifier, deploy gate, project state | replacing OpenClaw as the gateway, replacing Codex as the coding agent |
+| OpenClaw | channels, gateway behavior, plugins, hooks, services, task infrastructure, ecosystem integration | project-level `judge`, repair memory, software evolution rules |
+| Growware | project binding, feedback intake, observer, judge, incident queue, verifier, deploy gate, state machine | rewriting OpenClaw's host layer, rewriting Codex itself |
 | Codex | incident analysis, code edits, validation runs, repair output | long-lived channel hosting, durable project state, final product policy |
-| Target project or plugin | actual runtime behavior, project logs, run/test/deploy hooks | cross-project control policy |
+| Target project or plugin | actual runtime behavior, real logs, run/test/deploy/rollback hooks | cross-project orchestration and control policy |
 
-## First-Pilot Assumptions
+## Current Recommended Pilot Shape
 
-The current architecture assumes:
+For the first pilot, keep the design narrow and realistic:
 
-- one OpenClaw-connected target project first, such as `openclaw task system`
-- one explicit human feedback channel for that project, such as `feishu1`
-- one or more runtime or use channels for real usage
-- local-first execution and deployment
-- human approval retained at deployment boundaries
+- `A` is narrowed to `human feedback ingress`
+- `B` is the real use path and runtime evidence surface
+- do not build a dynamic `A/B routing engine` first
+- use explicit `project-channel binding`
+- give each project a lightweight `project daemon / sidecar`
+- keep `Codex` as an on-demand worker, not a resident session per project
 
-## Current Recommended Topology
+## Pilot Topology
 
 ```mermaid
 flowchart TD
@@ -64,6 +78,7 @@ flowchart TD
         Queue[Incident / repair queue]
         Verifier[Verifier]
         Gate[Deploy gate]
+        Memory[Rules / Rubrics / Regression]
     end
 
     subgraph Target
@@ -90,21 +105,24 @@ flowchart TD
     Codex --> Workspace
     Workspace --> Verifier
     Verifier --> Gate
-    A --> Gate
     Gate --> Daemon
     Daemon --> Adapter
     Adapter --> A
+
+    A --> Memory
+    Judge --> Memory
+    Verifier --> Memory
 ```
 
-## Main Data Flows
+## The Three Main Flows
 
-### 1. Human Feedback Flow
+### 1. Feedback flow
 
-This is the part you already described clearly:
+This is the shape you already defined clearly:
 
 `feishu1 -> OpenClaw adapter -> project daemon`
 
-That establishes the bidirectional feedback channel.
+If the daemon can also reply back through the same channel, the bidirectional feedback channel exists.
 
 ```mermaid
 sequenceDiagram
@@ -113,42 +131,53 @@ sequenceDiagram
     participant Adapter as Feedback adapter
     participant Daemon as Project daemon
 
-    Human->>A: report a problem or expected behavior
-    A->>Adapter: deliver channel message
-    Adapter->>Daemon: normalize into a feedback event
-    Daemon-->>Adapter: result / ack / follow-up
-    Adapter-->>A: send reply back to the same channel
+    Human->>A: requirement / issue / judgment
+    A->>Adapter: deliver message
+    Adapter->>Daemon: normalize into feedback event
+    Daemon-->>Adapter: ack / result / follow-up
+    Adapter-->>A: reply back to the same channel
 ```
 
-### 2. Runtime Evidence Flow
+### 2. Runtime evidence flow
 
-The first pilot does not need a smart `B` router.
-
-It needs configured evidence sources:
+The first stage does not need a dynamic `B` router, but it does need explicit evidence sources:
 
 - OpenClaw gateway logs
 - target plugin logs
 - daemon logs
 - optional structured events from the target project
 
-The observer collects those sources, but collection is not judgment.
+The `Observer` collects.  
+The `Judge` decides whether this is a problem, what kind of problem it is, and whether it can be auto-repaired.  
+Collection does not replace judgment.
 
-### 3. Repair Flow
+### 3. Evolution flow
 
-When the judge decides that evidence is a real incident:
+The most important part of the full origin conversation is not "repair once," but "learn once":
 
-1. Growware creates or updates an incident record.
-2. Codex is invoked with the incident, repo context, and verification commands.
-3. Codex proposes or applies a patch in the local workspace.
-4. Verifier runs the required checks.
-5. Deploy gate decides whether to reject, queue for approval, or deploy locally.
-6. Result is sent back through the feedback channel when needed.
+`A window feedback -> update spec / rubric / detector / eval -> edit code -> verify -> deploy`
 
-## Why Static Binding Replaces Routing First
+That flow is what makes Growware a software factory or growth engine instead of repeated chat-based bug fixing.
 
-The current pilot does not need an intelligent `A/B routing engine`.
+## Why `Judge` Cannot Be Removed
 
-It only needs an explicit binding like:
+Without a `judge layer`, the system collapses into:
+
+`read logs -> guess whether it is a problem -> ask Codex to try`
+
+That is not a closed loop and not evolution.
+
+At minimum, the judge must answer:
+
+- is this noise or an incident
+- is it a specification-gap problem or a runtime-observable problem
+- how severe is it
+- can it be auto-repaired
+- is human approval required
+
+## Why Static Binding Comes First
+
+The current pilot can avoid dynamic `A/B routing` and use explicit binding instead:
 
 ```yaml
 project_id: project-1
@@ -165,50 +194,13 @@ approval_channels:
   - feishu1
 ```
 
-This is enough while:
+That is enough to define:
 
-- project count is small
-- channel ownership is explicit
-- one human can clearly tell which project a channel belongs to
+- the human feedback entry
+- the runtime and evidence surfaces
+- which plugins and logs belong to the project
 
-If many projects later share channels, logs, or deployment paths, then a stronger routing layer becomes justified.
-
-## Why Judge Still Exists
-
-Removing dynamic routing does not remove the need for a judge.
-
-The observer answers:
-
-- where did the signal come from
-- what evidence was captured
-
-The judge answers:
-
-- is this normal noise or a real incident
-- how severe is it
-- can it be auto-repaired
-- does it require human approval
-
-Without this layer, the system falls back to "read logs and guess."
-
-## Project Daemon Role
-
-The recommended first-pilot daemon is intentionally thin.
-
-It should own:
-
-- project binding and local state
-- watched log and event sources
-- incident intake
-- repair queue handoff
-- local run/test/deploy/rollback hooks
-- result replies back into the feedback channel
-
-It should not try to become:
-
-- a permanent resident Codex session
-- a replacement for OpenClaw gateway features
-- a generalized multi-project orchestrator on day one
+Only when many projects share channels, logs, or deployment boundaries does a stronger routing layer become necessary.
 
 ## Minimal Event Contracts
 
@@ -238,6 +230,7 @@ It should not try to become:
   "summary": "task creation fails after confirmation",
   "severity": "medium",
   "evidence": ["log excerpt", "session id", "feedback event"],
+  "problem_type": "runtime-observable",
   "reproducible": false,
   "approval_required": true
 }
@@ -247,51 +240,25 @@ It should not try to become:
 
 ### Option 1. Embedded inside OpenClaw plugin or service
 
-Shape:
+Best when:
 
-- Growware daemon lives as an OpenClaw plugin or service
-- it reuses OpenClaw hooks, tasks, taskflow, and ecosystem wiring directly
+- the pilot is explicitly OpenClaw-only
+- you want to reuse OpenClaw hooks, tasks, taskflow, and runtime containers directly
+
+### Option 2. External sidecar
 
 Best when:
 
-- the pilot only targets OpenClaw-connected projects
-- you want the smallest operational surface first
+- Growware may later attach to systems beyond OpenClaw
+- you want to preserve Growware as an independent project-level control layer
 
-### Option 2. External sidecar attached to OpenClaw
+In both cases the boundary should stay the same:
 
-Shape:
+- OpenClaw owns hosting and integration
+- Growware owns project control
+- Codex owns controlled execution
 
-- Growware daemon runs outside OpenClaw
-- OpenClaw forwards events through MCP, hooks, or another bridge
+## Current Documentation Constraint
 
-Best when:
-
-- you expect Growware to outgrow OpenClaw later
-- you want stronger process isolation
-
-### Current Recommendation
-
-For the first pilot, either option is valid.
-
-The more important choice is not embedding versus sidecar. The important choice is keeping the responsibilities clean:
-
-- OpenClaw hosts channels and ecosystem integration
-- Growware owns project control logic
-- Codex runs on demand as a worker
-
-## What This Architecture Is Not
-
-- not a new chat shell around Codex
-- not a replacement for OpenClaw gateway, plugins, tasks, or MCP
-- not a full autonomous platform already
-- not a dynamic multi-project scheduler yet
-
-## Future Expansion Points
-
-Add stronger project-level routing only when needed for:
-
-- multiple projects sharing channels
-- multiple projects sharing the same log sources
-- parallel repair workers
-- isolated deployment gates per project
-- reusable regression memory across projects
+Until the pilot begins, the implementation posture can stay conservative: semi-automatic, local-first, human-gated.  
+But the project definition itself should no longer be narrowed to a closed-loop repair script or a document-first AI coding experiment.

@@ -2,58 +2,79 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-> Growware 是一个文档先行的闭环软件演化项目：把真实使用、incident 与反馈转成可审阅的修复与验证。
+> Growware 是一个根据需求、使用与反馈，持续驱动软件演化的反馈驱动引擎。它要做的不是“让 AI 帮忙写代码”，而是把意图、判题和实现接成一个会持续生长的软件工厂。
 
 ## 它是什么
 
-Growware 现在还不是一个已经完成的工具或框架。这个仓库当前做的事情，是先把一个本地优先的软件闭环边界定义清楚：软件被使用、被观测、被判定、被修复、被验证，然后才进入部署。
+根据完整起源对话，Growware 的目标不是一个普通的 AI 编程助手，也不是一个只会自动修 bug 的闭环脚本。
 
-这个项目的起点，来自一段关于 Codex 与 OpenClaw 风格通道的对话。核心目标不是“AI 帮忙写点代码”，而是把“人发现问题再转述给 AI”逐步推进成“系统先发现、先提案、先验证，人只在风险边界介入”。
+它更准确的定义是：
 
-## 适用对象
+- 一个自动反馈式的软件工厂
+- 一个把 `A 窗口`、`B 窗口` 和隐藏控制面接起来的生长引擎
+- 一个持续维护 `spec / judge / code` 一致性的项目级控制层
 
-- 正在构建自我改进插件、工具或软件闭环的维护者
-- 希望从聊天式调试走向 incident 驱动修复的操作者
-- 在实现开始前先审查项目可行性的协作者
+这里的核心不是“代码自己改”，而是：
 
-## 当前项目状态
+- `A 窗口` 定义意图、边界和裁判标准
+- `B 窗口` 提供真实使用中的证据
+- 隐藏控制面把反馈沉淀成规则、测试、修复和部署决策
 
-这个仓库现在处于“讨论与文档基线”阶段，不是“实现基线”阶段。
+## 它不是什么
 
-当前已经落下来的内容：
+- 不是另一个聊天式“让 LLM 写代码”的前端
+- 不是只盯日志然后猜哪里坏了的自动修复器
+- 不是要重写 OpenClaw 的 gateway、channel、plugin 或 task 生态
+- 不是要重写 Codex 这个 coding agent 本身
 
-- 起源对话的 Markdown 原文归档
-- 从项目角度给出的可行性评估
-- 稳定的架构和路线图基线
-- 一个停在实现之前的维护者开发计划
+Growware 应该补的是中间缺失的那层：把需求、使用与反馈转成可以持续演化软件的项目级控制面。
 
-当前仍然故意不做决定的内容：
+## 核心模型
 
-- 第一条真实 pilot loop 具体是什么
-- 目标软件边界是什么
-- 运行时和技术栈是什么
-- incident 与验证的机器可判定合同是什么
+- `A 窗口`：产品控制面。负责提需求、给反馈、做裁判、做审批。
+- `B 窗口`：运行面。真实的软件在这里被使用，并持续产出日志、行为、失败和满意度痕迹。
+- 隐藏控制面：演化引擎。负责把 A/B 两侧的信号转成 `spec`、`judge`、`test`、`code change`、`deploy gate` 和可复用记忆。
+
+这套系统真正要自动化的不是一条“写代码”动作，而是三条回路：
+
+1. 造软件：从意图到规格、实现、验证、部署。
+2. 修软件：从运行证据到 incident、修复、验证、回发。
+3. 学软件：把一次反馈沉淀成以后可重复执行的 `judge`、规则和回归资产。
+
+## 当前仓库状态
+
+这个仓库现在仍然处于“讨论与文档基线”阶段，还没有进入运行时代码阶段。
+
+当前已经完成的是：
+
+- 用 [docs/reference/growware/origin.pdf](docs/reference/growware/origin.pdf) 保存完整起源对话
+- 用 [docs/reference/growware/origin-raw-extract.zh-CN.md](docs/reference/growware/origin-raw-extract.zh-CN.md) 保存 PDF 的全文 Markdown 提取
+- 从完整原始对话抽象出 [docs/reference/growware/origin.zh-CN.md](docs/reference/growware/origin.zh-CN.md)
+- 用公开文档把项目重新定义为 `Growware`
+- 在不提前锁死技术栈的前提下，给出可行性、架构和路线图基线
+
+当前仍然故意没有锁死的是：
+
+- 第一条真实 pilot 接哪个具体项目
+- 哪些判断可以自动做，哪些必须人工裁定
+- 第一版 daemon、judge、verifier 的最小合同
+- 多项目接入和并行隔离的边界
 
 ## 快速开始
 
-1. 先看起点对话：[docs/reference/growware/origin-transcript-2026-04-13.zh-CN.md](docs/reference/growware/origin-transcript-2026-04-13.zh-CN.md)
-2. 再看项目判断：[docs/reference/growware/feasibility.zh-CN.md](docs/reference/growware/feasibility.zh-CN.md)
-3. 再看稳定系统边界：[docs/architecture.zh-CN.md](docs/architecture.zh-CN.md)
-4. 再看阶段顺序：[docs/roadmap.zh-CN.md](docs/roadmap.zh-CN.md)
-5. 需要恢复维护者执行线时，看 [docs/reference/growware/development-plan.zh-CN.md](docs/reference/growware/development-plan.zh-CN.md)
-
-## 核心概念
-
-- `A 窗口`：需求、反馈、审批和人工裁判进入的位置
-- `B 窗口`：真实使用产生证据、日志、incident 和行为轨迹的位置
-- 隐藏控制面：把信号变成 incident、修复任务、验证步骤、部署决策和可复用记忆的地方
+1. 先看完整真相源：[docs/reference/growware/origin.pdf](docs/reference/growware/origin.pdf)
+2. 再看项目起源抽象：[docs/reference/growware/origin.zh-CN.md](docs/reference/growware/origin.zh-CN.md)
+3. 再看项目可行性：[docs/reference/growware/feasibility.zh-CN.md](docs/reference/growware/feasibility.zh-CN.md)
+4. 再看当前架构：[docs/architecture.zh-CN.md](docs/architecture.zh-CN.md)
+5. 最后看阶段顺序：[docs/roadmap.zh-CN.md](docs/roadmap.zh-CN.md)
 
 ## 文档导航
 
 - [文档首页](docs/README.zh-CN.md)
+- [项目起源抽象](docs/reference/growware/origin.zh-CN.md)
 - [可行性评估](docs/reference/growware/feasibility.zh-CN.md)
 - [架构](docs/architecture.zh-CN.md)
 - [路线图](docs/roadmap.zh-CN.md)
 - [开发计划](docs/reference/growware/development-plan.zh-CN.md)
 - [测试计划](docs/test-plan.zh-CN.md)
-- [起源对话原文](docs/reference/growware/origin-transcript-2026-04-13.zh-CN.md)
+- [分享页转录稿](docs/reference/growware/origin-transcript-2026-04-13.zh-CN.md)
