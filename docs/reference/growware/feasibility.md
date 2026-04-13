@@ -70,6 +70,23 @@ As of `2026-04-13`, the next correct move for this repository is not runtime cod
 3. Turn human feedback into `judge`, rules, and regression assets before claiming that software can "grow itself."
 4. Start with one project or plugin before expanding into a multi-project platform.
 
+## Current Concrete Viability Call
+
+Given the current discussion, this default shape is reasonable:
+
+- `Project 1 = openclaw-task-system`
+- `feishu6` is the single default human feedback, approval, and notification entry for stage 1
+- `Telegram` is kept as a fallback channel rather than the primary pilot surface
+- all usage channels with `task system` mounted by default are treated as the runtime surface
+- project-level durable rules and contracts live in `.growware/` at the target project root
+
+This is a sensible default because it:
+
+- narrows human judgment to one surface first
+- keeps the real usage surface separate from the judgment surface
+- aligns project-level control with the project repository for Git review and versioning
+- keeps the Growware repository focused on architecture and method instead of replacing per-project control planes
+
 ## Source Context
 
 - [origin.pdf](origin.pdf)

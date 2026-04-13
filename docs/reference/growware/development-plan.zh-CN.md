@@ -29,7 +29,7 @@
 | --- | --- | --- |
 | 当前阶段 | Stage 1 已规划，等待开始指令。 | 来自 `.codex/plan.md` 的当前维护阶段 |
 | 当前切片 | `stage-1 project-1 pilot foundation` | 当前执行线绑定的切片 |
-| 当前执行线 | 把项目 1 的 target、OpenClaw 接线、daemon 职责、feedback/incident/judge/verifier/deploy 合同和启动条件一次规划完整，但先不执行 | 当前这轮真正要收口的工作 |
+| 当前执行线 | 把项目 1 的 target、`feishu6` 接线、`.growware/` 边界、daemon 职责、feedback/incident/judge/verifier/deploy 合同和启动条件一次规划完整，但先不执行 | 当前这轮真正要收口的工作 |
 | 当前验证 | Stage 1 长任务的 workstreams、交付件、退出条件和启动门都已经明确 | 继续前如何证明这条线已收口 |
 
 ## 阶段总览
@@ -77,14 +77,24 @@
 
 - `Project 1 = openclaw task system`
 
+当前推荐默认值：
+
+- `A channel = feishu6`
+- `A channel` 同时承载反馈、审批和通知
+- `Telegram` 作为备选通道
+- 所有默认挂载 `task system` 的使用 channel 都视为 `B` 面
+- 项目级 durable 配置与规则落在 `openclaw-task-system/.growware/`
+
 这个长任务的目的不是写运行时代码，而是把真正开工前必须压实的边界一次定义完整。
 
 ### Stage 1 的长任务目标
 
 - 锁定 `Project 1` 的目标对象
 - 锁定 OpenClaw 的静态 channel 绑定
+- 锁定 `feishu6` 和 `Telegram` 的主备策略
 - 锁定 `feedback adapter -> project daemon` 的接线方式
 - 锁定第一版 `feedback / incident / judge / verifier / deploy gate` 合同
+- 锁定项目内 `.growware/` 的 durable 边界
 - 锁定 daemon 需要暴露的本地接口
 - 锁定什么情况下才允许进入 Stage 2
 
@@ -92,10 +102,13 @@
 
 1. `WS1 - Project Lock`
    - 明确 `Project 1` 的目标项目、仓库、工作区和本地部署边界
+   - 明确 `.growware/` 在项目根目录下的落盘原则
 
 2. `WS2 - OpenClaw Binding`
-   - 明确哪个 channel 是人类反馈入口
-   - 明确哪个 channel 或日志来源属于真实使用证据
+   - 明确 `feishu6` 是人类反馈入口
+   - 明确 `feishu6` 同时承担 approval / notification
+   - 明确 `Telegram` 是否只做 fallback
+   - 明确所有默认挂载 `task system` 的 channel 都属于真实使用证据面
    - 明确 watched plugin、log source 和 approval channel
 
 3. `WS3 - Feedback And Incident Contract`
@@ -111,6 +124,7 @@
 5. `WS5 - Project Daemon Interface`
    - 明确 daemon 负责什么，不负责什么
    - 列出它必须暴露的 `run / test / deploy / rollback / logs` 接口
+   - 明确 daemon 读写 `.growware/` 的哪些路径
 
 6. `WS6 - Start Gate Review`
    - 用一份 review 清单确认 Stage 2 已经可以开始
@@ -120,6 +134,7 @@
 
 - 更新后的架构文档
 - `Project 1` 静态绑定配置草案
+- `.growware/` 目录结构草案
 - feedback event v0
 - incident record v0
 - judge / verifier / deploy gate v0
@@ -129,7 +144,8 @@
 ### Stage 1 的退出条件
 
 - `Project 1` 已明确
-- A/B 对应的 channel 与证据来源已明确
+- `feishu6`、`Telegram fallback` 与 A/B 对应关系已明确
+- 项目内 `.growware/` 边界已明确
 - daemon 边界已明确
 - feedback、incident、judge、verifier、deploy gate 合同已明确
 - 你明确下达开始指令，允许进入 Stage 2
@@ -149,6 +165,8 @@
 预期结果：
 
 - Growware 能在 `Project 1` 上证明端到端链路，但不夸大成“通用自治系统”
+- `feishu6` 能稳定承接反馈、通知和审批
+- `openclaw-task-system/.growware/` 能作为项目级 durable 控制面生效
 
 <a id="stage-3-detectors-gates-and-low-risk-automation"></a>
 ## Stage 3 - 检测器、门禁和低风险自动化

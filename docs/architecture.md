@@ -52,11 +52,16 @@ Growware should fill the missing project-level control plane between OpenClaw an
 
 For the first pilot, keep the design narrow and realistic:
 
+- lock `Project 1` to `openclaw-task-system`
 - `A` is narrowed to `human feedback ingress`
 - `B` is the real use path and runtime evidence surface
+- use `feishu6` as the single default human feedback, approval, and notification entry
+- keep `Telegram` only as a fallback or later secondary notification channel, not the primary pilot surface
+- treat all usage channels with `task system` mounted by default as `B` surfaces
 - do not build a dynamic `A/B routing engine` first
 - use explicit `project-channel binding`
 - give each project a lightweight `project daemon / sidecar`
+- keep project-level rules, contracts, and memory in `.growware/` under the target project root
 - keep `Codex` as an on-demand worker, not a resident session per project
 
 ## Pilot Topology
@@ -64,10 +69,11 @@ For the first pilot, keep the design narrow and realistic:
 ```mermaid
 flowchart TD
     subgraph OpenClaw
-        A[Feedback channel\nexample: feishu1]
-        B[Use channel\nreal user interaction]
+        A[Feedback / approval / notification channel\nfeishu6]
+        B[All usage channels with task system mounted]
         Adapter[Feedback adapter]
         GatewayLogs[Gateway logs]
+        TG[Telegram fallback\noptional]
     end
 
     subgraph Growware
@@ -92,6 +98,7 @@ flowchart TD
     A --> Adapter
     Adapter --> Binding
     Binding --> Daemon
+    TG -. optional .-> Adapter
 
     B --> Plugin
     Plugin --> PluginLogs
@@ -112,7 +119,29 @@ flowchart TD
     A --> Memory
     Judge --> Memory
     Verifier --> Memory
+    Workspace --> LocalRules[.growware/]
+    LocalRules --> Daemon
 ```
+
+## Current Recommended Pilot Binding
+
+After this round of discussion, the first business-validation loop should be narrowed to these defaults:
+
+- `Project 1 = openclaw-task-system`
+- `A channel = feishu6`
+- the `A channel` carries:
+  - human feedback
+  - approvals
+  - decisions and status notifications
+- `B surfaces = all usage channels where task system is mounted by default`
+- keep `Telegram` as a backup channel only for now
+
+This default set keeps the shape simple:
+
+- one human judgment surface
+- no mixing between feedback and real use
+- all real use of `task system` falls into one runtime evidence boundary
+- project-level control stays aligned with the project repository itself
 
 ## The Three Main Flows
 
@@ -120,7 +149,7 @@ flowchart TD
 
 This is the shape you already defined clearly:
 
-`feishu1 -> OpenClaw adapter -> project daemon`
+`feishu6 -> OpenClaw adapter -> project daemon`
 
 If the daemon can also reply back through the same channel, the bidirectional feedback channel exists.
 
@@ -181,17 +210,22 @@ The current pilot can avoid dynamic `A/B routing` and use explicit binding inste
 
 ```yaml
 project_id: project-1
+project_name: openclaw-task-system
 feedback_channels:
-  - feishu1
+  - feishu6
 runtime_channels:
-  - user-channel-1
+  - "*"
 watched_plugins:
   - openclaw-task-system
 log_sources:
   - openclaw-gateway
   - project-daemon
 approval_channels:
-  - feishu1
+  - feishu6
+notification_channels:
+  - feishu6
+fallback_channels:
+  - telegram
 ```
 
 That is enough to define:
@@ -199,8 +233,56 @@ That is enough to define:
 - the human feedback entry
 - the runtime and evidence surfaces
 - which plugins and logs belong to the project
+- that all decision notifications return to `feishu6`
 
 Only when many projects share channels, logs, or deployment boundaries does a stronger routing layer become necessary.
+
+## `.growware/` Directory Boundary
+
+For the first stage, I agree with storing the project-level Growware control surface inside the target project rather than only in the Growware meta-repo.
+
+For `Project 1`, the recommended shape is:
+
+```text
+openclaw-task-system/
+  .growware/
+    project.yaml
+    channels.yaml
+    contracts/
+    spec/
+    judge/
+    ops/
+    memory/
+```
+
+Two categories should stay separate:
+
+Should be tracked in Git:
+
+- `project.yaml`
+- channel-binding config
+- `spec/`
+- `judge/`
+- contract definitions
+- deploy / approval policy
+- durable rules learned from human feedback
+
+Should not be tracked directly in Git:
+
+- temporary runtime state
+- local queues
+- raw log cache
+- one-off debug artifacts
+
+If those live under the project root, the recommended form is:
+
+```text
+.growware/
+  runtime/   # gitignored
+  logs/      # gitignored
+```
+
+That keeps configuration versioned with the project while preventing runtime noise from polluting Git history.
 
 ## Minimal Event Contracts
 
@@ -257,6 +339,11 @@ In both cases the boundary should stay the same:
 - OpenClaw owns hosting and integration
 - Growware owns project control
 - Codex owns controlled execution
+
+For `Project 1`, the more specific recommendation is:
+
+- runtime can still be either a sidecar or an OpenClaw service
+- but the durable project-level configuration should live in `openclaw-task-system/.growware/`
 
 ## Current Documentation Constraint
 

@@ -53,11 +53,16 @@ Growware 应该补的是 OpenClaw 和 Codex 之间缺失的那层项目级控制
 
 在第一条 pilot 里，建议保持现实收缩：
 
+- `Project 1` 先锁定为 `openclaw-task-system`
 - `A` 先收缩成 `human feedback ingress`
 - `B` 表示真实使用通道和运行证据源
+- `feishu6` 作为唯一默认的人类反馈、审批和通知入口
+- `Telegram` 只作为备选或后续补充通知通道，不作为第一阶段主入口
+- 所有默认挂载 `task system` 的使用 channel，都视为 `B` 面
 - 不做动态 `A/B routing engine`
 - 改用显式的 `project-channel binding`
 - 每个项目先配一个轻量 `project daemon / sidecar`
+- 项目级规则、合同和记忆落在目标项目根目录下的 `.growware/`
 - `Codex` 作为按需拉起的执行器，而不是每项目常驻会话
 
 ## Pilot 拓扑
@@ -65,10 +70,11 @@ Growware 应该补的是 OpenClaw 和 Codex 之间缺失的那层项目级控制
 ```mermaid
 flowchart TD
     subgraph OpenClaw
-        A[反馈 channel\n例如: feishu1]
-        B[使用 channel\n真实用户交互]
+        A[反馈 / 审批 / 通知 channel\nfeishu6]
+        B[所有挂载 task system 的使用 channel]
         Adapter[Feedback adapter]
         GatewayLogs[Gateway logs]
+        TG[Telegram fallback\n可选]
     end
 
     subgraph Growware
@@ -93,6 +99,7 @@ flowchart TD
     A --> Adapter
     Adapter --> Binding
     Binding --> Daemon
+    TG -. optional .-> Adapter
 
     B --> Plugin
     Plugin --> PluginLogs
@@ -113,7 +120,29 @@ flowchart TD
     A --> Memory
     Judge --> Memory
     Verifier --> Memory
+    Workspace --> LocalRules[.growware/]
+    LocalRules --> Daemon
 ```
+
+## 当前推荐的 Pilot 绑定
+
+这轮讨论后，第一条业务验证闭环建议先按下面的默认值收敛：
+
+- `Project 1 = openclaw-task-system`
+- `A channel = feishu6`
+- `A channel` 同时承担：
+  - 人类反馈入口
+  - 审批入口
+  - 决策和状态通知入口
+- `B surfaces = 所有默认挂载 task system 的使用 channel`
+- `Telegram` 暂时只保留为备选通道，不抢主流程
+
+这组默认值的好处是：
+
+- 先把人类裁判面收敛成单点
+- 不把真实使用面和反馈面混在一起
+- 让 `task system` 的所有真实使用都自动进入同一批运行证据范围
+- 把项目级控制面和项目代码目录对齐，便于 Git 管理
 
 ## 三条主流
 
@@ -121,7 +150,7 @@ flowchart TD
 
 这条线对应你已经定义清楚的那种接法：
 
-`feishu1 -> OpenClaw adapter -> project daemon`
+`feishu6 -> OpenClaw adapter -> project daemon`
 
 如果 daemon 能把结果再回发回去，这条双向 feedback channel 就成立了。
 
@@ -182,17 +211,22 @@ sequenceDiagram
 
 ```yaml
 project_id: project-1
+project_name: openclaw-task-system
 feedback_channels:
-  - feishu1
+  - feishu6
 runtime_channels:
-  - user-channel-1
+  - "*"
 watched_plugins:
   - openclaw-task-system
 log_sources:
   - openclaw-gateway
   - project-daemon
 approval_channels:
-  - feishu1
+  - feishu6
+notification_channels:
+  - feishu6
+fallback_channels:
+  - telegram
 ```
 
 这样已经足够覆盖：
@@ -200,8 +234,60 @@ approval_channels:
 - 明确项目的人类反馈入口
 - 明确项目的运行面和证据面
 - 明确要观察哪些插件和日志源
+- 明确所有决策通知默认回到 `feishu6`
 
 只有以后多个项目共享 channel、日志源或部署边界时，才需要更强的 routing。
+
+## `.growware/` 目录边界
+
+第一阶段我同意把项目级 Growware 控制面放到目标项目目录里，而不是只放在 Growware 主仓库里。
+
+对 `Project 1` 来说，推荐形态是：
+
+```text
+openclaw-task-system/
+  .growware/
+    project.yaml
+    channels.yaml
+    contracts/
+    spec/
+    judge/
+    ops/
+    memory/
+```
+
+这里建议区分两类内容：
+
+应该进 Git：
+
+- `project.yaml`
+- channel 绑定配置
+- `spec/`
+- `judge/`
+- 合同定义
+- deploy / approval policy
+- 人工沉淀下来的 durable 规则
+
+不应该直接进 Git：
+
+- 临时运行状态
+- 本地队列
+- 原始日志缓存
+- 一次性的调试产物
+
+如果要放在项目目录下，建议形态是：
+
+```text
+.growware/
+  runtime/   # gitignore
+  logs/      # gitignore
+```
+
+这样就能同时满足：
+
+- 项目配置跟着项目仓库走
+- Growware 的核心规则可以被代码审查和版本管理
+- 运行态垃圾不会污染项目 Git 历史
 
 ## 最小事件合同
 
@@ -258,6 +344,11 @@ approval_channels:
 - OpenClaw 负责宿主和接入
 - Growware 负责项目控制面
 - Codex 负责受控执行
+
+当前对 `Project 1` 的建议更偏向：
+
+- 运行上允许 sidecar 或 OpenClaw service 二选一
+- 但项目级 durable 配置无论如何都放在 `openclaw-task-system/.growware/`
 
 ## 当前文档约束
 

@@ -29,7 +29,7 @@ It answers one practical question:
 | --- | --- | --- |
 | Current Phase | Stage 1 planned and waiting for a start command. | Current maintainer-facing phase from `.codex/plan.md` |
 | Active Slice | `stage-1 project-1 pilot foundation` | The slice tied to the current execution line |
-| Current Execution Line | fully define Project 1 target, OpenClaw wiring, daemon responsibility, and the feedback/incident/judge/verifier/deploy contracts before execution begins | What the repo is trying to finish now |
+| Current Execution Line | fully define Project 1 target, `feishu6` wiring, `.growware/` boundaries, daemon responsibility, and the feedback/incident/judge/verifier/deploy contracts before execution begins | What the repo is trying to finish now |
 | Validation | Stage 1 workstreams, deliverables, exit criteria, and start gate are explicit | How this line proves itself before moving on |
 
 ## Milestone Overview
@@ -77,14 +77,24 @@ Recommended target:
 
 - `Project 1 = openclaw task system`
 
+Current recommended defaults:
+
+- `A channel = feishu6`
+- the `A channel` carries feedback, approvals, and notifications
+- `Telegram` is the fallback channel
+- all usage channels with `task system` mounted by default are treated as `B` surfaces
+- project-level durable configuration and rules live in `openclaw-task-system/.growware/`
+
 This long task is not for runtime implementation yet. It exists to lock down the boundaries that must be true before implementation begins.
 
 ### Stage 1 Objectives
 
 - lock the `Project 1` target
 - lock the OpenClaw static channel binding
+- lock the `feishu6` / `Telegram` primary-fallback strategy
 - lock the `feedback adapter -> project daemon` integration shape
 - lock the first `feedback / incident / judge / verifier / deploy gate` contracts
+- lock the durable `.growware/` boundary inside the target project
 - lock the local interfaces the daemon must expose
 - lock the start gate for Stage 2
 
@@ -92,10 +102,13 @@ This long task is not for runtime implementation yet. It exists to lock down the
 
 1. `WS1 - Project Lock`
    - define the target project, repo, workspace, and local deploy boundary
+   - define the on-repo `.growware/` persistence boundary
 
 2. `WS2 - OpenClaw Binding`
-   - define the human feedback channel
-   - define the real usage channel or evidence source
+   - define `feishu6` as the human feedback entry
+   - define `feishu6` as the approval / notification route
+   - define whether `Telegram` stays fallback-only
+   - define all task-system-mounted channels as the real usage evidence surface
    - define watched plugins, log sources, and approval channels
 
 3. `WS3 - Feedback And Incident Contract`
@@ -111,6 +124,7 @@ This long task is not for runtime implementation yet. It exists to lock down the
 5. `WS5 - Project Daemon Interface`
    - define what the daemon owns and what it does not own
    - list the required `run / test / deploy / rollback / logs` interfaces
+   - define which `.growware/` paths the daemon reads and writes
 
 6. `WS6 - Start Gate Review`
    - review whether Stage 2 is actually ready to begin
@@ -120,6 +134,7 @@ This long task is not for runtime implementation yet. It exists to lock down the
 
 - updated architecture docs
 - Project 1 static binding draft
+- `.growware/` directory layout draft
 - feedback event v0
 - incident record v0
 - judge / verifier / deploy gate v0
@@ -129,7 +144,8 @@ This long task is not for runtime implementation yet. It exists to lock down the
 ### Stage 1 Exit Criteria
 
 - `Project 1` is explicit
-- channel ownership and evidence sources are explicit
+- the `feishu6` and `Telegram fallback` ownership model is explicit
+- the in-project `.growware/` boundary is explicit
 - daemon boundaries are explicit
 - the feedback, incident, judge, verifier, and deploy gate contracts are explicit
 - the user has explicitly authorized the transition into Stage 2
@@ -149,6 +165,8 @@ Goal:
 Expected result:
 
 - Growware can prove one end-to-end loop on `Project 1` without claiming generalized autonomy
+- `feishu6` can reliably carry feedback, notifications, and approvals
+- `openclaw-task-system/.growware/` works as the project-level durable control surface
 
 <a id="stage-3-detectors-gates-and-low-risk-automation"></a>
 ## Stage 3 - Detectors, Gates, and Low-Risk Automation
