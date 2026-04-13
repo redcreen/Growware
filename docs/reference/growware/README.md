@@ -13,6 +13,7 @@ This directory holds Growware's durable reference sources. It is not the live co
 - [origin.md](origin.md): the extracted project definition from the full origin conversation
 - [origin-transcript-2026-04-13.md](origin-transcript-2026-04-13.md): the share-page transcript capture, retained only as provenance and known to be incomplete
 - [feasibility.md](feasibility.md): project-level feasibility, risks, and entry conditions
+- [shared-policy-contract.md](shared-policy-contract.md): the shared policy contract for humans, `project-assistant`, and Growware, covering docs as source, `.policy/`, compile responsibility, execution boundaries, and layered gates
 - [development-plan.md](development-plan.md): detailed execution queue below the roadmap
 
 ## Reading Rules

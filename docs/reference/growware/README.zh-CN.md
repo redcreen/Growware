@@ -13,6 +13,7 @@
 - [origin.zh-CN.md](origin.zh-CN.md)：从完整起源对话抽象出来的项目定义
 - [origin-transcript-2026-04-13.zh-CN.md](origin-transcript-2026-04-13.zh-CN.md)：从分享页抓取的转录稿，只保留作来源痕迹；它已知不完整
 - [feasibility.zh-CN.md](feasibility.zh-CN.md)：从项目角度对 Growware 的可行性、风险和进入条件做判断
+- [shared-policy-contract.zh-CN.md](shared-policy-contract.zh-CN.md)：人类、`project-assistant`、Growware 共用的 policy 合同，定义文档源、`.policy/`、编译责任、执行边界和门禁分层
 - [development-plan.zh-CN.md](development-plan.zh-CN.md)：路线图之下的详细执行队列
 
 ## 读取原则
