@@ -1,0 +1,8 @@
+{
+  "schema": "growware.daemon_foundation.manifest.v1",
+  "contract_version": 1,
+  "generated_by": "growware/scripts/growware_daemon_contract_sync.py",
+  "generated_at": "2026-04-14T03:13:06Z",
+  "index": ".growware/daemon-foundation/index.json",
+  "contracts_dir": ".growware/daemon-foundation/contracts"
+}

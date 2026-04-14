@@ -22,4 +22,4 @@
 ## 条目
 
 - 建议按日期命名，例如 `2026-04-12-control-surface-convergence.md`
-
+- [2026-04-14-daemon-contract-pack.zh-CN.md](2026-04-14-daemon-contract-pack.zh-CN.md)

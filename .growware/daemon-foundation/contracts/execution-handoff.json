@@ -1,0 +1,84 @@
+{
+  "schema": "growware.daemon_foundation.contract.v1",
+  "id": "growware.execution-handoff.v1",
+  "title": "Execution Handoff Contract",
+  "kind": "daemon-contract",
+  "status": "active-draft",
+  "contract_type": "execution-handoff",
+  "owners": [
+    "growware"
+  ],
+  "depends_on": [
+    "docs/reference/growware/daemon-foundation-plan.md",
+    "docs/reference/growware/shared-policy-contract.md"
+  ],
+  "required_sections": [
+    "purpose",
+    "handoff_modes",
+    "required_handoff_record",
+    "decision_rules",
+    "approval_rules",
+    "machine_notes"
+  ],
+  "sections": {
+    "purpose": {
+      "title": "Purpose",
+      "items": [],
+      "text": "This contract defines when Growware answers from daemon-owned state, when it delegates, and when it must wait for approval."
+    },
+    "handoff_modes": {
+      "title": "Handoff Modes",
+      "items": [
+        "`state-only`: answer from durable project state without code execution",
+        "`coordination-only`: update project progress or planning state without entering executor-required work",
+        "`executor-required`: hand work to the declared project executor or adapter",
+        "`approval-wait`: stop because approval is required before the action may continue"
+      ],
+      "text": ""
+    },
+    "required_handoff_record": {
+      "title": "Required Handoff Record",
+      "items": [
+        "`project_id`: resolved attached project",
+        "`requested_action`: action being asked for",
+        "`handoff_mode`: one of the declared handoff modes",
+        "`reason`: concise explanation for why this mode was chosen",
+        "`policy_refs`: policy ids or manifests consulted before the decision",
+        "`required_validation`: validation path expected before close-out",
+        "`approval_state`: current approval state for the action"
+      ],
+      "text": ""
+    },
+    "decision_rules": {
+      "title": "Decision Rules",
+      "items": [
+        "prefer `state-only` when the answer already exists in durable project state",
+        "use `coordination-only` when the work updates planning or progress but does not require code execution",
+        "use `executor-required` only when the project capsule and policy layer both authorize the declared execution path",
+        "move to `approval-wait` whenever the loaded policy or capsule boundary says the action is gated"
+      ],
+      "text": ""
+    },
+    "approval_rules": {
+      "title": "Approval Rules",
+      "items": [
+        "Growware must not invent an executor path outside the capsule's declared `executor_ref`",
+        "a handoff record that changes action scope requires review",
+        "final close-out must preserve the chosen `handoff_mode` as provenance"
+      ],
+      "text": ""
+    },
+    "machine_notes": {
+      "title": "Machine Notes",
+      "items": [
+        "compile `handoff_modes`, `required_handoff_record`, `decision_rules`, and `approval_rules` as separate arrays",
+        "keep `handoff_mode` spellings stable for future daemon adapters"
+      ],
+      "text": ""
+    }
+  },
+  "source_docs": [
+    "docs/reference/growware/daemon-contracts/execution-handoff.md",
+    "docs/reference/growware/daemon-contracts/execution-handoff.zh-CN.md"
+  ]
+}

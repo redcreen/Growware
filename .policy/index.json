@@ -1,0 +1,27 @@
+{
+  "schema": "growware.policy.index.v1",
+  "rules": [
+    {
+      "id": "project-1.openclaw-task-system.policy-source",
+      "kind": "project-policy",
+      "status": "active",
+      "effect": "deny-without-approval",
+      "applies_to": [
+        "README.md",
+        "README.zh-CN.md",
+        "docs/architecture.md",
+        "docs/architecture.zh-CN.md",
+        "docs/roadmap.md",
+        "docs/roadmap.zh-CN.md",
+        "docs/reference/growware/*",
+        "docs/policy/*",
+        "openclaw-task-system/.growware/"
+      ],
+      "rule_file": ".policy/rules/project-1.openclaw-task-system.policy-source.json",
+      "source_docs": [
+        "docs/policy/project-1.md",
+        "docs/policy/project-1.zh-CN.md"
+      ]
+    }
+  ]
+}

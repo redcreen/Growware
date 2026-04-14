@@ -43,7 +43,9 @@ The system is trying to automate three loops:
 
 ## Current Repository State
 
-This repository has moved beyond the discussion-only baseline into a single-project pilot baseline.
+This repository remains in discussion and documentation mode.
+
+The current repo can preserve source material, define policy source, and lock the first pilot loop on paper. It should not yet be read as proof that Project 1 runtime wiring is live.
 
 What exists now:
 
@@ -52,18 +54,24 @@ What exists now:
 - the extracted project definition lives in [docs/reference/growware/origin.md](docs/reference/growware/origin.md)
 - public docs have been reframed around `Growware`
 - feasibility, architecture, and roadmap are defined without prematurely locking the runtime stack
-- `openclaw-task-system` is locked as `Project 1`
-- the target project now contains a project-local `.growware/` control surface
-- `feishu6-chat` is safely rebound to a dedicated `growware` agent in OpenClaw
-- the local deploy baseline is real: if host install is blocked, deployment falls back to installed runtime sync, Gateway restart, smoke, and drift checks
-- the `growware` agent has been verified inside the `openclaw-task-system` workspace
+- `openclaw-task-system` is the documented `Project 1` pilot target
+- the human-readable policy source now lives in [docs/policy/](docs/policy/README.md) and compiles locally into `.policy/`
+- the first pilot loop is now explicit in [docs/reference/growware/pilot-loop-v1.md](docs/reference/growware/pilot-loop-v1.md)
+- the current review mainline is now the daemon-first self-improvement plan in [docs/reference/growware/daemon-foundation-plan.md](docs/reference/growware/daemon-foundation-plan.md)
+- the daemon foundation contract pack now lives in [docs/reference/growware/daemon-contracts/README.md](docs/reference/growware/daemon-contracts/README.md) and compiles locally into `.growware/daemon-foundation/`
+- the medium-tier `.codex/*` control surface is aligned to the same pre-runtime stage
 
 What remains intentionally not overstated:
 
+- a live `openclaw-task-system/.growware/` control surface owned from this repo
+- a verified `feishu6-chat -> growware` runtime binding
+- a runnable local observe -> report -> repair -> verify -> deploy loop
 - production-grade autonomous release
 - multi-project isolation
 - stronger detector / rubric / regression accumulation
 - proactive cross-channel notification without an active conversation context
+- runtime execution wired directly to the compiled `.growware/daemon-foundation/` layer
+- runtime execution wired directly to the compiled `.policy/` layer
 
 ## Quick Start
 
@@ -71,7 +79,19 @@ What remains intentionally not overstated:
 2. Read the extracted project definition: [docs/reference/growware/origin.md](docs/reference/growware/origin.md)
 3. Review feasibility: [docs/reference/growware/feasibility.md](docs/reference/growware/feasibility.md)
 4. Read the current architecture: [docs/architecture.md](docs/architecture.md)
-5. Follow milestone order in [docs/roadmap.md](docs/roadmap.md)
+5. Review the first pilot loop definition: [docs/reference/growware/pilot-loop-v1.md](docs/reference/growware/pilot-loop-v1.md)
+6. Review the current daemon-first plan: [docs/reference/growware/daemon-foundation-plan.md](docs/reference/growware/daemon-foundation-plan.md)
+7. Follow milestone order in [docs/roadmap.md](docs/roadmap.md)
+8. Review the daemon contract pack: [docs/reference/growware/daemon-contracts/README.md](docs/reference/growware/daemon-contracts/README.md)
+9. Review the policy source: [docs/policy/README.md](docs/policy/README.md) and [docs/reference/growware/shared-policy-contract.md](docs/reference/growware/shared-policy-contract.md)
+10. Compile and validate the machine layers:
+
+```bash
+python3 scripts/growware_daemon_contract_sync.py --write --json
+python3 scripts/growware_daemon_contract_sync.py --check --json
+python3 scripts/growware_policy_sync.py --write --json
+python3 scripts/growware_policy_sync.py --check --json
+```
 
 ## Documentation Map
 
@@ -79,7 +99,11 @@ What remains intentionally not overstated:
 - [Origin Summary](docs/reference/growware/origin.md)
 - [Feasibility](docs/reference/growware/feasibility.md)
 - [Architecture](docs/architecture.md)
+- [Pilot Loop V1](docs/reference/growware/pilot-loop-v1.md)
+- [Daemon Foundation Plan](docs/reference/growware/daemon-foundation-plan.md)
+- [Daemon Contract Pack](docs/reference/growware/daemon-contracts/README.md)
 - [Roadmap](docs/roadmap.md)
 - [Development Plan](docs/reference/growware/development-plan.md)
 - [Test Plan](docs/test-plan.md)
 - [Share Transcript Capture](docs/reference/growware/origin-transcript-2026-04-13.md)
+- [Policy Source](docs/policy/README.md)

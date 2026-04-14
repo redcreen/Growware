@@ -27,19 +27,20 @@
 
 | 项目 | 当前值 | 说明 |
 | --- | --- | --- |
-| 当前阶段 | Stage 3 baseline 已完成，进入真实反馈运行期。 | 来自当前 pilot 的实际执行状态 |
-| 当前切片 | `real-feishu6 pilot operation` | 当前执行线绑定的切片 |
-| 当前执行线 | 接收 `feishu6-chat` 的真实反馈，通过 `growware` agent 进入 `openclaw-task-system` 工作区，先本地验证再走 deploy baseline 和通知回发 | 当前这轮真正要持续推进的工作 |
-| 当前验证 | `.growware/`、OpenClaw 绑定、本地 deploy fallback、Gateway 重启、plugin smoke、install drift、feedback classifier、close-out provenance 已落地并验证 | 当前线如何证明已经进入可运行状态 |
+| 当前阶段 | Stage 1.5 daemon-foundation 合同包实现已激活；仓库当前先把 Growware 自身边界落成机器可编译资产，再考虑继续放大目标项目执行线。 | 当前维护者视角的阶段 |
+| 当前切片 | `growware-self daemon foundation` | 当前执行线绑定的切片 |
+| 当前执行线 | 把 Growware 自身的 daemon-first 控制合同编译成可 review 合同包和本地 `.growware/daemon-foundation/` 机器层 | 当前这轮真正要持续推进的工作 |
+| 当前验证 | `daemon-foundation-plan`、`daemon-contracts/*`、生成出的 `.growware/daemon-foundation/*`、architecture、roadmap、development plan、test plan 与 `.codex/*` 都描述同一个 Growware-self 边界 | 当前线如何证明已经进入可执行状态 |
 
 ## 阶段总览
 
 | 阶段 | 状态 | 目标 | 依赖 | 退出条件 |
 | --- | --- | --- | --- | --- |
 | Stage 0 | 已完成 | 保存起源对话、把项目统一命名为 Growware、建立真实文档基线 | 共享对话 | 对话已归档、命名已统一、基线文档已落下 |
-| Stage 1 | 已完成 | 把项目 1 的基础合同和边界全部压实到真实仓库和宿主配置 | Stage 0 | target、channel 绑定、daemon 接口、核心合同和启动条件已落地 |
-| Stage 2 | 已完成 | 在项目 1 上实现一条带人工审批门的本地半自动闭环 baseline | Stage 1 | 一条本地 observe -> report -> repair -> verify -> deploy 链路已实际跑通 |
-| Stage 3 | 已完成（baseline） | 扩展检测器、回归资产、门禁和低风险自动化的第一版 | Stage 2 | 部分低风险 fallback 自动化已可运行，并保留显式门禁 |
+| Stage 1 | 纸面已完成 | 用一条长任务把 Project 1 和第一版操作合同都定义清楚 | Stage 0 | target、channel 绑定、daemon 接口、核心合同和启动条件已明确 |
+| Stage 1.5 | 进行中 / 合同包实现态 | 先定义 Growware 自身的 daemon 边界、project capsule、channel progress 合同与执行 handoff | Stage 1 | Growware 自身主线已显式化、可编译，并在 Stage 2 前完成 review |
+| Stage 2 | 排队中 | 在批准过的 Growware daemon 边界之下，于项目 1 上实现一条带人工审批门的本地半自动闭环 baseline | Stage 1.5 | 一条本地 observe -> report -> repair -> verify -> deploy 链路可被实际跑通 |
+| Stage 3 | 排队中 | 扩展检测器、回归资产、门禁和低风险自动化的第一版 | Stage 2 | 部分低风险 incident 可以转为带门禁的自动执行 |
 | Stage 4 | 更后 | 支持多项目接入并保持隔离 | Stage 3 | 多项目并行时不发生 channel、状态、队列或部署污染 |
 
 ## 顺序执行队列
@@ -48,10 +49,12 @@
 | --- | --- | --- | --- | --- |
 | 1 | `bootstrap control surface` | 较早切片 | n/a | n/a |
 | 2 | `origin capture and feasibility baseline` | 较早切片 | 保存共享对话并发布真实文档基线 | 对话归档、文档互链、命名收敛 |
-| 3 | `stage-1 project-1 pilot foundation` | 已完成 | 把项目 1 的基础合同、OpenClaw 接线和 daemon 接口一次规划并落地 | `.growware/` 与 `growware` agent 已生效 |
-| 4 | `single-project local semi-automatic loop` | 已完成 | 在项目 1 上实现第一条本地 observe -> report -> repair -> verify -> deploy baseline 链路，并保留人工审批 | 本地 deploy、重启、smoke、drift 已验证 |
-| 5 | `detectors, gates, and low-risk automation` | 已完成（baseline） | 把重复的人类纠正先沉淀成 v0 judge、门禁和 fallback 自动化 | 低风险 fallback 自动化保持显式门禁且可回滚 |
-| 6 | `multi-project onboarding and isolation` | 更后 | 支持第二个及更多目标项目接入 | 多项目不会互相污染 |
+| 3 | `stage-1 project-1 pilot foundation` | 支撑项 / 纸面已完成 | 把项目 1 合同、OpenClaw 绑定、daemon 接口和实现入口门写实 | `pilot-loop-v1` 与关联文档把第一条 pilot 写清楚，但不声称已 rollout |
+| 4 | `growware-self daemon foundation` | 当前 / 实现中 | 定义 Growware 自身 daemon 边界、project capsule、channel-progress 合同与 execution handoff | `daemon-foundation-plan`、`daemon-contracts/*` 与 `.growware/daemon-foundation/*` 让 Growware 自身主线既显式又可机器校验 |
+| 5 | `single-project local semi-automatic loop` | 下一步 / 排队中 | 在批准过的 Growware daemon 边界之下，于项目 1 上实现第一条本地 observe -> report -> repair -> verify -> deploy baseline 链路，并保留人工审批 | 一条 pilot 能在本地按可重复路径跑通 |
+| 6 | `detectors, gates, and low-risk automation` | 更后 / 排队中 | 把重复的人类纠正先沉淀成 v0 judge、门禁和 fallback 自动化 | 低风险自动化保持显式门禁且可回滚 |
+| 7 | `multi-project onboarding and isolation` | 更后 | 支持第二个及更多目标项目接入 | 多项目不会互相污染 |
+| 8 | `project-policy-source rollout` | 支撑项 / 已完成 | 把 `docs/policy/` 变成 Project 1 的可读规则源，并让入口文档都指向它 | 中英文成对的 policy source 已可见 |
 
 ## 里程碑细节
 
@@ -87,11 +90,7 @@
 
 这条长任务已经完成，相关结果已经落到：
 
-- `openclaw-task-system/.growware/`
-- `scripts/runtime/growware_preflight.py`
-- `scripts/runtime/growware_openclaw_binding.py`
-- `scripts/runtime/growware_local_deploy.py`
-- OpenClaw `feishu6-chat -> growware` 真实绑定
+这条长任务现在仍然停留在“先把启动门写清楚”的阶段，当前纸面汇总在 [pilot-loop-v1.zh-CN.md](pilot-loop-v1.zh-CN.md)。
 
 ### Stage 1 的长任务目标
 
@@ -161,6 +160,42 @@
 - 当前只完成“规划”
 - 真正开始执行，必须等待你的明确命令
 
+<a id="stage-15-growware-self--daemon-foundation"></a>
+## Stage 1.5 - Growware 自身 / Daemon Foundation
+
+目标：
+
+- 在继续扩展目标项目执行线之前，先定义 Growware 自身的 daemon-first 控制层
+
+当前主线判断：
+
+- Growware 应先补齐自己作为 daemon-owned 项目控制面的合同
+- 目标项目应作为挂接验证对象存在，而不是默认成为当前 roadmap 主线
+- channel 对话应该先能通过 Growware 推动项目进展，而不是继续依赖 repo-local 的人工接续
+
+当前参考文档：
+
+- [daemon-foundation-plan.zh-CN.md](daemon-foundation-plan.zh-CN.md)
+
+### Stage 1.5 的目标
+
+- 定义 daemon responsibility boundary
+- 定义 project capsule contract
+- 定义 channel command / event model
+- 定义 progress push / close-out contract
+- 定义 policy loading 与 approval-check 路径
+- 定义 executor / adapter handoff boundary
+- 定义 learning-writeback contract
+
+### Stage 1.5 的退出条件
+
+- `daemon-foundation-plan*` 已显式存在并可 review
+- `daemon-contracts/*` 已作为已批准合同的可 review source pack 存在
+- `.growware/daemon-foundation/*` 能稳定从 source pack 编译并通过校验
+- roadmap、development plan、test plan 与 `.codex/*` 都指向同一条 Growware-self 主线
+- `Project 1` 被明确当成验证对象，而不是当前扩展主线
+- 你明确批准这条线开始实现
+
 <a id="stage-2-single-project-local-semi-automatic-loop"></a>
 ## Stage 2 - 单项目本地半自动闭环
 
@@ -204,4 +239,4 @@
 
 | 下一步 | 为什么做 |
 | --- | --- |
-| 在 `feishu6-chat` 接收真实反馈并继续迭代 | 规划、接线和 deploy baseline 已经完成，接下来应进入真实人类反馈闭环 |
+| 持续保持 `daemon-foundation-plan`、`daemon-contracts/*`、生成出的 `.growware/daemon-foundation/*`、入口文档和 `.codex/*` 对齐，直到 Growware 自身主线被 review 并批准 | 当前主线问题已经变成 Growware 自身 daemon 边界，而不是继续扩展目标项目 |

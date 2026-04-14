@@ -27,18 +27,19 @@ It answers one practical question:
 
 | Item | Current Value | Meaning |
 | --- | --- | --- |
-| Current Phase | Stage 3 baseline is complete and the pilot is now live for real feedback. | Current maintainer-facing phase |
-| Active Slice | `real-feishu6 pilot operation` | The slice tied to the current execution line |
-| Current Execution Line | accept real `feishu6-chat` feedback, enter the `openclaw-task-system` workspace through the `growware` agent, verify locally, then run the deploy baseline and send notifications back | What the repo is trying to continue now |
-| Validation | `.growware/`, OpenClaw binding, local deploy fallback, Gateway restart, plugin smoke, and install drift are all live and verified | How this line proves itself now |
+| Current Phase | Stage 1.5 daemon-foundation contract-pack implementation is active; the repo is now turning Growware's own boundaries into machine-compilable assets before broadening target-project execution. | Current maintainer-facing phase |
+| Active Slice | `growware-self daemon foundation` | The slice tied to the current execution line |
+| Current Execution Line | compile Growware's daemon-first control contract into a reviewable contract pack and a local `.growware/daemon-foundation/` machine layer | What the repo is trying to continue now |
+| Validation | `daemon-foundation-plan`, `daemon-contracts/*`, generated `.growware/daemon-foundation/*`, roadmap, development plan, test plan, and `.codex/*` all describe the same Growware-self boundary | How this line proves itself now |
 
 ## Milestone Overview
 
 | Milestone | Status | Goal | Depends On | Exit Criteria |
 | --- | --- | --- | --- | --- |
 | Stage 0 | completed | preserve the origin conversation, rename the project to Growware, and establish a truthful docs baseline | shared conversation | transcript archived, naming aligned, baseline docs exist |
-| Stage 1 | planned / not started | use one long task to define Project 1 and all of its first operational contracts | Stage 0 | target, channel binding, daemon interface, core contracts, and the start gate are explicit |
-| Stage 2 | queued | implement one local semi-automatic loop with human approval at deployment gates for Project 1 | Stage 1 | Project 1 can run through observe -> report -> repair -> verify -> deploy locally |
+| Stage 1 | complete on paper | use one long task to define Project 1 and all of its first operational contracts | Stage 0 | target, channel binding, daemon interface, core contracts, and the start gate are explicit |
+| Stage 1.5 | active / contract-pack implementation | define Growware's own daemon boundary, project capsule, channel progress contract, and execution handoff | Stage 1 | Growware's self-improvement line is explicit, compiled, and reviewed before Stage 2 implementation |
+| Stage 2 | queued | implement one local semi-automatic loop with human approval at deployment gates for Project 1 under the approved Growware daemon boundary | Stage 1.5 | Project 1 can run through observe -> report -> repair -> verify -> deploy locally |
 | Stage 3 | queued | expand detectors, gates, regression assets, and low-risk automation | Stage 2 | selected low-risk incidents can be auto-fixed behind explicit gates |
 | Stage 4 | later | onboard more than one project without cross-project contamination | Stage 3 | multiple projects can share Growware without channel, state, queue, or deploy collisions |
 
@@ -48,10 +49,12 @@ It answers one practical question:
 | --- | --- | --- | --- | --- |
 | 1 | `bootstrap control surface` | earlier slice | n/a | n/a |
 | 2 | `origin capture and feasibility baseline` | earlier slice | preserve the shared conversation and publish truthful baseline docs | transcript archived, docs linked, and naming converged |
-| 3 | `stage-1 project-1 pilot foundation` | current / planning only | fully define Project 1 contracts, OpenClaw bindings, and daemon interfaces | Stage 1 long task is complete and waiting for the user to start it |
-| 4 | `single-project local semi-automatic loop` | next / queued | implement the first local observe -> report -> repair -> verify -> deploy loop with human approval for Project 1 | one pilot runs locally through a repeatable path |
-| 5 | `detectors, gates, and low-risk automation` | later / queued | turn repeated human corrections into detectors, rules, gates, and regression assets | low-risk automation stays gated and reversible |
-| 6 | `multi-project onboarding and isolation` | later | support a second and later target projects | multiple projects do not contaminate each other |
+| 3 | `stage-1 project-1 pilot foundation` | supporting / complete on paper | fully define Project 1 contracts, OpenClaw bindings, daemon interfaces, and the implementation gate | `pilot-loop-v1` and related docs make the first pilot explicit without claiming rollout |
+| 4 | `growware-self daemon foundation` | current / implementation | define Growware's own daemon boundary, project capsule, channel-progress contract, and execution handoff | `daemon-foundation-plan`, `daemon-contracts/*`, and `.growware/daemon-foundation/*` make the Growware-self line explicit and machine-checkable |
+| 5 | `single-project local semi-automatic loop` | next / queued | implement the first local observe -> report -> repair -> verify -> deploy loop with human approval for Project 1 | one pilot runs locally through a repeatable path |
+| 6 | `detectors, gates, and low-risk automation` | later / queued | turn repeated human corrections into detectors, rules, gates, and regression assets | low-risk automation stays gated and reversible |
+| 7 | `multi-project onboarding and isolation` | later | support a second and later target projects | multiple projects do not contaminate each other |
+| 8 | `project-policy-source rollout` | supporting / complete | make `docs/policy/` the readable Project 1 rule source and align the entry docs | one visible bilingual policy source is in place |
 
 ## Milestone Details
 
@@ -86,6 +89,8 @@ Current recommended defaults:
 - project-level durable configuration and rules live in `openclaw-task-system/.growware/`
 
 This long task is not for runtime implementation yet. It exists to lock down the boundaries that must be true before implementation begins.
+
+The current Stage 1 paper gate is collected in [pilot-loop-v1.md](pilot-loop-v1.md).
 
 ### Stage 1 Objectives
 
@@ -155,6 +160,42 @@ This long task is not for runtime implementation yet. It exists to lock down the
 - planning is complete
 - execution remains paused until the user explicitly says to start
 
+<a id="stage-15-growware-self--daemon-foundation"></a>
+## Stage 1.5 - Growware Self / Daemon Foundation
+
+Goal:
+
+- define Growware's own daemon-first control layer before broadening target-project execution
+
+Current mainline thesis:
+
+- Growware should first improve itself into a daemon-owned project control plane
+- target projects should remain attached validation objects rather than the active roadmap by default
+- channel dialogue should be able to drive project progress through Growware, not only through repo-local manual continuation
+
+Current reference:
+
+- [daemon-foundation-plan.md](daemon-foundation-plan.md)
+
+### Stage 1.5 Objectives
+
+- define the daemon responsibility boundary
+- define the project capsule contract
+- define the channel command / event model
+- define the progress push / close-out contract
+- define the policy loading and approval-check path
+- define the executor / adapter handoff boundary
+- define the learning-writeback contract
+
+### Stage 1.5 Exit Criteria
+
+- `daemon-foundation-plan*` is explicit and reviewable
+- `daemon-contracts/*` exists as the reviewable source pack for the approved contracts
+- `.growware/daemon-foundation/*` compiles and validates against that source pack
+- roadmap, development plan, test plan, and `.codex/*` point to the same Growware-self mainline
+- `Project 1` is treated as a validation target instead of the current expansion line
+- the user explicitly approves implementation to begin on this line
+
 <a id="stage-2-single-project-local-semi-automatic-loop"></a>
 ## Stage 2 - Single-Project Local Semi-Automatic Loop
 
@@ -195,4 +236,4 @@ Expected result:
 
 | Next Move | Why |
 | --- | --- |
-| Wait for the user to start `Stage 1 - Project 1 Pilot Foundation Long Task` | this round defines the long task completely, but does not start execution |
+| Keep `daemon-foundation-plan`, `daemon-contracts/*`, generated `.growware/daemon-foundation/*`, entry docs, and `.codex/*` aligned until the Growware-self line is reviewed and approved | the mainline question is now Growware's own daemon boundary rather than target-project expansion |

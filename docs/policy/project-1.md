@@ -1,0 +1,71 @@
+# Project 1 Policy Source
+
+[English](project-1.md) | [中文](project-1.zh-CN.md)
+
+## Metadata
+
+- id: `project-1.openclaw-task-system.policy-source`
+- kind: `project-policy`
+- status: `active`
+- owners: `growware-maintainers`
+- applies_to:
+  - `README.md`
+  - `README.zh-CN.md`
+  - `docs/architecture.md`
+  - `docs/architecture.zh-CN.md`
+  - `docs/roadmap.md`
+  - `docs/roadmap.zh-CN.md`
+  - `docs/reference/growware/*`
+  - `docs/policy/*`
+  - `openclaw-task-system/.growware/`
+- effect: `deny-without-approval`
+
+## Rule
+
+Project 1 is the `openclaw-task-system` pilot.
+
+Its project policy must stay reviewable in docs, and the rules that matter for execution must be explicit before any behavior is treated as durable.
+
+The current default human ingress, approval, and notification surface is `feishu6`.
+
+The current durable project control surface belongs in `openclaw-task-system/.growware/`, while the human-readable policy source for this repo lives in `docs/policy/`.
+
+Any change to the project target, the channel binding, the approval boundary, or the user-visible semantics of the pilot loop requires explicit review before it is treated as active policy.
+
+## Allowed
+
+- clarify policy wording
+- add or tighten documentation that makes the project rules easier to execute
+- keep the policy source bilingual and consistent
+- keep `openclaw-task-system` as Project 1 unless a human explicitly changes it
+- keep `feishu6` as the default human ingress / approval / notification path unless a human explicitly changes it
+- keep durable project rules in `openclaw-task-system/.growware/`
+
+## Forbidden
+
+- retarget Project 1 by assumption
+- move primary human ingress off `feishu6` by assumption
+- claim autonomous production deployment
+- change user-visible pilot semantics without approval
+- treat terminal takeover as a rule exemption
+- write policy only in chat and leave docs out of sync
+
+## Approval Required
+
+- any Project 1 target change
+- any channel binding change
+- any deploy or rollback approval boundary change
+- any change that redefines daemon-owned vs terminal-takeover
+- any addition of a new default pilot surface or notification route
+
+## Verification
+
+- `README` / `roadmap` / `architecture` / `development-plan` / `test-plan` remain aligned with this contract
+- `docs/policy/README.md` lists this file as the current policy source
+- `shared-policy-contract` still describes docs as source and `.policy/` as the machine layer
+- when the machine layer exists, compile consistency is checked before execution
+
+## Machine Notes
+
+- this document is the project-readable source until `.policy/` is generated
+- the compiled machine layer must not broaden scope beyond what this doc and the shared contract allow

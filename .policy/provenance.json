@@ -1,0 +1,13 @@
+{
+  "schema": "growware.policy.provenance.v1",
+  "contract_version": 1,
+  "source_docs": [
+    {
+      "source": "docs/policy/project-1.md",
+      "translation": "docs/policy/project-1.zh-CN.md",
+      "rule_id": "project-1.openclaw-task-system.policy-source",
+      "kind": "project-policy"
+    }
+  ],
+  "warnings": []
+}

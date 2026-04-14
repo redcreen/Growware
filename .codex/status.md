@@ -2,35 +2,36 @@
 
 ## Delivery Tier
 - Tier: `medium`
-- Why this tier: the repository now has a documentation baseline and still needs multiple sessions to reach a real first pilot loop
-- Last reviewed: 2026-04-13
+- Why this tier: the repository now has a documentation baseline plus local machine layers for policy and Growware's own daemon contracts, but it still needs multiple sessions before any runnable loop is approved
+- Last reviewed: 2026-04-14
 
 ## Current Phase
 
-Stage 0-3 pilot baseline active; priority is closing the gap from terminal takeover to daemon-owned execution.
+Stage 1.5 daemon-contract implementation established on top of the policy-source baseline; the repo now has one explicit Growware-self contract pack in docs and one local machine-layer sync path in `scripts/growware_daemon_contract_sync.py`.
 
 ## Active Slice
 
-Project-1 feedback-to-change closure for `feishu6 -> growware -> openclaw-task-system`.
+`growware-self daemon foundation`
 
 ## Current Execution Line
 
-- Objective: make the first real feedback from `feishu6` trigger a durable code change path, then turn that path into daemon-owned capability instead of repeated terminal takeover
-- Plan Link: single-project local semi-automatic loop
-- Runway: one execution-sized checkpoint that ends when daemon can own intake, execution status, and completion notification for the same class of feedback
-- Progress: 2 / 5 tasks complete
+- Objective: define Growware's own daemon-first control contract, compile it into `.growware/daemon-foundation/`, and keep that contract pack, the policy source, public docs, and `.codex/*` aligned without drifting into target-project expansion
+- Plan Link: daemon-foundation planning plus contract-pack implementation
+- Runway: one implementation checkpoint that ends when the daemon contract pack, generated machine layer, and entry docs all agree on the same Growware-self boundary
+- Progress: 4 / 4 tasks complete
 - Stop Conditions:
-  - feedback still only produces conversational replies without durable code changes
-  - terminal takeover is not converted into daemon-owned capability
-  - completion still cannot be pushed back to `feishu6`
+  - Growware's daemon-first contract pack stays implicit or split across docs
+  - the generated `.growware/daemon-foundation/` layer drifts from `docs/reference/growware/daemon-contracts/`
+  - the compiled `.policy/` layer drifts from `docs/policy/`
+  - target-project expansion is described as the current mainline before Growware's own boundary is approved
+  - the project policy or daemon contract still depends on chat-only agreement
 
 ## Execution Tasks
 
-- [x] EL-1 bind `feishu6` to the dedicated `growware` agent
-- [x] EL-2 turn the first real feedback into a code change, tests, and local deploy
-- [ ] EL-3 make daemon execution status explicit: `daemon-owned` vs `terminal-takeover`
-- [ ] EL-4 make completion notifications push back to `feishu6`
-- [ ] EL-5 promote the manual execution path into daemon-owned intake and execution rules
+- [x] EL-1 create `daemon-contracts/*` and make the Growware-self daemon contracts explicit
+- [x] EL-2 implement `scripts/growware_daemon_contract_sync.py` and compile the contract pack into `.growware/daemon-foundation/`
+- [x] EL-3 align README, docs home, roadmap, development plan, test plan, and reference docs to the same contract-pack checkpoint
+- [x] EL-4 rerun daemon and policy machine-layer validation after the contract-pack pass
 
 ## Execution Standard
 
@@ -43,20 +44,20 @@ Project-1 feedback-to-change closure for `feishu6 -> growware -> openclaw-task-s
 
 - Trigger Level: high
 - Pending Capture: no
-- Last Entry: 2026-04-13 docs baseline established; first formal devlog entry will be created when the pilot contract is chosen or a durable rule changes
+- Last Entry: 2026-04-14 daemon contract pack turned the Growware-self boundary into machine-compilable source and generated `.growware/daemon-foundation/`
 
 ## Architecture Supervision
-- Signal: `yellow`
-- Signal Basis: open blockers or architectural risks are still recorded; ownership or boundary drift is visible in the current slice
-- Root Cause Hypothesis: planning clarity is now higher than start-control clarity unless the paused state is made explicit
-- Correct Layer: roadmap, development plan, and explicit start-gate control
-- Automatic Review Trigger: ownership or boundary drift is visible in the current slice
-- Escalation Gate: raise but continue
+- Signal: `green`
+- Signal Basis: the pilot gate exists, Growware's own daemon boundary is now explicit, and both machine layers compile cleanly
+- Root Cause Hypothesis: target-project planning had been easier to point at than Growware's own daemon control contract, so a dedicated contract pack was missing
+- Correct Layer: Growware-self daemon contracts, review, and later runtime integration before target-project execution broadens
+- Automatic Review Trigger: any doc starts treating target-project expansion as the current mainline, or either machine layer drifts from source
+- Escalation Gate: continue automatically
 
 ## Current Escalation State
-- Current Gate: raise but continue
-- Reason: the current direction can continue, but architecture review should stay visible because an automatic trigger fired
-- Next Review Trigger: review again when ownership, boundary, or layer responsibilities change
+- Current Gate: continue automatically
+- Reason: the Growware-self contract pack is now explicit and machine-checkable; the remaining decision is when to authorize runtime integration on top of it
+- Next Review Trigger: review again when the user asks to refine the daemon boundary, or to start runtime work under this contract pack
 
 ## Done
 
@@ -65,22 +66,25 @@ Project-1 feedback-to-change closure for `feishu6 -> growware -> openclaw-task-s
 - origin transcript archived in Markdown
 - feasibility, architecture, roadmap, development-plan, and test-plan docs created
 - public docs aligned to Growware naming
-- bootstrap and docs validations prepared for rerun
+- `docs/policy/README*` and `docs/policy/project-1*` now define the visible Project 1 policy source
+- `shared-policy-contract*`, README, docs home, roadmap, architecture, development-plan, test-plan, and reference pack now point at the same policy source
+- `pilot-loop-v1*` now records the first pilot target, operator path, real usage path, incident contract, verification contract, and deployment approval boundary
+- `daemon-foundation-plan*` now records Growware's own daemon boundary, project capsule, progress-push contract, and execution handoff model
+- `docs/reference/growware/daemon-contracts/*` now records the daemon boundary, capsule, channel, progress, policy-loading, handoff, and learning-writeback contracts
+- `scripts/growware_daemon_contract_sync.py` now compiles and validates the daemon contract source into `.growware/daemon-foundation/`
+- `scripts/growware_policy_sync.py` still compiles and validates the Project 1 source into `.policy/`
 
 ## In Progress
 
-- pilot-loop definition is prepared as the next slice
-- the Stage 1 long task has been expanded as a planned-but-not-started package
-- public docs and control-surface alignment are being refreshed
+- none; the daemon-contract implementation checkpoint is closed and the repo is waiting for review, refinement, or explicit runtime authorization
 
 ## Blockers / Open Decisions
 
-- Final confirmation of `Project 1` is still pending.
-- The exact OpenClaw bindings for feedback, runtime evidence, and approval are still pending.
-- The incident structure and first judge signal are still pending final confirmation.
-- The local verification path, daemon interface, and deployment approval boundary are still pending final confirmation.
+- Whether runtime should later consume compiled `.growware/daemon-foundation/` and `.policy/` directly is still an open follow-up.
+- Whether Growware's future runtime should materialize as a sidecar, service, or another approved shape remains intentionally undecided.
+- Whether the current contract pack needs narrower or richer fields before runtime work begins is still open for review.
 
 ## Next 3 Actions
-1. Add daemon-owned completion notification to `feishu6`.
-2. Add explicit execution provenance: `daemon-owned` vs `terminal-takeover`.
-3. Convert the natural-language feedback handling path into daemon-owned intake logic instead of repeated manual takeover.
+1. Review `daemon-contracts/*` and `daemon-foundation-plan*` as the Growware-self implementation gate.
+2. Refine contract fields or rules only through the doc source, then rerun both sync scripts.
+3. Start runtime integration only with an explicit user decision after the contract pack is approved.

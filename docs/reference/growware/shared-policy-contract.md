@@ -23,6 +23,21 @@ This document is not itself a runtime config file. It defines how runtime policy
 - `Growware`: the project-level execution loop for feedback, implementation, verification, deploy, and notification
 - `terminal takeover`: Codex working directly in the terminal must also obey this contract
 
+## Current Adoption In This Repo
+
+For the Growware repository, the first policy source lives in `docs/policy/`.
+
+The current minimal source set is:
+
+- `docs/policy/README.md`
+- `docs/policy/project-1.md`
+- `docs/policy/README.zh-CN.md`
+- `docs/policy/project-1.zh-CN.md`
+
+This repo uses those documents as the human-readable rule source for Project 1.
+The same source is compiled locally into `.policy/` through `python3 scripts/growware_policy_sync.py --write --json` and validated with `python3 scripts/growware_policy_sync.py --check --json`.
+Growware should read the compiled layer rather than inventing new rules at runtime.
+
 ## Current Problems This Contract Solves
 
 This contract is not speculative. It exists because these problems have already appeared in practice.
@@ -84,12 +99,12 @@ This contract is based on the following conclusions from the discussion:
    Humans primarily express rules through docs.
 
 5. Machines should not depend on rereading the full docs every time  
-   That is why `.policy/` is needed.
+   That is why the project needs one explicit machine policy layer.
 
 6. `project-assistant` is the right place to compile policy from docs  
    It already owns project governance, doc governance, and generic gates.
 
-7. Growware, the daemon, and terminal takeover must all execute the same `.policy/`  
+7. Growware, the daemon, and terminal takeover must all execute the same active machine policy layer
    The system cannot allow daemon-owned execution and manual takeover to follow different rules.
 
 ## Final Decisions
@@ -112,11 +127,16 @@ The recommended home is:
 docs/policy/
 ```
 
-### Decision 3: `.policy/` is the machine execution source of truth
+### Decision 3: the project needs one active machine policy layer
 
-`.policy/` does not replace docs. It is the machine execution layer compiled from docs.
+The machine execution layer does not replace docs. It is the project-local layer that executors actually load at runtime.
 
-Growware, the daemon, and terminal takeover should execute `.policy/` at runtime.
+Two forms are allowed:
+
+- current pilot compatibility profile: `.growware/contracts/`, `.growware/policies/`, and `.growware/ops/`
+- steady-state target profile: `.policy/` compiled from `docs/policy/`
+
+Growware, the daemon, and terminal takeover must execute the same active machine policy layer for the current project state.
 
 ### Decision 4: `project-assistant` owns normalization and compilation
 
@@ -151,7 +171,7 @@ The human:
 - defines rules in docs
 - reviews and approves rule changes
 - decides major business tradeoffs
-- does not directly maintain machine `.policy/`
+- does not directly maintain the machine policy layer by hand
 
 ### `project-assistant`
 
@@ -159,15 +179,15 @@ The human:
 
 - reads policy source from project docs
 - normalizes it into stable structure
-- generates `.policy/`
+- generates or refreshes the active machine policy layer
 - checks doc / policy consistency
-- turns `.policy/` into executable gate inputs
+- turns the active machine policy layer into executable gate inputs
 
 ### Growware
 
 Growware:
 
-- reads `.policy/` for the current task and touched scope
+- reads the active machine policy layer for the current task and touched scope
 - decides whether the change is `allow`, `deny`, or `require-approval`
 - executes implementation, verification, deploy, and notification under those rules
 - reports triggered rules and execution source in close-out
@@ -176,7 +196,7 @@ Growware:
 
 terminal takeover:
 
-- must read `.policy/` before executing
+- must read the active machine policy layer before executing
 - may not bypass forbidden changes
 - may not bypass approval-required changes
 - must state that the result was `terminal-takeover` and which capabilities were fed back into durable assets
@@ -195,21 +215,25 @@ The final input source is always the `human`.
 
 Humans primarily edit `documents`, not `.policy/` machine files.
 
-### 3. `.policy/` is the machine execution source of truth
+### 3. The active machine policy layer is the execution source of truth
 
 Human-readable rules live in `docs/`.
 
-Machine-executable rules live in `.policy/`.
+Machine-executable rules live in the active machine policy layer.
 
-Growware, the daemon, and terminal takeover should treat `.policy/` as the runtime constraint input rather than re-reading the full repo documentation on every task.
+Today, the pilot compatibility profile uses `.growware/contracts/`, `.growware/policies/`, and `.growware/ops/`.
+
+The long-term target is `docs/policy/` plus compiled `.policy/`.
+
+Growware, the daemon, and terminal takeover should treat the active machine policy layer as the runtime constraint input rather than re-reading the full repo documentation on every task.
 
 ### 4. `project-assistant` turns documents into normalized policy
 
 `project-assistant` is responsible for:
 
 - defining how policy source should be written in docs
-- extracting and compiling `.policy/`
-- validating document and `.policy/` consistency
+- extracting and compiling the active machine policy layer
+- validating document and machine-policy consistency
 - attaching policy to the generic gate framework
 
 ### 5. Growware executes policy; it does not legislate policy
@@ -230,38 +254,66 @@ From highest to lowest priority:
 
 1. `human approval`
 2. `policy source in project docs`
-3. `.policy/` machine execution layer
+3. active machine policy layer
 4. `runtime state`
 
 That means:
 
 - `human approval` determines whether a rule is valid
 - `docs` make rules reviewable and maintainable by humans
-- `.policy/` makes rules executable and gateable by machines
+- the active machine policy layer makes rules executable and gateable by machines
 - `runtime state` may consume rules but may not define them
 
 If there is a conflict, precedence is:
 
-`explicit human approval > policy source in docs > .policy/ > runtime inference`
+`explicit human approval > policy source in docs > active machine policy layer > runtime inference`
 
 Therefore:
 
-- if `.policy/` conflicts with docs, the gate must fail
-- if runtime behavior conflicts with `.policy/`, execution must be blocked or downgraded
+- if the active machine policy layer conflicts with docs, the gate must fail
+- if runtime behavior conflicts with the active machine policy layer, execution must be blocked or downgraded
 - if docs were not approved, executors may not silently treat new behavior as official policy
+
+## Current Pilot Compatibility Profile
+
+The long-term contract still targets `docs/policy/` plus compiled `.policy/`.
+
+But the current Growware pilot is not there yet. Today, the machine-executed project layer is:
+
+```text
+.growware/
+  contracts/
+  policies/
+  ops/
+```
+
+For the current pilot:
+
+- `.growware/contracts/` carries event and incident schemas
+- `.growware/policies/` carries the machine-readable intake, judge, and deploy rules
+- `.growware/ops/` carries daemon-facing execution entrypoints and responsibilities
+- `docs/reference/growware/shared-policy-contract*.md` is the durable human-readable contract that explains how this repo expresses policy in `docs/policy/` and compiles it into `.policy/`
+
+This means the pilot does not yet claim that every onboarded project already ships `docs/policy/` and `.policy/`.
+
+Instead, the contract is:
+
+- current pilot runtime: `.growware/*`
+- future generalized policy stack: `docs/policy/` -> `.policy/`
+- both profiles preserve the same ownership rule: project docs define policy, executors only consume it
 
 ## Responsibility Boundaries
 
 | Role | Owns | Responsible For | Must Not Do |
 | --- | --- | --- | --- |
-| Human | final rule interpretation, approval, business direction | expressing rules in docs, approving rule changes, deciding major tradeoffs | hand-authoring machine JSON in `.policy/` |
-| `project-assistant` | rule framework, docs governance, generic gate orchestration | defining doc format, compiling `.policy/`, validating consistency, wiring rules into gates | deciding project business rules on its own |
-| Growware | execution, feedback loop, repair flow | reading `.policy/`, deciding whether execution is allowed, implementing, verifying, notifying | self-legislating project rules or bypassing approvals |
-| terminal takeover | temporary execution path | obeying `.policy/` during direct execution | treating manual takeover as a rule exemption |
+| Human | final rule interpretation, approval, business direction | expressing rules in docs, approving rule changes, deciding major tradeoffs | hand-authoring machine JSON as a substitute for reviewable docs |
+| `project-assistant` | rule framework, docs governance, generic gate orchestration | defining doc format, compiling `.policy/` when available, validating consistency, and bridging pilot policy stacks toward the target model | deciding project business rules on its own |
+| Growware | execution, feedback loop, repair flow | reading the active machine policy layer, deciding whether execution is allowed, implementing, verifying, notifying | self-legislating project rules or bypassing approvals |
+| terminal takeover | temporary execution path | obeying the same active machine policy layer during direct execution | treating manual takeover as a rule exemption |
 
-## Directory Convention
+## Steady-State Target Convention
 
-Every onboarded project should have two policy layers:
+Every fully converged project should have two policy layers:
 
 ```text
 docs/
@@ -278,6 +330,15 @@ docs/
 
 - `docs/policy/`: human-readable rule layer
 - `.policy/`: machine-executable rule layer
+
+This is the target shape once the generic document-to-policy compile path is in place.
+
+Until then, a pilot project may use a compatibility profile such as `.growware/contracts/`, `.growware/policies/`, and `.growware/ops/`, provided that:
+
+- the ownership chain still starts from human-approved docs
+- the machine layer is versioned in Git
+- daemon and terminal takeover execute the same rules
+- the migration path toward `docs/policy/` plus `.policy/` is explicit
 
 ## Document Layer Contract: `docs/policy/*.md`
 
@@ -629,11 +690,13 @@ Conservative behavior means:
 To adopt this contract, a project needs at least:
 
 1. a `docs/policy/` directory
-2. a `.policy/` directory
-3. at least one `interaction-contract`
-4. at least one `verification-rule`
-5. a `project-assistant` compile / validate entrypoint
-6. a Growware `.policy/` read path
+2. a `docs/policy/README.md` entry point
+3. a `docs/policy/project-1.md` or equivalent project policy source
+4. a `.policy/` directory
+5. at least one `interaction-contract`
+6. at least one `verification-rule`
+7. a `project-assistant` compile / validate entrypoint
+8. a Growware `.policy/` read path
 
 ## WD First-Reply Example
 

@@ -1,0 +1,8 @@
+{
+  "schema": "growware.policy.manifest.v1",
+  "contract_version": 1,
+  "generated_by": "growware/scripts/growware_policy_sync.py",
+  "generated_at": "2026-04-14T02:00:10Z",
+  "index": ".policy/index.json",
+  "rules_dir": ".policy/rules"
+}

@@ -13,11 +13,15 @@
 - [origin.zh-CN.md](origin.zh-CN.md)：从完整起源对话抽象出来的项目定义
 - [origin-transcript-2026-04-13.zh-CN.md](origin-transcript-2026-04-13.zh-CN.md)：从分享页抓取的转录稿，只保留作来源痕迹；它已知不完整
 - [feasibility.zh-CN.md](feasibility.zh-CN.md)：从项目角度对 Growware 的可行性、风险和进入条件做判断
-- [shared-policy-contract.zh-CN.md](shared-policy-contract.zh-CN.md)：人类、`project-assistant`、Growware 共用的 policy 合同，定义文档源、`.policy/`、编译责任、执行边界和门禁分层
+- [pilot-loop-v1.zh-CN.md](pilot-loop-v1.zh-CN.md)：Project 1 第一条 pilot loop 的定义与实现入口门
+- [daemon-foundation-plan.zh-CN.md](daemon-foundation-plan.zh-CN.md)：Growware 自身 daemon-first 规划主线，以及在继续扩展目标项目前必须先补齐的控制合同
+- [daemon-contracts/README.zh-CN.md](daemon-contracts/README.zh-CN.md)：把这条规划主线继续落成机器可编译 source docs 的 daemon 合同包
+- [shared-policy-contract.zh-CN.md](shared-policy-contract.zh-CN.md)：人类、`project-assistant`、Growware 共用的 policy 合同，定义当前 pilot 的 `.growware/*` 兼容态、长期 `docs/policy/` -> `.policy/` 目标态、编译责任、执行边界和门禁分层
+- [../../policy/README.zh-CN.md](../../policy/README.zh-CN.md)：Project 1 的人类可读 policy source 入口
 - [development-plan.zh-CN.md](development-plan.zh-CN.md)：路线图之下的详细执行队列
 
 ## 读取原则
 
 - 项目“是什么”，以 `origin.pdf` 和 `origin*.md` 为准
 - 项目“现在能不能做”，以 `feasibility*.md` 为准
-- 项目“当前先怎么落”，以 `architecture*.md`、`roadmap*.md` 和 `development-plan*.md` 为准
+- 项目“当前先怎么落”，以 `architecture*.md`、`roadmap*.md`、`development-plan*.md`、`pilot-loop-v1*.md`、`daemon-foundation-plan*.md` 和 `daemon-contracts/*` 为准

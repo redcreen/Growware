@@ -62,6 +62,7 @@ For the first pilot, keep the design narrow and realistic:
 - use explicit `project-channel binding`
 - give each project a lightweight `project daemon / sidecar`
 - keep project-level rules, contracts, and memory in `.growware/` under the target project root
+- keep the human-readable policy source in `docs/policy/` and compile it into `.policy/` through `scripts/growware_policy_sync.py`
 - keep `Codex` as an on-demand worker, not a resident session per project
 
 ## Pilot Topology
@@ -241,7 +242,7 @@ Only when many projects share channels, logs, or deployment boundaries does a st
 
 For the first stage, I agree with storing the project-level Growware control surface inside the target project rather than only in the Growware meta-repo.
 
-For `Project 1`, the current landed shape is:
+For `Project 1`, the current proposed shape is:
 
 ```text
 openclaw-task-system/
@@ -263,6 +264,7 @@ Should be tracked in Git:
 - channel-binding config
 - `contracts/`
 - `policies/`
+- `docs/policy/`
 - contract definitions
 - deploy / approval policy
 - durable rules learned from human feedback
@@ -274,14 +276,11 @@ Should not be tracked directly in Git:
 - raw log cache
 - one-off debug artifacts
 
-This exact shape is now live in `openclaw-task-system` and has already passed preflight, safe OpenClaw config validation, the local deploy baseline, Gateway restart, plugin smoke, and install-drift checks.
-
-One real boundary remains:
-
-- `openclaw plugins install ./plugin` is still blocked by the current host dangerous-code check
-- the local deploy baseline therefore prefers normal install first and falls back to installed-runtime sync when install is blocked
+This directory boundary is the Stage 1 recommendation for the target project once runtime implementation is explicitly approved.
 
 ## Minimal Event Contracts
+
+These are v0 contract drafts for the Stage 1 paper gate. The consolidated implementation gate lives in [reference/growware/pilot-loop-v1.md](reference/growware/pilot-loop-v1.md).
 
 ### Feedback Event
 
@@ -340,7 +339,8 @@ In both cases the boundary should stay the same:
 For `Project 1`, the more specific recommendation is:
 
 - runtime can still be either a sidecar or an OpenClaw service
-- but the durable project-level configuration should live in `openclaw-task-system/.growware/`
+- the runtime choice stays open until Stage 2 starts
+- the durable project-level configuration should live in `openclaw-task-system/.growware/` once the pilot is authorized
 
 ## Current Documentation Constraint
 

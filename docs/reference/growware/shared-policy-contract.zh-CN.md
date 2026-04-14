@@ -23,6 +23,21 @@
 - `Growware`：负责 feedback intake、执行、验证、部署、通知的项目级闭环执行层
 - `terminal takeover`：Codex 在终端中临时接管执行时，也必须遵守本合同
 
+## 本仓库的当前落地方式
+
+在 Growware 仓库里，第一层 policy source 放在 `docs/policy/`。
+
+当前最小 source 集是：
+
+- `docs/policy/README.md`
+- `docs/policy/project-1.md`
+- `docs/policy/README.zh-CN.md`
+- `docs/policy/project-1.zh-CN.md`
+
+这个仓库把这些文档当成 Project 1 的人类可读规则源。
+同一份 source 现在可以通过 `python3 scripts/growware_policy_sync.py --write --json` 本地编译进 `.policy/`，并通过 `python3 scripts/growware_policy_sync.py --check --json` 做一致性校验。
+Growware 应该读取编译后的机器层，而不是在运行时自己发明新规则。
+
 ## 当前遇到的问题
 
 这份合同不是凭空设计出来的，而是为了解决当前已经真实出现的问题。
@@ -84,12 +99,12 @@
    人类主要通过文档表达规则。
 
 5. 机器不能直接啃全文文档  
-   所以需要一个 `.policy/` 机器执行层。
+   所以项目需要一个明确的机器 policy 执行层。
 
 6. `project-assistant` 最适合承担“从文档编译 policy”的工作  
    因为它本来就负责项目治理、文档治理和通用 gate 编排。
 
-7. Growware、daemon、terminal takeover 都必须执行同一套 `.policy/`  
+7. Growware、daemon、terminal takeover 都必须执行同一套“当前有效机器 policy 层”
    不能出现“daemon 遵守、人工接管不遵守”的分裂状态。
 
 ## 最终决定
@@ -112,11 +127,16 @@
 docs/policy/
 ```
 
-### 决定 3：`.policy/` 是机器执行真相源
+### 决定 3：项目需要一层“当前有效机器 policy 层”
 
-`.policy/` 不取代文档，而是由文档编译出来的机器执行层。
+机器执行层不取代文档，它是执行器在运行时真正加载的项目本地规则层。
 
-Growware、daemon、terminal takeover 在运行时只应执行 `.policy/`。
+允许两种形态：
+
+- 当前 pilot 兼容态：`.growware/contracts/`、`.growware/policies/`、`.growware/ops/`
+- 长期目标态：由 `docs/policy/` 编译出来的 `.policy/`
+
+Growware、daemon、terminal takeover 在任一时刻都必须执行当前项目的同一套“当前有效机器 policy 层”。
 
 ### 决定 4：`project-assistant` 负责规范化落地
 
@@ -151,7 +171,7 @@ Growware 不负责最终解释项目规则。
 - 在文档中定义规则
 - review 和批准规则变化
 - 判断重大业务 tradeoff
-- 不直接维护机器层 `.policy/`
+- 不直接手工维护机器 policy 层
 
 ### `project-assistant`
 
@@ -159,15 +179,15 @@ Growware 不负责最终解释项目规则。
 
 - 读取项目文档中的 policy source
 - 将规则抽象成稳定结构
-- 生成 `.policy/`
-- 检查文档与 `.policy/` 是否一致
-- 把 `.policy/` 变成可执行 gate 输入
+- 生成或刷新当前有效机器 policy 层
+- 检查文档与机器 policy 是否一致
+- 把当前有效机器 policy 层变成可执行 gate 输入
 
 ### Growware
 
 Growware 的工作方式是：
 
-- 根据当前任务和 touched scope 读取 `.policy/`
+- 根据当前任务和 touched scope 读取当前有效机器 policy 层
 - 决定这次执行是 `allow`、`deny` 还是 `require-approval`
 - 按规则执行代码修改、验证、部署、通知
 - 在 close-out 中说明命中的规则和执行来源
@@ -176,7 +196,7 @@ Growware 的工作方式是：
 
 terminal takeover 的工作方式是：
 
-- 接管时先读 `.policy/`
+- 接管时先读当前有效机器 policy 层
 - 不允许跳过禁止项
 - 不允许跳过审批项
 - 执行结束后明确说明：这是 `terminal-takeover`，以及哪些能力已回灌
@@ -195,21 +215,25 @@ terminal takeover 的工作方式是：
 
 但人类主要修改的是 `文档`，不是 `.policy/` 里的机器文件。
 
-### 3. `.policy/` 是机器执行真相源
+### 3. 当前有效机器 policy 层是执行真相源
 
 给人看的规则，放在 `docs/`。
 
-给机器执行的规则，放在 `.policy/`。
+给机器执行的规则，放在当前有效机器 policy 层。
 
-Growware、daemon、terminal takeover 都只应把 `.policy/` 当作运行时约束输入，而不是直接靠全文阅读整仓文档做即时判断。
+当前 pilot 兼容态使用的是 `.growware/contracts/`、`.growware/policies/`、`.growware/ops/`。
+
+长期目标态则是 `docs/policy/` 加上编译后的 `.policy/`。
+
+Growware、daemon、terminal takeover 都只应把当前有效机器 policy 层当作运行时约束输入，而不是直接靠全文阅读整仓文档做即时判断。
 
 ### 4. `project-assistant` 负责文档到 policy 的规范化落地
 
 `project-assistant` 负责：
 
 - 定义文档中的 policy source 应如何书写
-- 从文档提炼和编译 `.policy/`
-- 校验文档与 `.policy/` 是否一致
+- 从文档提炼和编译当前有效机器 policy 层
+- 校验文档与机器 policy 是否一致
 - 将 `.policy/` 接入通用 gate 框架
 
 ### 5. Growware 只执行，不立法
@@ -230,38 +254,66 @@ Growware 负责执行项目规则，不负责自创项目规则。
 
 1. `人类批准`
 2. `项目文档中的 policy source`
-3. `.policy/` 机器执行层
+3. 当前有效机器 policy 层
 4. `运行时状态`
 
 解释：
 
 - `人类批准` 决定规则是否成立
 - `文档` 负责让人类可读、可 review、可维护
-- `.policy/` 负责让机器可执行、可校验、可 gate
+- 当前有效机器 policy 层负责让机器可执行、可校验、可 gate
 - `运行时状态` 只能消费规则，不能定义规则
 
 如果出现冲突，优先级如下：
 
-`人类明确批准 > 文档中的 policy source > .policy/ > 运行时推断`
+`人类明确批准 > 文档中的 policy source > 当前有效机器 policy 层 > 运行时推断`
 
 因此：
 
-- 如果 `.policy/` 与文档不一致，gate 必须报错
-- 如果运行时行为与 `.policy/` 不一致，执行必须被阻断或降级
+- 如果当前有效机器 policy 层与文档不一致，gate 必须报错
+- 如果运行时行为与当前有效机器 policy 层不一致，执行必须被阻断或降级
 - 如果文档没有批准更新，执行器不能擅自把新行为当成正式规则
+
+## 当前 Pilot 兼容态
+
+长期目标仍然是 `docs/policy/` 加编译后的 `.policy/`。
+
+但当前 Growware pilot 还没有走到那一步。现在机器真正执行的是：
+
+```text
+.growware/
+  contracts/
+  policies/
+  ops/
+```
+
+对当前 pilot 来说：
+
+- `.growware/contracts/` 承载 event / incident schema
+- `.growware/policies/` 承载 intake、judge、deploy 的机器可读规则
+- `.growware/ops/` 承载 daemon 可执行入口和职责定义
+- `docs/reference/growware/shared-policy-contract*.md` 则是解释这个仓库如何把 policy 写在 `docs/policy/`，并把它编译成 `.policy/` 的 durable 合同
+
+这意味着当前 pilot **并不宣称** 每个接入项目现在都已经具备 `docs/policy/` 和 `.policy/`。
+
+当前合同真正表达的是：
+
+- 当前 pilot runtime：`.growware/*`
+- 未来通用 policy 栈：`docs/policy/` -> `.policy/`
+- 两种形态都必须保持同一个 ownership 原则：项目文档定义规则，执行器只消费规则
 
 ## 三方职责边界
 
 | 角色 | 拥有什么 | 负责什么 | 不负责什么 |
 | --- | --- | --- | --- |
-| 人类 | 最终规则解释权、批准权、业务方向决定权 | 在文档中表达规则、批准规则变更、判断重大 tradeoff | 维护机器格式、手写 `.policy/` JSON |
-| `project-assistant` | 规则框架、文档治理、通用 gate 编排 | 定义文档格式、编译 `.policy/`、校验一致性、把规则接入 gate | 替项目拍板业务规则、绕过审批改规则 |
-| Growware | 执行权、反馈闭环、修复执行权 | 读取 `.policy/`、判断能不能做、执行、验证、通知 | 自主立法、越过规则边界修改项目行为 |
-| terminal takeover | 过渡执行能力 | 在临时接管时仍遵守 `.policy/` | 以“人工接管”为理由绕开项目规则 |
+| 人类 | 最终规则解释权、批准权、业务方向决定权 | 在文档中表达规则、批准规则变更、判断重大 tradeoff | 把手写机器 JSON 当成可 review 文档的替代 |
+| `project-assistant` | 规则框架、文档治理、通用 gate 编排 | 定义文档格式、在可用时编译 `.policy/`、校验一致性，并把 pilot policy 栈逐步桥接到目标模型 | 替项目拍板业务规则、绕过审批改规则 |
+| Growware | 执行权、反馈闭环、修复执行权 | 读取当前有效机器 policy 层、判断能不能做、执行、验证、通知 | 自主立法、越过规则边界修改项目行为 |
+| terminal takeover | 过渡执行能力 | 在临时接管时仍遵守同一套当前有效机器 policy 层 | 以“人工接管”为理由绕开项目规则 |
 
-## 目录约定
+## 长期目标目录约定
 
-每个接入项目都应同时拥有两层规则目录：
+每个已经收敛完成的项目，长期应同时拥有两层规则目录：
 
 ```text
 docs/
@@ -280,6 +332,15 @@ docs/
 
 - `docs/policy/`：人类可读规则层
 - `.policy/`：机器执行规则层
+
+这是通用“文档 -> 机器 policy”编译链成熟后的目标形态。
+
+在那之前，pilot 项目允许使用 `.growware/contracts/`、`.growware/policies/`、`.growware/ops/` 这种兼容态，只要满足：
+
+- ownership 仍然从人类批准的文档开始
+- 机器层仍然进入 Git 管理
+- daemon 和 terminal takeover 执行的是同一套规则
+- 仓库明确写清楚如何迁移到 `docs/policy/` + `.policy/`
 
 ## 文档层约定：`docs/policy/*.md`
 
@@ -635,11 +696,13 @@ Growware、daemon、terminal takeover 都必须遵守同一套执行合同。
 一个项目要接入本合同，最少需要：
 
 1. `docs/policy/` 目录
-2. `.policy/` 目录
-3. 至少 1 条 `interaction-contract`
-4. 至少 1 条 `verification-rule`
-5. `project-assistant` 的 compile / validate 入口
-6. Growware 的 `.policy/` 读取入口
+2. `docs/policy/README.md` 入口文件
+3. `docs/policy/project-1.md` 或等价的项目 policy source
+4. `.policy/` 目录
+5. 至少 1 条 `interaction-contract`
+6. 至少 1 条 `verification-rule`
+7. `project-assistant` 的 compile / validate 入口
+8. Growware 的 `.policy/` 读取入口
 
 ## WD 首轮回复示例
 

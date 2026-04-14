@@ -1,0 +1,56 @@
+{
+  "schema": "growware.daemon_foundation.provenance.v1",
+  "contract_version": 1,
+  "source_docs": [
+    {
+      "stem": "daemon-boundary",
+      "source": "docs/reference/growware/daemon-contracts/daemon-boundary.md",
+      "translation": "docs/reference/growware/daemon-contracts/daemon-boundary.zh-CN.md",
+      "contract_id": "growware.daemon.boundary",
+      "contract_type": "daemon-boundary"
+    },
+    {
+      "stem": "project-capsule",
+      "source": "docs/reference/growware/daemon-contracts/project-capsule.md",
+      "translation": "docs/reference/growware/daemon-contracts/project-capsule.zh-CN.md",
+      "contract_id": "growware.project-capsule.minimum",
+      "contract_type": "project-capsule"
+    },
+    {
+      "stem": "channel-command-model",
+      "source": "docs/reference/growware/daemon-contracts/channel-command-model.md",
+      "translation": "docs/reference/growware/daemon-contracts/channel-command-model.zh-CN.md",
+      "contract_id": "growware.channel.command-model.v1",
+      "contract_type": "channel-command-model"
+    },
+    {
+      "stem": "progress-push",
+      "source": "docs/reference/growware/daemon-contracts/progress-push.md",
+      "translation": "docs/reference/growware/daemon-contracts/progress-push.zh-CN.md",
+      "contract_id": "growware.progress-push.v1",
+      "contract_type": "progress-push"
+    },
+    {
+      "stem": "policy-loading",
+      "source": "docs/reference/growware/daemon-contracts/policy-loading.md",
+      "translation": "docs/reference/growware/daemon-contracts/policy-loading.zh-CN.md",
+      "contract_id": "growware.policy-loading.v1",
+      "contract_type": "policy-loading"
+    },
+    {
+      "stem": "execution-handoff",
+      "source": "docs/reference/growware/daemon-contracts/execution-handoff.md",
+      "translation": "docs/reference/growware/daemon-contracts/execution-handoff.zh-CN.md",
+      "contract_id": "growware.execution-handoff.v1",
+      "contract_type": "execution-handoff"
+    },
+    {
+      "stem": "learning-writeback",
+      "source": "docs/reference/growware/daemon-contracts/learning-writeback.md",
+      "translation": "docs/reference/growware/daemon-contracts/learning-writeback.zh-CN.md",
+      "contract_id": "growware.learning-writeback.v1",
+      "contract_type": "learning-writeback"
+    }
+  ],
+  "warnings": []
+}

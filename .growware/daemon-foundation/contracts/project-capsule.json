@@ -1,0 +1,81 @@
+{
+  "schema": "growware.daemon_foundation.contract.v1",
+  "id": "growware.project-capsule.minimum",
+  "title": "Project Capsule Contract",
+  "kind": "daemon-contract",
+  "status": "active-draft",
+  "contract_type": "project-capsule",
+  "owners": [
+    "growware"
+  ],
+  "depends_on": [
+    "docs/reference/growware/daemon-foundation-plan.md"
+  ],
+  "required_sections": [
+    "purpose",
+    "required_fields",
+    "state_rules",
+    "approval_rules",
+    "machine_notes"
+  ],
+  "sections": {
+    "purpose": {
+      "title": "Purpose",
+      "items": [],
+      "text": "This contract defines the minimum project-facing surface Growware reads from each attached project."
+    },
+    "required_fields": {
+      "title": "Required Fields",
+      "items": [
+        "`project_id`: stable attached-project identifier",
+        "`project_label`: human-facing name used in progress push",
+        "`project_root`: repo or workspace root that the project represents",
+        "`control_surface_root`: durable project-local control surface root",
+        "`phase`: current project phase",
+        "`execution_line`: current active execution line",
+        "`blockers`: current blocker summary or empty list",
+        "`approval_boundary`: review and approval boundary for risky actions",
+        "`policy_source_docs`: human-readable policy source refs",
+        "`policy_machine_manifest`: machine-layer policy manifest ref",
+        "`validation_entrypoints`: allowed validation commands or adapters",
+        "`deploy_entrypoints`: allowed deploy commands or adapters",
+        "`rollback_entrypoints`: allowed rollback commands or adapters",
+        "`channel_bindings`: attached channel refs that can steer or receive push updates",
+        "`executor_ref`: declared executor or adapter Growware may hand work to",
+        "`status_updated_at`: last durable state update timestamp"
+      ],
+      "text": ""
+    },
+    "state_rules": {
+      "title": "State Rules",
+      "items": [
+        "a project missing any required field is not attachable as an active capsule",
+        "unknown values must be recorded explicitly rather than omitted silently",
+        "`approval_boundary`, `policy_machine_manifest`, and `executor_ref` must be present before executor-required work starts",
+        "Growware may read the capsule for progress answers without mutating the target project"
+      ],
+      "text": ""
+    },
+    "approval_rules": {
+      "title": "Approval Rules",
+      "items": [
+        "changing `project_root`, `control_surface_root`, or `channel_bindings` requires explicit review",
+        "widening any entrypoint privilege requires explicit approval",
+        "changing the deploy or rollback boundary without review is invalid"
+      ],
+      "text": ""
+    },
+    "machine_notes": {
+      "title": "Machine Notes",
+      "items": [
+        "compile `required_fields` as a stable ordered array",
+        "preserve field names exactly so adapters can validate against the same spellings"
+      ],
+      "text": ""
+    }
+  },
+  "source_docs": [
+    "docs/reference/growware/daemon-contracts/project-capsule.md",
+    "docs/reference/growware/daemon-contracts/project-capsule.zh-CN.md"
+  ]
+}

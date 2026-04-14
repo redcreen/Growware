@@ -1,0 +1,75 @@
+{
+  "schema": "growware.daemon_foundation.index.v1",
+  "contracts": [
+    {
+      "id": "growware.daemon.boundary",
+      "contract_type": "daemon-boundary",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/daemon-boundary.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/daemon-boundary.md",
+        "docs/reference/growware/daemon-contracts/daemon-boundary.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.project-capsule.minimum",
+      "contract_type": "project-capsule",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/project-capsule.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/project-capsule.md",
+        "docs/reference/growware/daemon-contracts/project-capsule.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.channel.command-model.v1",
+      "contract_type": "channel-command-model",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/channel-command-model.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/channel-command-model.md",
+        "docs/reference/growware/daemon-contracts/channel-command-model.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.progress-push.v1",
+      "contract_type": "progress-push",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/progress-push.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/progress-push.md",
+        "docs/reference/growware/daemon-contracts/progress-push.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.policy-loading.v1",
+      "contract_type": "policy-loading",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/policy-loading.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/policy-loading.md",
+        "docs/reference/growware/daemon-contracts/policy-loading.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.execution-handoff.v1",
+      "contract_type": "execution-handoff",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/execution-handoff.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/execution-handoff.md",
+        "docs/reference/growware/daemon-contracts/execution-handoff.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.learning-writeback.v1",
+      "contract_type": "learning-writeback",
+      "status": "active-draft",
+      "contract_file": ".growware/daemon-foundation/contracts/learning-writeback.json",
+      "source_docs": [
+        "docs/reference/growware/daemon-contracts/learning-writeback.md",
+        "docs/reference/growware/daemon-contracts/learning-writeback.zh-CN.md"
+      ]
+    }
+  ]
+}

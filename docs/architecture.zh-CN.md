@@ -63,6 +63,7 @@ Growware 应该补的是 OpenClaw 和 Codex 之间缺失的那层项目级控制
 - 改用显式的 `project-channel binding`
 - 每个项目先配一个轻量 `project daemon / sidecar`
 - 项目级规则、合同和记忆落在目标项目根目录下的 `.growware/`
+- 人类可读 policy source 放在 `docs/policy/`，并通过 `scripts/growware_policy_sync.py` 编译进 `.policy/`
 - `Codex` 作为按需拉起的执行器，而不是每项目常驻会话
 - `growware` agent 的自然语言 feedback intake 和 close-out provenance 也落在项目本地 `.growware/`，而不是散落在全局 prompt
 
@@ -271,7 +272,7 @@ fallback_channels:
 
 第一阶段我同意把项目级 Growware 控制面放到目标项目目录里，而不是只放在 Growware 主仓库里。
 
-对 `Project 1` 来说，当前已经落地成：
+对 `Project 1` 来说，当前建议的形态是：
 
 ```text
 openclaw-task-system/
@@ -293,6 +294,7 @@ openclaw-task-system/
 - channel 绑定配置
 - `contracts/`
 - `policies/`
+- `docs/policy/`
 - 合同定义
 - deploy / approval policy
 - 人工沉淀下来的 durable 规则
@@ -304,27 +306,11 @@ openclaw-task-system/
 - 原始日志缓存
 - 一次性的调试产物
 
-现在这套形态已经实际被用于 `openclaw-task-system`，并通过了：
-
-- `growware_preflight.py`
-- OpenClaw config validate + safe rollback
-- `growware_local_deploy.py`
-- Gateway restart
-- `plugin_smoke.py`
-- `plugin_install_drift.py`
-
-同时要注意一个现实边界：
-
-- `openclaw plugins install ./plugin` 当前会被宿主危险代码检查拦截
-- 所以本地 deploy baseline 现在走的是“优先正常安装，失败后回退到 installed runtime sync”的受控路径
-
-这样仍然能同时满足：
-
-- 项目配置跟着项目仓库走
-- Growware 的核心规则可以被代码审查和版本管理
-- 运行态垃圾不会污染项目 Git 历史
+这套目录边界是 Stage 1 对目标项目的建议态，等 Stage 2 被明确批准后才进入实现。
 
 ## 最小事件合同
+
+这些内容是 Stage 1 的 v0 合同草案。实现入口门的汇总版本见 [reference/growware/pilot-loop-v1.zh-CN.md](reference/growware/pilot-loop-v1.zh-CN.md)。
 
 ### Feedback Event
 
@@ -383,6 +369,7 @@ openclaw-task-system/
 当前对 `Project 1` 的建议更偏向：
 
 - 运行上允许 sidecar 或 OpenClaw service 二选一
+- 这个 runtime 选择留到 Stage 2 再定
 - 但项目级 durable 配置无论如何都放在 `openclaw-task-system/.growware/`
 
 ## 当前文档约束

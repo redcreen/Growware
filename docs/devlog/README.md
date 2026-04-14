@@ -22,4 +22,4 @@ This directory records durable implementation narratives: what went wrong, what 
 ## Entries
 
 - add date-based entries such as `2026-04-12-control-surface-convergence.md`
-
+- [2026-04-14-daemon-contract-pack.md](2026-04-14-daemon-contract-pack.md)
