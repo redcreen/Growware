@@ -79,6 +79,11 @@ An incident may start from either human feedback or runtime evidence, but both m
 
 No repair is eligible for deployment until the verifier can attach a scoped verification record.
 
+The expanded Stage 2 and Stage 3 paper-delivery contracts now live in:
+
+- [stage-2-3-baseline.md](stage-2-3-baseline.md)
+- [stage-2-3-contracts/README.md](stage-2-3-contracts/README.md)
+
 ### Required Verification Record
 
 | Field | Meaning |

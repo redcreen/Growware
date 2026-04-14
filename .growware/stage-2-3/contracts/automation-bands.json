@@ -1,0 +1,86 @@
+{
+  "schema": "growware.stage23.contract.v1",
+  "id": "growware.stage23.automation-bands.v1",
+  "title": "Automation Bands Contract",
+  "kind": "stage-contract",
+  "status": "active-draft",
+  "contract_type": "automation-bands",
+  "owners": [
+    "growware"
+  ],
+  "depends_on": [
+    "docs/reference/growware/stage-2-3-baseline.md",
+    "docs/reference/growware/shared-policy-contract.md"
+  ],
+  "required_sections": [
+    "purpose",
+    "automation_bands",
+    "eligibility_rules",
+    "guardrails",
+    "approval_rules",
+    "escalation_rules",
+    "machine_notes"
+  ],
+  "sections": {
+    "purpose": {
+      "title": "Purpose",
+      "items": [],
+      "text": "This contract defines the Stage 3 handling bands for manual-only, approval-gated, and low-risk automatic work."
+    },
+    "automation_bands": {
+      "title": "Automation Bands",
+      "items": [
+        "manual-only",
+        "approval-gated",
+        "low-risk-automatic"
+      ],
+      "text": ""
+    },
+    "eligibility_rules": {
+      "title": "Eligibility Rules",
+      "items": [
+        "user-visible semantic changes remain `manual-only`",
+        "deploy and rollback remain at least `approval-gated` unless another explicit contract narrows the rule",
+        "only repeated, reversible, low-blast-radius work may be considered for `low-risk-automatic`"
+      ],
+      "text": ""
+    },
+    "guardrails": {
+      "title": "Guardrails",
+      "items": [
+        "every automatic path must preserve incident refs, verification refs, and close-out provenance",
+        "every automatic path must still preserve a rollback path",
+        "lack of fresh evidence moves the work back out of `low-risk-automatic`"
+      ],
+      "text": ""
+    },
+    "approval_rules": {
+      "title": "Approval Rules",
+      "items": [
+        "band promotion from `manual-only` to `approval-gated` or `low-risk-automatic` requires explicit review",
+        "automation band changes may not be inferred from one successful repair"
+      ],
+      "text": ""
+    },
+    "escalation_rules": {
+      "title": "Escalation Rules",
+      "items": [
+        "any band ambiguity falls back to the stricter band",
+        "repeated verification failure immediately exits `low-risk-automatic`",
+        "incidents involving approval-boundary drift immediately fall back to `manual-only`"
+      ],
+      "text": ""
+    },
+    "machine_notes": {
+      "title": "Machine Notes",
+      "items": [
+        "compile `automation_bands`, `eligibility_rules`, `guardrails`, `approval_rules`, and `escalation_rules` as separate arrays"
+      ],
+      "text": ""
+    }
+  },
+  "source_docs": [
+    "docs/reference/growware/stage-2-3-contracts/automation-bands.md",
+    "docs/reference/growware/stage-2-3-contracts/automation-bands.zh-CN.md"
+  ]
+}

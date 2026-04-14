@@ -2,10 +2,10 @@
 
 - Workspace: `/Users/redcreen/Project/growware`
 - Ready to continue: `yes`
-- Current stage: `Stage 1.5 daemon-contract implementation established; the repo now keeps Growware self-improvement explicit through a reviewable contract pack and a generated machine layer.`
-- Current slice: `growware-self daemon foundation`
-- Current checkpoint: `one implementation checkpoint that ends when \`daemon-contracts/*\`, generated \`.growware/daemon-foundation/*\`, entry docs, and \`.codex/*\` all agree on the same Growware-self boundary`
-- Next action: `Review \`daemon-contracts/*\` and \`daemon-foundation-plan*\` as the Growware-self implementation gate, then refine source docs or start runtime work only with explicit approval.`
+- Current stage: `project-bound readonly executor bridge established; the repo now reaches the real Project 1 workspace through readonly commands only.`
+- Current slice: `project-bound-readonly-executor-bridge-v0`
+- Current checkpoint: `one experimental checkpoint that ends when \`project-bound-executor-bridge-v0*\`, \`experiments/mock_runtime/*\`, compiled machine layers, entry docs, and \`.codex/*\` all agree on the same readonly bridge boundary`
+- Next action: `Review \`project-bound-executor-bridge-v0*\` and \`experiments/mock_runtime/*\` as the current implementation gate, then refine source docs or bind a write-capable executor only with explicit approval.`
 - Next action source: `status.next-3`
 - Queue: `0 waiting · 0 running · 0 done`
 
@@ -17,8 +17,8 @@ Do not restart repo-wide discovery unless the durable control surface conflicts 
 
 ## Execution Continuity
 
-- Current checkpoint: `one implementation checkpoint that ends when \`daemon-contracts/*\`, generated \`.growware/daemon-foundation/*\`, entry docs, and \`.codex/*\` all agree on the same Growware-self boundary`
-- Next action: `Review \`daemon-contracts/*\` and \`daemon-foundation-plan*\` as the Growware-self implementation gate, then refine source docs or start runtime work only with explicit approval.`
+- Current checkpoint: `one experimental checkpoint that ends when \`project-bound-executor-bridge-v0*\`, \`experiments/mock_runtime/*\`, compiled machine layers, entry docs, and \`.codex/*\` all agree on the same readonly bridge boundary`
+- Next action: `Review \`project-bound-executor-bridge-v0*\` and \`experiments/mock_runtime/*\` as the current implementation gate, then refine source docs or bind a write-capable executor only with explicit approval.`
 
 Treat that checkpoint as already-established truth and move straight into the next action.
 
@@ -40,6 +40,6 @@ Unless I explicitly say `做完手上工作停止`, keep going by default.
 ## Suggested First Move
 
 1. Read `continue.md` and `.codex/status.md`.
-2. Continue from checkpoint: `one implementation checkpoint that ends when \`daemon-contracts/*\`, generated \`.growware/daemon-foundation/*\`, entry docs, and \`.codex/*\` all agree on the same Growware-self boundary`.
-3. Start with next action: `Review \`daemon-contracts/*\` and \`daemon-foundation-plan*\` as the Growware-self implementation gate, then refine source docs or start runtime work only with explicit approval.`.
+2. Continue from checkpoint: `one experimental checkpoint that ends when \`project-bound-executor-bridge-v0*\`, \`experiments/mock_runtime/*\`, compiled machine layers, entry docs, and \`.codex/*\` all agree on the same readonly bridge boundary`.
+3. Start with next action: `Review \`project-bound-executor-bridge-v0*\` and \`experiments/mock_runtime/*\` as the current implementation gate, then refine source docs or bind a write-capable executor only with explicit approval.`.
 4. Continue implementation instead of asking for another manual resume prompt.

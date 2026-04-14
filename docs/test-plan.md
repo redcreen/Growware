@@ -4,7 +4,7 @@
 
 ## Scope and Risk
 
-This test plan verifies the current documentation-first baseline for Growware.
+This test plan verifies the current experimental-runtime foundation baseline for Growware.
 
 Main risks at this stage:
 
@@ -15,7 +15,10 @@ Main risks at this stage:
 - the first pilot loop gate stays implicit or split across docs
 - Growware's own daemon-first planning line stays vague and target-project work is mistaken for Growware progress
 - the daemon contract pack drifts from the generated `.growware/daemon-foundation/` machine layer
+- the Stage 2/3 contract pack drifts from the generated `.growware/stage-2-3/` machine layer
 - the compiled `.policy/` machine layer drifts from `docs/policy/`
+- the experimental mock runtime drifts from the compiled machine-layer contracts it claims to consume
+- the project-bound readonly executor bridge stops matching the real Project 1 readonly entrypoints
 
 ## Acceptance Cases
 | Case | Setup | Action | Expected Result |
@@ -27,9 +30,12 @@ Main risks at this stage:
 | Pilot-loop definition | `reference/growware/pilot-loop-v1.md` exists | Review the implementation gate items | pilot target, operator path, real usage path, incident contract, verification contract, and deployment approval boundary are explicit |
 | Daemon-foundation planning | `reference/growware/daemon-foundation-plan.md` exists | Review the daemon-first workstreams and boundaries | Growware's own daemon boundary, project capsule, progress push, and handoff model are explicit before broader project execution |
 | Daemon contract pack compile | `reference/growware/daemon-contracts/*` and `scripts/growware_daemon_contract_sync.py` exist | Run the compiler and then validate the generated output | `.growware/daemon-foundation/manifest.json`, `.growware/daemon-foundation/index.json`, provenance, and contract files are generated and match the source docs |
-| Control-surface alignment | `.codex/brief.md`, `.codex/plan.md`, and `.codex/status.md` exist | Compare them against roadmap and development plan | The current slice is `growware-self daemon foundation`, not target-project expansion |
+| Stage 2/3 paper baseline compile | `reference/growware/stage-2-3-baseline.md`, `reference/growware/stage-2-3-contracts/*`, and `scripts/growware_stage23_contract_sync.py` exist | Run the compiler and then validate the generated output | `.growware/stage-2-3/manifest.json`, `.growware/stage-2-3/index.json`, provenance, and contract files are generated and match the source docs |
+| Control-surface alignment | `.codex/brief.md`, `.codex/plan.md`, and `.codex/status.md` exist | Compare them against roadmap and development plan | The current slice is `project-bound-readonly-executor-bridge-v0`, not target-project expansion |
 | Policy source alignment | `docs/policy/README.md` and `docs/policy/project-1.md` exist | Read the policy source alongside the shared contract | The human-readable policy source is explicit, bilingual, and anchored to Project 1 |
 | Policy machine-layer compile | `docs/policy/*` and `scripts/growware_policy_sync.py` exist | Run the compiler and then validate the generated output | `.policy/manifest.json`, `.policy/index.json`, provenance, and rule files are generated and match the source docs |
+| Experimental mock runtime demo | `experiments/mock_runtime/runtime.py` and compiled machine layers exist | Run the local demo and the smoke test | the mock runtime loads the machine layers, reaches `approval-wait` and `close-out`, and still does not execute deploy |
+| Project-bound readonly bridge | `../openclaw-task-system` exists and its readonly runtime entrypoints are available | Run the bridge status command | Growware records a successful executor snapshot from the real Project 1 workspace without mutating it |
 
 ## Automation Coverage
 
@@ -38,11 +44,17 @@ Main risks at this stage:
 - `python3 <project-assistant>/scripts/validate_public_docs_i18n.py <repo> --format text`
 - `python3 scripts/growware_daemon_contract_sync.py --write --json`
 - `python3 scripts/growware_daemon_contract_sync.py --check --json`
+- `python3 scripts/growware_stage23_contract_sync.py --write --json`
+- `python3 scripts/growware_stage23_contract_sync.py --check --json`
 - `python3 scripts/growware_policy_sync.py --write --json`
 - `python3 scripts/growware_policy_sync.py --check --json`
+- `python3 experiments/mock_runtime/runtime.py demo --workspace /tmp/growware-mock-runtime`
+- `python3 experiments/mock_runtime/runtime.py bridge-status --workspace /tmp/growware-mock-runtime`
+- `python3 -m unittest discover -s experiments/mock_runtime -p 'test_*.py'`
 - search active docs for the retired placeholder name and confirm no matches remain
 - confirm the active docs do not claim that Stage 2 or Stage 3 are already live
 - confirm the daemon contract pack is linked from docs home, the reference pack, and the daemon-foundation plan
+- confirm the Stage 2/3 baseline and contract pack are linked from docs home and the reference pack
 - confirm the policy source docs are linked from docs home and the reference pack
 - confirm `pilot-loop-v1.md` is linked from the docs entry points
 - confirm `daemon-foundation-plan.md` is linked from the docs entry points
@@ -52,10 +64,13 @@ Main risks at this stage:
 - Compare the archived transcript against the shared page during review.
 - Confirm that the feasibility assessment still reflects the shared conversation instead of future assumptions.
 - Confirm that no doc claims a runnable autonomous baseline already exists.
-- Confirm that the first pilot loop remains explicitly pre-implementation unless the user has approved Stage 2.
+- Confirm that the runtime boundary still stops at the approved experimental slice unless the user explicitly widens it further.
 - Confirm that target-project expansion is not described as the current mainline while Growware's own daemon boundary is still under review.
 - Confirm that the generated `.growware/daemon-foundation/` files still trace back to the same bilingual source docs.
+- Confirm that the generated `.growware/stage-2-3/` files still trace back to the same bilingual source docs.
 - Confirm that the generated `.policy/` files still trace back to the same bilingual source docs.
+- Confirm that the experimental runtime still stops at approval-gated actions and does not claim deploy execution.
+- Confirm that the readonly bridge uses only non-mutating target-project entrypoints.
 
 ## Test Data and Fixtures
 
@@ -63,11 +78,15 @@ Main risks at this stage:
 - The public docs set under `README*` and `docs/*.md`
 - The live control surface under `.codex/*`
 - The generated daemon machine layer under `.growware/daemon-foundation/*`
+- The generated Stage 2/3 machine layer under `.growware/stage-2-3/*`
 - The compiled machine layer under `.policy/*`
+- The experimental runtime under `experiments/mock_runtime/*`
 
 ## Release Gate
 
-- Passing this test plan means the repo has a truthful discussion baseline.
+- Passing this test plan means the repo has a truthful experimental-runtime foundation baseline.
 - It also means the repo can compile and validate its current daemon contract source into `.growware/daemon-foundation/`.
+- It also means the repo can compile and validate its current Stage 2/3 contract source into `.growware/stage-2-3/`.
 - It also means the repo can compile and validate its current Project 1 policy source into `.policy/`.
+- It also means the repo can run one isolated local mock runtime against those machine layers.
 - It does not mean runtime implementation or autonomous deployment is ready.

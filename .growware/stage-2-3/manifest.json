@@ -1,0 +1,8 @@
+{
+  "schema": "growware.stage23.manifest.v1",
+  "contract_version": 1,
+  "generated_by": "growware/scripts/growware_stage23_contract_sync.py",
+  "generated_at": "2026-04-14T04:51:30Z",
+  "index": ".growware/stage-2-3/index.json",
+  "contracts_dir": ".growware/stage-2-3/contracts"
+}

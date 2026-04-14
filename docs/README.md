@@ -17,6 +17,8 @@
 | Review the first pilot loop gate | [reference/growware/pilot-loop-v1.md](reference/growware/pilot-loop-v1.md) |
 | Review the current daemon-first plan | [reference/growware/daemon-foundation-plan.md](reference/growware/daemon-foundation-plan.md) |
 | Review the daemon contract pack | [reference/growware/daemon-contracts/README.md](reference/growware/daemon-contracts/README.md) |
+| Review the Stage 2/3 paper baseline | [reference/growware/stage-2-3-baseline.md](reference/growware/stage-2-3-baseline.md) |
+| Review the Stage 2/3 contract pack | [reference/growware/stage-2-3-contracts/README.md](reference/growware/stage-2-3-contracts/README.md) |
 | See milestone order and current phase | [roadmap.md](roadmap.md) |
 | Resume detailed maintainer work | [reference/growware/development-plan.md](reference/growware/development-plan.md) |
 | Review the project policy source | [policy/README.md](policy/README.md) |
@@ -28,6 +30,8 @@
 - Pilot loop definition: [reference/growware/pilot-loop-v1.md](reference/growware/pilot-loop-v1.md)
 - Daemon foundation plan: [reference/growware/daemon-foundation-plan.md](reference/growware/daemon-foundation-plan.md)
 - Daemon contract pack: [reference/growware/daemon-contracts/README.md](reference/growware/daemon-contracts/README.md)
+- Stage 2/3 paper baseline: [reference/growware/stage-2-3-baseline.md](reference/growware/stage-2-3-baseline.md)
+- Stage 2/3 contract pack: [reference/growware/stage-2-3-contracts/README.md](reference/growware/stage-2-3-contracts/README.md)
 - Roadmap: [roadmap.md](roadmap.md)
 - Policy Source: [policy/README.md](policy/README.md)
 - Testing: [test-plan.md](test-plan.md)

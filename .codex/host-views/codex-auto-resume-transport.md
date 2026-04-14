@@ -4,8 +4,8 @@ Project Assistant 自动恢复传输文件。目标项目: growware (/Users/redc
 
 实际任务：
 - 目标项目是 growware，工作区路径是 /Users/redcreen/Project/growware。
-- 当前 checkpoint 是 one implementation checkpoint that ends when `daemon-contracts/*`, generated `.growware/daemon-foundation/*`, entry docs, and `.codex/*` all agree on the same Growware-self boundary。
-- 下一动作是 Review `daemon-contracts/*` and `daemon-foundation-plan*` as the Growware-self implementation gate, then refine source docs or start runtime work only with explicit approval.。
+- 当前 checkpoint 是 one experimental checkpoint that ends when `project-bound-executor-bridge-v0*`, `experiments/mock_runtime/*`, compiled machine layers, entry docs, and `.codex/*` all agree on the same readonly bridge boundary。
+- 下一动作是 Review `project-bound-executor-bridge-v0*` and `experiments/mock_runtime/*` as the current implementation gate, then refine source docs or bind a write-capable executor only with explicit approval.。
 - 先读取附加的 resume 文件。
 - 不要重新从零做仓库扫描。
 - 直接从下一动作继续这个仓库里的工作。

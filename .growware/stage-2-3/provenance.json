@@ -1,0 +1,56 @@
+{
+  "schema": "growware.stage23.provenance.v1",
+  "contract_version": 1,
+  "source_docs": [
+    {
+      "stem": "incident-lifecycle",
+      "source": "docs/reference/growware/stage-2-3-contracts/incident-lifecycle.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/incident-lifecycle.zh-CN.md",
+      "contract_id": "growware.stage23.incident-lifecycle.v1",
+      "contract_type": "incident-lifecycle"
+    },
+    {
+      "stem": "verification-profile",
+      "source": "docs/reference/growware/stage-2-3-contracts/verification-profile.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/verification-profile.zh-CN.md",
+      "contract_id": "growware.stage23.verification-profile.v1",
+      "contract_type": "verification-profile"
+    },
+    {
+      "stem": "deployment-gate",
+      "source": "docs/reference/growware/stage-2-3-contracts/deployment-gate.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/deployment-gate.zh-CN.md",
+      "contract_id": "growware.stage23.deployment-gate.v1",
+      "contract_type": "deployment-gate"
+    },
+    {
+      "stem": "close-out-provenance",
+      "source": "docs/reference/growware/stage-2-3-contracts/close-out-provenance.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/close-out-provenance.zh-CN.md",
+      "contract_id": "growware.stage23.close-out-provenance.v1",
+      "contract_type": "close-out-provenance"
+    },
+    {
+      "stem": "judge-promotion",
+      "source": "docs/reference/growware/stage-2-3-contracts/judge-promotion.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/judge-promotion.zh-CN.md",
+      "contract_id": "growware.stage23.judge-promotion.v1",
+      "contract_type": "judge-promotion"
+    },
+    {
+      "stem": "automation-bands",
+      "source": "docs/reference/growware/stage-2-3-contracts/automation-bands.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/automation-bands.zh-CN.md",
+      "contract_id": "growware.stage23.automation-bands.v1",
+      "contract_type": "automation-bands"
+    },
+    {
+      "stem": "regression-assets",
+      "source": "docs/reference/growware/stage-2-3-contracts/regression-assets.md",
+      "translation": "docs/reference/growware/stage-2-3-contracts/regression-assets.zh-CN.md",
+      "contract_id": "growware.stage23.regression-assets.v1",
+      "contract_type": "regression-assets"
+    }
+  ],
+  "warnings": []
+}

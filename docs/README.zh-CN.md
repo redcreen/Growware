@@ -17,6 +17,8 @@
 | 审看第一条 pilot loop 的进入门 | [reference/growware/pilot-loop-v1.zh-CN.md](reference/growware/pilot-loop-v1.zh-CN.md) |
 | 审看当前 daemon-first 主线规划 | [reference/growware/daemon-foundation-plan.zh-CN.md](reference/growware/daemon-foundation-plan.zh-CN.md) |
 | 审看 daemon contract pack | [reference/growware/daemon-contracts/README.zh-CN.md](reference/growware/daemon-contracts/README.zh-CN.md) |
+| 审看 Stage 2 / Stage 3 paper baseline | [reference/growware/stage-2-3-baseline.zh-CN.md](reference/growware/stage-2-3-baseline.zh-CN.md) |
+| 审看 Stage 2 / Stage 3 contract pack | [reference/growware/stage-2-3-contracts/README.zh-CN.md](reference/growware/stage-2-3-contracts/README.zh-CN.md) |
 | 查看阶段顺序与当前焦点 | [roadmap.zh-CN.md](roadmap.zh-CN.md) |
 | 恢复维护者详细执行线 | [reference/growware/development-plan.zh-CN.md](reference/growware/development-plan.zh-CN.md) |
 | 查看项目 policy source | [policy/README.zh-CN.md](policy/README.zh-CN.md) |
@@ -28,6 +30,8 @@
 - Pilot Loop 定义：[reference/growware/pilot-loop-v1.zh-CN.md](reference/growware/pilot-loop-v1.zh-CN.md)
 - Daemon Foundation 规划：[reference/growware/daemon-foundation-plan.zh-CN.md](reference/growware/daemon-foundation-plan.zh-CN.md)
 - Daemon Contract Pack：[reference/growware/daemon-contracts/README.zh-CN.md](reference/growware/daemon-contracts/README.zh-CN.md)
+- Stage 2 / Stage 3 Paper Baseline：[reference/growware/stage-2-3-baseline.zh-CN.md](reference/growware/stage-2-3-baseline.zh-CN.md)
+- Stage 2 / Stage 3 Contract Pack：[reference/growware/stage-2-3-contracts/README.zh-CN.md](reference/growware/stage-2-3-contracts/README.zh-CN.md)
 - 路线图：[roadmap.zh-CN.md](roadmap.zh-CN.md)
 - Policy Source：[policy/README.zh-CN.md](policy/README.zh-CN.md)
 - 测试：[test-plan.zh-CN.md](test-plan.zh-CN.md)

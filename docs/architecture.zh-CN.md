@@ -64,8 +64,29 @@ Growware 应该补的是 OpenClaw 和 Codex 之间缺失的那层项目级控制
 - 每个项目先配一个轻量 `project daemon / sidecar`
 - 项目级规则、合同和记忆落在目标项目根目录下的 `.growware/`
 - 人类可读 policy source 放在 `docs/policy/`，并通过 `scripts/growware_policy_sync.py` 编译进 `.policy/`
+- Stage 2 / Stage 3 的纸面基线落在 `docs/reference/growware/stage-2-3-baseline*`，并编译进 `.growware/stage-2-3/`
+- 保留一条隔离的实验 runtime `experiments/mock_runtime/`，只消费 `.policy/`、`.growware/daemon-foundation/` 和 `.growware/stage-2-3/`，不直接改真实目标项目
 - `Codex` 作为按需拉起的执行器，而不是每项目常驻会话
 - `growware` agent 的自然语言 feedback intake 和 close-out provenance 也落在项目本地 `.growware/`，而不是散落在全局 prompt
+
+## 当前实验 Runtime
+
+当前已经批准的 runtime 步子是故意收缩过的：
+
+- 使用 `experiments/mock_runtime/runtime.py` 作为本地实验 harness
+- 运行时直接加载已编译的机器层，而不是重新从 prose 猜规则
+- 只通过 readonly executor commands 接到真实 `openclaw-task-system` 工作区
+- `deploy` 和 `rollback` 继续保持 approval-gated
+- 不修改真实目标项目工作区
+- 先把控制闭环建成状态迁移和结构化 payload
+
+这意味着当前实验 runtime 只能证明 daemon-side control flow。它还不能证明：
+
+- `feishu6 -> Growware -> openclaw-task-system` 已经端到端打通
+- 已经发生真实目标项目代码修改
+- 已经具备 project-bound 写动作
+- 已经具备 deploy 或 rollback 执行能力
+- 已经具备生产级自动化
 
 ## Pilot 拓扑
 

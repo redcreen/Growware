@@ -23,3 +23,6 @@
 
 - 建议按日期命名，例如 `2026-04-12-control-surface-convergence.md`
 - [2026-04-14-daemon-contract-pack.zh-CN.md](2026-04-14-daemon-contract-pack.zh-CN.md)
+- [2026-04-14-stage23-paper-baseline.zh-CN.md](2026-04-14-stage23-paper-baseline.zh-CN.md)
+- [2026-04-14-experimental-runtime-v0.zh-CN.md](2026-04-14-experimental-runtime-v0.zh-CN.md)
+- [2026-04-14-project-bound-readonly-executor-bridge.zh-CN.md](2026-04-14-project-bound-readonly-executor-bridge.zh-CN.md)

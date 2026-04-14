@@ -1,0 +1,94 @@
+{
+  "schema": "growware.stage23.contract.v1",
+  "id": "growware.stage23.regression-assets.v1",
+  "title": "Regression Asset Contract",
+  "kind": "stage-contract",
+  "status": "active-draft",
+  "contract_type": "regression-assets",
+  "owners": [
+    "growware"
+  ],
+  "depends_on": [
+    "docs/reference/growware/stage-2-3-baseline.md",
+    "docs/reference/growware/daemon-foundation-plan.md"
+  ],
+  "required_sections": [
+    "purpose",
+    "asset_types",
+    "required_fields",
+    "writeback_rules",
+    "coverage_rules",
+    "approval_rules",
+    "machine_notes"
+  ],
+  "sections": {
+    "purpose": {
+      "title": "Purpose",
+      "items": [],
+      "text": "This contract defines how Stage 2 and Stage 3 work writes back tests, replays, fixtures, rules, or explicit deferrals."
+    },
+    "asset_types": {
+      "title": "Asset Types",
+      "items": [
+        "test",
+        "replay",
+        "fixture",
+        "rule",
+        "judge",
+        "deferred-gap"
+      ],
+      "text": ""
+    },
+    "required_fields": {
+      "title": "Required Fields",
+      "items": [
+        "asset_id",
+        "asset_type",
+        "project_id",
+        "source_incident_ref",
+        "target_surface",
+        "asset_summary",
+        "status",
+        "approval_state"
+      ],
+      "text": ""
+    },
+    "writeback_rules": {
+      "title": "Writeback Rules",
+      "items": [
+        "every closed incident must either create an asset or create an explicit `deferred-gap`",
+        "assets must preserve provenance back to the incident or close-out that created them",
+        "deferred gaps must explain why they were not yet promoted"
+      ],
+      "text": ""
+    },
+    "coverage_rules": {
+      "title": "Coverage Rules",
+      "items": [
+        "repeated incidents without new assets should trigger review",
+        "one asset may cover more than one incident only when the shared scope is explicit",
+        "regression assets should narrow future ambiguity rather than merely restate the incident summary"
+      ],
+      "text": ""
+    },
+    "approval_rules": {
+      "title": "Approval Rules",
+      "items": [
+        "adding a rule or judge that changes deploy authority requires explicit review",
+        "deleting or replacing an accepted regression asset requires explicit review and provenance"
+      ],
+      "text": ""
+    },
+    "machine_notes": {
+      "title": "Machine Notes",
+      "items": [
+        "compile `asset_types`, `required_fields`, `writeback_rules`, `coverage_rules`, and `approval_rules` as separate arrays"
+      ],
+      "text": ""
+    }
+  },
+  "source_docs": [
+    "docs/reference/growware/stage-2-3-contracts/regression-assets.md",
+    "docs/reference/growware/stage-2-3-contracts/regression-assets.zh-CN.md"
+  ]
+}

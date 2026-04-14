@@ -15,7 +15,10 @@
 - 第一条 pilot loop 的进入门仍然隐含在聊天里，没有集中落盘
 - Growware 自身 daemon-first 主线仍然含糊不清，导致目标项目工作被误读成 Growware 本体进展
 - daemon contract pack 与生成出来的 `.growware/daemon-foundation/` 机器层发生漂移
+- Stage 2 / Stage 3 contract pack 与生成出来的 `.growware/stage-2-3/` 机器层发生漂移
 - 编译后的 `.policy/` 机器层与 `docs/policy/` 漂移
+- 实验 mock runtime 与它声称消费的机器层合同发生漂移
+- project-bound readonly executor bridge 与真实 Project 1 的只读入口发生漂移
 
 ## 验收用例
 | 用例 | 前置条件 | 操作 | 预期结果 |
@@ -27,9 +30,12 @@
 | Pilot Loop 定义 | `reference/growware/pilot-loop-v1.zh-CN.md` 已存在 | 审看实现入口门条目 | pilot target、operator path、real usage path、incident contract、verification contract 与 deployment approval boundary 都已显式写出 |
 | Daemon Foundation 规划 | `reference/growware/daemon-foundation-plan.zh-CN.md` 已存在 | 审看 daemon-first 工作流和边界 | Growware 自身的 daemon 边界、project capsule、progress push 与 handoff model 都已在扩展目标项目之前显式写出 |
 | Daemon contract pack 编译 | `reference/growware/daemon-contracts/*` 与 `scripts/growware_daemon_contract_sync.py` 已存在 | 先运行编译，再校验产物 | `.growware/daemon-foundation/manifest.json`、`.growware/daemon-foundation/index.json`、provenance 与 contract 文件被生成且与 source 文档一致 |
-| 控制面对齐 | `.codex/brief.md`、`.codex/plan.md`、`.codex/status.md` 已存在 | 对照 roadmap 和 development plan 审核 | 当前切片已经切到 `growware-self daemon foundation`，而不是直接去扩展目标项目 |
+| Stage 2 / Stage 3 paper baseline 编译 | `reference/growware/stage-2-3-baseline.zh-CN.md`、`reference/growware/stage-2-3-contracts/*` 与 `scripts/growware_stage23_contract_sync.py` 已存在 | 先运行编译，再校验产物 | `.growware/stage-2-3/manifest.json`、`.growware/stage-2-3/index.json`、provenance 与 contract 文件被生成且与 source 文档一致 |
+| 控制面对齐 | `.codex/brief.md`、`.codex/plan.md`、`.codex/status.md` 已存在 | 对照 roadmap 和 development plan 审核 | 当前切片已经切到 `project-bound-readonly-executor-bridge-v0`，而不是直接去扩展目标项目 |
 | Policy source 对齐 | `docs/policy/README.md` 和 `docs/policy/project-1.md` 已存在 | 把 policy source 与 shared contract 一起阅读 | 人类可读 policy source 已显式存在，且中英文成对并锚定 Project 1 |
 | Policy 机器层编译 | `docs/policy/*` 与 `scripts/growware_policy_sync.py` 已存在 | 先运行编译，再校验产物 | `.policy/manifest.json`、`.policy/index.json`、provenance 与 rule 文件被生成且与 source 文档一致 |
+| 实验 mock runtime 演示 | `experiments/mock_runtime/runtime.py` 与已编译机器层已存在 | 运行本地 demo 和 smoke test | mock runtime 能加载机器层，走到 `approval-wait` 与 `close-out`，同时不执行 deploy |
+| project-bound readonly bridge | `../openclaw-task-system` 已存在且只读入口可用 | 运行 bridge status 命令 | Growware 能从真实 Project 1 工作区记录一份成功的 executor snapshot，且不发生修改 |
 
 ## 自动化覆盖
 
@@ -38,11 +44,17 @@
 - `python3 <project-assistant>/scripts/validate_public_docs_i18n.py <repo> --format text`
 - `python3 scripts/growware_daemon_contract_sync.py --write --json`
 - `python3 scripts/growware_daemon_contract_sync.py --check --json`
+- `python3 scripts/growware_stage23_contract_sync.py --write --json`
+- `python3 scripts/growware_stage23_contract_sync.py --check --json`
 - `python3 scripts/growware_policy_sync.py --write --json`
 - `python3 scripts/growware_policy_sync.py --check --json`
+- `python3 experiments/mock_runtime/runtime.py demo --workspace /tmp/growware-mock-runtime`
+- `python3 experiments/mock_runtime/runtime.py bridge-status --workspace /tmp/growware-mock-runtime`
+- `python3 -m unittest discover -s experiments/mock_runtime -p 'test_*.py'`
 - 搜索活跃文档里的历史占位名，并确认已无匹配
 - 确认活跃文档没有把 Stage 2 或 Stage 3 写成已经上线
 - 确认 daemon contract pack 已从 docs 首页、reference pack 和 daemon-foundation plan 可见地链接出去
+- 确认 Stage 2 / Stage 3 baseline 与 contract pack 已从 docs 首页和 reference pack 可见地链接出去
 - 确认 policy source 文档已从 docs 首页和 reference pack 可见地链接出去
 - 确认 `pilot-loop-v1.zh-CN.md` 已从入口文档能直接点到
 - 确认 `daemon-foundation-plan.zh-CN.md` 已从入口文档能直接点到
@@ -55,7 +67,10 @@
 - 确认在你明确批准 Stage 2 之前，第一条 pilot loop 仍然被写成实现前状态
 - 确认在 Growware 自身 daemon 边界完成 review 之前，没有把目标项目扩展写成当前主线
 - 确认生成出来的 `.growware/daemon-foundation/` 仍然能追溯回同一组中英文 source 文档
+- 确认生成出来的 `.growware/stage-2-3/` 仍然能追溯回同一组中英文 source 文档
 - 确认生成出来的 `.policy/` 仍然能追溯回同一组中英文 source 文档
+- 确认实验 runtime 仍然会在 approval-gated 动作前停住，并且没有把 deploy 写成已经执行
+- 确认 readonly bridge 只调用非写入的目标项目入口
 
 ## 测试数据与夹具
 
@@ -63,11 +78,15 @@
 - `README*` 与 `docs/*.md` 构成的公开文档集合
 - `.codex/*` 下的实时控制面
 - `.growware/daemon-foundation/*` 下的 daemon 机器层产物
+- `.growware/stage-2-3/*` 下的 Stage 2 / Stage 3 机器层产物
 - `.policy/*` 下的机器层产物
+- `experiments/mock_runtime/*` 下的实验运行时
 
 ## 发布门禁
 
 - 通过这份测试计划，只表示仓库已经具备真实的讨论基线。
 - 这也表示仓库已经能把当前 daemon contract source 编译并校验进 `.growware/daemon-foundation/`。
+- 这也表示仓库已经能把当前 Stage 2 / Stage 3 contract source 编译并校验进 `.growware/stage-2-3/`。
 - 这也表示仓库已经能把当前 Project 1 policy source 编译并校验进 `.policy/`。
+- 这也表示仓库已经能基于这些机器层跑一条隔离的本地 mock runtime。
 - 这不表示运行时代码实现或自动部署已经就绪。

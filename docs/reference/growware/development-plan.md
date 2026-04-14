@@ -27,10 +27,10 @@ It answers one practical question:
 
 | Item | Current Value | Meaning |
 | --- | --- | --- |
-| Current Phase | Stage 1.5 daemon-foundation contract-pack implementation is active; the repo is now turning Growware's own boundaries into machine-compilable assets before broadening target-project execution. | Current maintainer-facing phase |
-| Active Slice | `growware-self daemon foundation` | The slice tied to the current execution line |
-| Current Execution Line | compile Growware's daemon-first control contract into a reviewable contract pack and a local `.growware/daemon-foundation/` machine layer | What the repo is trying to continue now |
-| Validation | `daemon-foundation-plan`, `daemon-contracts/*`, generated `.growware/daemon-foundation/*`, roadmap, development plan, test plan, and `.codex/*` all describe the same Growware-self boundary | How this line proves itself now |
+| Current Phase | Stage 2 experimental runtime v0 is active; the repo now bridges into the real Project 1 workspace through readonly executor commands without claiming that Project 1 is fully wired. | Current maintainer-facing phase |
+| Active Slice | `project-bound-readonly-executor-bridge-v0` | The slice tied to the current execution line |
+| Current Execution Line | extend the experimental runtime so it consumes compiled machine layers and records readonly executor snapshots from the real Project 1 workspace while keeping deploy and rollback approval-gated | What the repo is trying to continue now |
+| Validation | `experiments/mock_runtime/*`, bridge snapshots, `.growware/*`, `.policy/*`, roadmap, development plan, test plan, and `.codex/*` all describe the same experimental boundary | How this line proves itself now |
 
 ## Milestone Overview
 
@@ -38,9 +38,9 @@ It answers one practical question:
 | --- | --- | --- | --- | --- |
 | Stage 0 | completed | preserve the origin conversation, rename the project to Growware, and establish a truthful docs baseline | shared conversation | transcript archived, naming aligned, baseline docs exist |
 | Stage 1 | complete on paper | use one long task to define Project 1 and all of its first operational contracts | Stage 0 | target, channel binding, daemon interface, core contracts, and the start gate are explicit |
-| Stage 1.5 | active / contract-pack implementation | define Growware's own daemon boundary, project capsule, channel progress contract, and execution handoff | Stage 1 | Growware's self-improvement line is explicit, compiled, and reviewed before Stage 2 implementation |
-| Stage 2 | queued | implement one local semi-automatic loop with human approval at deployment gates for Project 1 under the approved Growware daemon boundary | Stage 1.5 | Project 1 can run through observe -> report -> repair -> verify -> deploy locally |
-| Stage 3 | queued | expand detectors, gates, regression assets, and low-risk automation | Stage 2 | selected low-risk incidents can be auto-fixed behind explicit gates |
+| Stage 1.5 | paper complete / foundational | define Growware's own daemon boundary, project capsule, channel progress contract, and execution handoff | Stage 1 | Growware's self-improvement line is explicit, compiled, and ready to support Stage 2 and Stage 3 paper baselines |
+| Stage 2 | experimental v0 in progress / deploy gated | implement one local semi-automatic loop with human approval at deployment gates for Project 1 under the approved Growware daemon boundary | Stage 1.5 | one isolated mock runtime consumes the machine layers and reaches `approval-wait` / `close-out` locally without mutating the real target project |
+| Stage 3 | paper baseline complete / experiment hookup queued | expand detectors, gates, regression assets, and low-risk automation | Stage 2 | the Stage 3 judge, automation-band, and regression contracts are explicit and machine-compilable before production activation |
 | Stage 4 | later | onboard more than one project without cross-project contamination | Stage 3 | multiple projects can share Growware without channel, state, queue, or deploy collisions |
 
 ## Ordered Execution Queue
@@ -50,11 +50,14 @@ It answers one practical question:
 | 1 | `bootstrap control surface` | earlier slice | n/a | n/a |
 | 2 | `origin capture and feasibility baseline` | earlier slice | preserve the shared conversation and publish truthful baseline docs | transcript archived, docs linked, and naming converged |
 | 3 | `stage-1 project-1 pilot foundation` | supporting / complete on paper | fully define Project 1 contracts, OpenClaw bindings, daemon interfaces, and the implementation gate | `pilot-loop-v1` and related docs make the first pilot explicit without claiming rollout |
-| 4 | `growware-self daemon foundation` | current / implementation | define Growware's own daemon boundary, project capsule, channel-progress contract, and execution handoff | `daemon-foundation-plan`, `daemon-contracts/*`, and `.growware/daemon-foundation/*` make the Growware-self line explicit and machine-checkable |
-| 5 | `single-project local semi-automatic loop` | next / queued | implement the first local observe -> report -> repair -> verify -> deploy loop with human approval for Project 1 | one pilot runs locally through a repeatable path |
-| 6 | `detectors, gates, and low-risk automation` | later / queued | turn repeated human corrections into detectors, rules, gates, and regression assets | low-risk automation stays gated and reversible |
-| 7 | `multi-project onboarding and isolation` | later | support a second and later target projects | multiple projects do not contaminate each other |
-| 8 | `project-policy-source rollout` | supporting / complete | make `docs/policy/` the readable Project 1 rule source and align the entry docs | one visible bilingual policy source is in place |
+| 4 | `growware-self daemon foundation` | supporting / paper complete | define Growware's own daemon boundary, project capsule, channel-progress contract, and execution handoff | `daemon-foundation-plan`, `daemon-contracts/*`, and `.growware/daemon-foundation/*` make the Growware-self line explicit and machine-checkable |
+| 5 | `stage-2-and-stage-3 paper baseline` | supporting / paper complete | define Stage 2 incident, verification, deploy, provenance, judge, automation, and regression contracts | `stage-2-3-baseline`, `stage-2-3-contracts/*`, and `.growware/stage-2-3/*` make the Stage 2/3 line explicit and machine-checkable |
+| 6 | `experimental-mock-runtime-v0` | current / implementation in progress | implement the first isolated local mock runtime that consumes compiled machine layers and stops at approval gates | `experiments/mock_runtime/` demo and smoke test succeed without claiming production readiness |
+| 7 | `project-bound-readonly-executor-bridge-v0` | current / implementation in progress | bridge the experimental runtime into the real Project 1 workspace through readonly executor commands only | `bridge-status` and `demo` succeed against the real Project 1 workspace without mutation |
+| 8 | `single-project local semi-automatic loop` | next / runtime queued | implement the first local observe -> report -> repair -> verify -> deploy loop with human approval for Project 1 | one pilot runs locally through a repeatable path |
+| 9 | `detectors, gates, and low-risk automation` | later / runtime queued | turn repeated human corrections into detectors, rules, gates, and regression assets | low-risk automation stays gated and reversible |
+| 10 | `multi-project onboarding and isolation` | later | support a second and later target projects | multiple projects do not contaminate each other |
+| 11 | `project-policy-source rollout` | supporting / complete | make `docs/policy/` the readable Project 1 rule source and align the entry docs | one visible bilingual policy source is in place |
 
 ## Milestone Details
 
@@ -196,6 +199,10 @@ Current reference:
 - `Project 1` is treated as a validation target instead of the current expansion line
 - the user explicitly approves implementation to begin on this line
 
+Current result:
+
+- this stage is now paper-complete and serves as the foundation for the Stage 2/3 paper baseline
+
 <a id="stage-2-single-project-local-semi-automatic-loop"></a>
 ## Stage 2 - Single-Project Local Semi-Automatic Loop
 
@@ -203,11 +210,21 @@ Goal:
 
 - implement one local-first loop with structured observation, incident generation, repair execution, verification, and gated deployment for `Project 1`
 
+Current paper baseline:
+
+- [stage-2-3-baseline.md](stage-2-3-baseline.md)
+- [stage-2-3-contracts/README.md](stage-2-3-contracts/README.md)
+
 Expected result:
 
 - Growware can prove one end-to-end loop on `Project 1` without claiming generalized autonomy
 - `feishu6` can reliably carry feedback, notifications, and approvals
 - `openclaw-task-system/.growware/` works as the project-level durable control surface
+
+Current truthful status:
+
+- the delivery contracts are complete on paper
+- runtime integration is still queued
 
 <a id="stage-3-detectors-gates-and-low-risk-automation"></a>
 ## Stage 3 - Detectors, Gates, and Low-Risk Automation
@@ -216,9 +233,19 @@ Goal:
 
 - accumulate detectors, judges, rules, regression assets, and rollback-safe automation from repeated incidents
 
+Current paper baseline:
+
+- [stage-2-3-baseline.md](stage-2-3-baseline.md)
+- [stage-2-3-contracts/README.md](stage-2-3-contracts/README.md)
+
 Expected result:
 
 - some low-risk repairs can move from human-triggered to gated automatic execution
+
+Current truthful status:
+
+- the Stage 3 judge, automation-band, and regression contracts are complete on paper
+- no runtime automation band is enabled yet
 
 <a id="stage-4-multi-project-onboarding-and-isolation"></a>
 ## Stage 4 - Multi-Project Onboarding and Isolation
@@ -236,4 +263,4 @@ Expected result:
 
 | Next Move | Why |
 | --- | --- |
-| Keep `daemon-foundation-plan`, `daemon-contracts/*`, generated `.growware/daemon-foundation/*`, entry docs, and `.codex/*` aligned until the Growware-self line is reviewed and approved | the mainline question is now Growware's own daemon boundary rather than target-project expansion |
+| Review `stage-2-3-baseline*` and `stage-2-3-contracts/*`, then keep `.growware/stage-2-3/*`, `.growware/daemon-foundation/*`, entry docs, and `.codex/*` aligned | the paper-complete question is now how to preserve a truthful Stage 2/3 baseline before runtime integration begins |

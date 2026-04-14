@@ -1,0 +1,92 @@
+{
+  "schema": "growware.stage23.contract.v1",
+  "id": "growware.stage23.close-out-provenance.v1",
+  "title": "Close-Out Provenance Contract",
+  "kind": "stage-contract",
+  "status": "active-draft",
+  "contract_type": "close-out-provenance",
+  "owners": [
+    "growware"
+  ],
+  "depends_on": [
+    "docs/reference/growware/daemon-foundation-plan.md",
+    "docs/reference/growware/stage-2-3-baseline.md"
+  ],
+  "required_sections": [
+    "purpose",
+    "execution_sources",
+    "required_fields",
+    "provenance_rules",
+    "follow_up_rules",
+    "approval_rules",
+    "machine_notes"
+  ],
+  "sections": {
+    "purpose": {
+      "title": "Purpose",
+      "items": [],
+      "text": "This contract defines how every Stage 2 and Stage 3 close-out preserves execution source, verification evidence, and unresolved follow-up."
+    },
+    "execution_sources": {
+      "title": "Execution Sources",
+      "items": [
+        "daemon-owned",
+        "terminal-takeover",
+        "mixed"
+      ],
+      "text": ""
+    },
+    "required_fields": {
+      "title": "Required Fields",
+      "items": [
+        "project_id",
+        "incident_id",
+        "execution_source",
+        "result_summary",
+        "verification_refs",
+        "writeback_refs",
+        "residual_risk",
+        "follow_up_needed",
+        "closed_at"
+      ],
+      "text": ""
+    },
+    "provenance_rules": {
+      "title": "Provenance Rules",
+      "items": [
+        "every close-out must name one execution source",
+        "`closed` must not imply that all capability was daemon-owned",
+        "mixed execution must describe which part stayed manual"
+      ],
+      "text": ""
+    },
+    "follow_up_rules": {
+      "title": "Follow-Up Rules",
+      "items": [
+        "missing judge, rule, or regression work must be surfaced as deferred follow-up rather than omitted",
+        "unresolved risk must stay visible in the close-out payload",
+        "rejected or blocked work still needs close-out provenance"
+      ],
+      "text": ""
+    },
+    "approval_rules": {
+      "title": "Approval Rules",
+      "items": [
+        "close-out may not erase the approval history that allowed the action",
+        "terminal takeover may not be represented as daemon-owned for convenience"
+      ],
+      "text": ""
+    },
+    "machine_notes": {
+      "title": "Machine Notes",
+      "items": [
+        "compile `execution_sources`, `required_fields`, `provenance_rules`, `follow_up_rules`, and `approval_rules` as separate arrays"
+      ],
+      "text": ""
+    }
+  },
+  "source_docs": [
+    "docs/reference/growware/stage-2-3-contracts/close-out-provenance.md",
+    "docs/reference/growware/stage-2-3-contracts/close-out-provenance.zh-CN.md"
+  ]
+}

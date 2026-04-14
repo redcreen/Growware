@@ -23,3 +23,6 @@ This directory records durable implementation narratives: what went wrong, what 
 
 - add date-based entries such as `2026-04-12-control-surface-convergence.md`
 - [2026-04-14-daemon-contract-pack.md](2026-04-14-daemon-contract-pack.md)
+- [2026-04-14-stage23-paper-baseline.md](2026-04-14-stage23-paper-baseline.md)
+- [2026-04-14-experimental-runtime-v0.md](2026-04-14-experimental-runtime-v0.md)
+- [2026-04-14-project-bound-readonly-executor-bridge.md](2026-04-14-project-bound-readonly-executor-bridge.md)

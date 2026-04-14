@@ -1,0 +1,75 @@
+{
+  "schema": "growware.stage23.index.v1",
+  "contracts": [
+    {
+      "id": "growware.stage23.incident-lifecycle.v1",
+      "contract_type": "incident-lifecycle",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/incident-lifecycle.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/incident-lifecycle.md",
+        "docs/reference/growware/stage-2-3-contracts/incident-lifecycle.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.stage23.verification-profile.v1",
+      "contract_type": "verification-profile",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/verification-profile.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/verification-profile.md",
+        "docs/reference/growware/stage-2-3-contracts/verification-profile.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.stage23.deployment-gate.v1",
+      "contract_type": "deployment-gate",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/deployment-gate.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/deployment-gate.md",
+        "docs/reference/growware/stage-2-3-contracts/deployment-gate.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.stage23.close-out-provenance.v1",
+      "contract_type": "close-out-provenance",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/close-out-provenance.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/close-out-provenance.md",
+        "docs/reference/growware/stage-2-3-contracts/close-out-provenance.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.stage23.judge-promotion.v1",
+      "contract_type": "judge-promotion",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/judge-promotion.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/judge-promotion.md",
+        "docs/reference/growware/stage-2-3-contracts/judge-promotion.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.stage23.automation-bands.v1",
+      "contract_type": "automation-bands",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/automation-bands.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/automation-bands.md",
+        "docs/reference/growware/stage-2-3-contracts/automation-bands.zh-CN.md"
+      ]
+    },
+    {
+      "id": "growware.stage23.regression-assets.v1",
+      "contract_type": "regression-assets",
+      "status": "active-draft",
+      "contract_file": ".growware/stage-2-3/contracts/regression-assets.json",
+      "source_docs": [
+        "docs/reference/growware/stage-2-3-contracts/regression-assets.md",
+        "docs/reference/growware/stage-2-3-contracts/regression-assets.zh-CN.md"
+      ]
+    }
+  ]
+}

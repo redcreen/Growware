@@ -6,7 +6,7 @@
 
 - 项目名：`growware`
 - 工作区路径：`/Users/redcreen/Project/growware`
-- 最近匹配会话：`按照 plan 先做个长任务开发 (019db0c1-9a79-7dc5-9173-6ea4f5c4b0f0)`
+- 最近匹配会话：`从当前开始，一直吧 Stage 3 一口气长任务做完 (019db76d-5c18-7e01-b565-1c6ee615b14f)`
 
 如果当前线程上下文和上面的项目信息不一致，优先以上面的工作区路径为准。
 
@@ -18,8 +18,8 @@
 
 ## 当前连续性
 
-- 当前 checkpoint：`one implementation checkpoint that ends when \`daemon-contracts/*\`, generated \`.growware/daemon-foundation/*\`, entry docs, and \`.codex/*\` all agree on the same Growware-self boundary`
-- 下一动作：`Review \`daemon-contracts/*\` and \`daemon-foundation-plan*\` as the Growware-self implementation gate, then refine source docs or start runtime work only with explicit approval.`
+- 当前 checkpoint：`one experimental checkpoint that ends when \`project-bound-executor-bridge-v0*\`, \`experiments/mock_runtime/*\`, compiled machine layers, entry docs, and \`.codex/*\` all agree on the same readonly bridge boundary`
+- 下一动作：`Review \`project-bound-executor-bridge-v0*\` and \`experiments/mock_runtime/*\` as the current implementation gate, then refine source docs or bind a write-capable executor only with explicit approval.`
 - 下一动作来源：`status.next-3`
 
 收到这些恢复材料后，默认直接从“下一动作”切入，而不是重新开始一轮 resume 问答。

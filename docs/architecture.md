@@ -63,7 +63,28 @@ For the first pilot, keep the design narrow and realistic:
 - give each project a lightweight `project daemon / sidecar`
 - keep project-level rules, contracts, and memory in `.growware/` under the target project root
 - keep the human-readable policy source in `docs/policy/` and compile it into `.policy/` through `scripts/growware_policy_sync.py`
+- keep the Stage 2 and Stage 3 paper baseline in `docs/reference/growware/stage-2-3-baseline*` and compile it into `.growware/stage-2-3/`
+- keep one isolated experimental runtime in `experiments/mock_runtime/` that consumes `.policy/`, `.growware/daemon-foundation/`, and `.growware/stage-2-3/` without mutating the real target project
 - keep `Codex` as an on-demand worker, not a resident session per project
+
+## Current Experimental Runtime
+
+The current approved runtime step is intentionally narrow:
+
+- use `experiments/mock_runtime/runtime.py` as a local-only harness
+- load the compiled machine layers instead of re-parsing prose at runtime
+- bridge into the real `openclaw-task-system` workspace only through readonly executor commands
+- keep `deploy` and `rollback` approval-gated
+- keep the target-project workspace unmodified
+- model the control loop as state transitions and structured payloads first
+
+That means the experimental runtime proves daemon-side control flow only. It does not yet prove:
+
+- `feishu6 -> Growware -> openclaw-task-system` end-to-end wiring
+- target-project code mutation
+- project-bound write actions
+- deploy or rollback execution
+- production-ready automation
 
 ## Pilot Topology
 
