@@ -3,6 +3,7 @@
 [English](README.md) | [中文](README.zh-CN.md)
 
 ## 从这里开始
+- 人类查看计划入口：[路线图](roadmap.zh-CN.md) 和 [开发计划](reference/growware/development-plan.zh-CN.md)
 - 项目总览：[README](../README.zh-CN.md)
 - 起源对话原文：[reference/growware/origin-transcript-2026-04-13.zh-CN.md](reference/growware/origin-transcript-2026-04-13.zh-CN.md)
 - 可行性评估：[reference/growware/feasibility.zh-CN.md](reference/growware/feasibility.zh-CN.md)
@@ -10,6 +11,7 @@
 ## 按目标阅读
 | 目标 | 阅读这里 |
 | --- | --- |
+| 查看总体进展、分项进展和明确下一步动作 | 先看 [roadmap.zh-CN.md](roadmap.zh-CN.md)，再看 [reference/growware/development-plan.zh-CN.md](reference/growware/development-plan.zh-CN.md) |
 | 理解 Growware 是什么 | [README](../README.zh-CN.md) |
 | 审看项目起点对话 | [reference/growware/origin-transcript-2026-04-13.zh-CN.md](reference/growware/origin-transcript-2026-04-13.zh-CN.md) |
 | 评估方向是否可行、风险在哪 | [reference/growware/feasibility.zh-CN.md](reference/growware/feasibility.zh-CN.md) |

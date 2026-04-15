@@ -4,7 +4,7 @@
 
 ## Purpose
 
-This document is the durable maintainer-facing execution plan that sits below `docs/roadmap.md` and above `.codex/plan.md`.
+This document is the durable maintainer-facing execution plan that sits below `docs/roadmap.md` and above the internal control surface.
 
 It answers one practical question:
 
@@ -19,9 +19,28 @@ It answers one practical question:
 
 ## How To Use This Plan
 
-1. Read the roadmap first to understand milestone order.
-2. Read `Current Position` and `Ordered Execution Queue` here to know where to resume.
-3. Drop into `.codex/plan.md` only when you need the live control-surface detail.
+1. Read the roadmap first to understand overall progress and the next stage.
+2. Read `Overall Progress`, `Execution Task Progress`, and `Ordered Execution Queue` here to know where to resume.
+3. Only drop into the internal control docs when you are maintaining the automation itself.
+
+## Overall Progress
+
+| Item | Current Value |
+| --- | --- |
+| Mainline Progress | The repo has progressed from paper-only planning into a bounded real-project readonly bridge review |
+| Current Phase | Stage 2 experimental runtime v0 with a project-bound readonly executor bridge |
+| Current Objective | extend the experimental runtime so it records readonly executor snapshots from the real Project 1 workspace without widening the runtime claim beyond that sandbox |
+| Clear Next Move | review whether the readonly bridge boundary is still too narrow or too wide before binding any write-capable executor |
+| Next Candidate Move | enter the first write-capable `single-project local semi-automatic loop` only with explicit follow-up approval |
+
+## Execution Task Progress
+
+| Order | Task | Status |
+| --- | --- | --- |
+| 1 | EL-1 extend source-of-truth docs and control surface to the project-bound readonly executor bridge boundary | done |
+| 2 | EL-2 implement readonly target-project bridge commands in `experiments/mock_runtime/` | done |
+| 3 | EL-3 capture bridge snapshots in the demo flow and smoke test | done |
+| 4 | EL-4 rerun bridge, runtime, and machine-layer verification | done |
 
 ## Current Position
 
@@ -31,6 +50,12 @@ It answers one practical question:
 | Active Slice | `project-bound-readonly-executor-bridge-v0` | The slice tied to the current execution line |
 | Current Execution Line | extend the experimental runtime so it consumes compiled machine layers and records readonly executor snapshots from the real Project 1 workspace while keeping deploy and rollback approval-gated | What the repo is trying to continue now |
 | Validation | `experiments/mock_runtime/*`, bridge snapshots, `.growware/*`, `.policy/*`, roadmap, development plan, test plan, and `.codex/*` all describe the same experimental boundary | How this line proves itself now |
+
+## Current Next Step
+
+| Next Move | Why |
+| --- | --- |
+| review whether the readonly bridge boundary is still too narrow or too wide before binding any write-capable executor | The readonly bridge slice is complete; the next risk is widening capability by assumption instead of explicit approval. |
 
 ## Milestone Overview
 

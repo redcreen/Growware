@@ -8,6 +8,18 @@ This roadmap shows the milestone order for turning the Growware concept into a r
 
 For the detailed maintainer queue under these stages, use [reference/growware/development-plan.md](reference/growware/development-plan.md).
 
+## Overall Progress
+
+| Item | Current Value |
+| --- | --- |
+| Mainline Progress | Stage 0, Stage 1, Stage 1.5, and the readonly bridge checkpoint are complete enough to move the repo from paper-only planning into a bounded real-project bridge review |
+| Current Phase | experimental runtime v0 with a project-bound readonly executor bridge |
+| Current Objective | keep the readonly bridge truthful, keep all machine layers aligned to doc source, and do not overclaim Project 1 runtime completion |
+| Clear Next Move | review whether the readonly bridge boundary is still too narrow or too wide before binding any write-capable executor |
+| Next Candidate Move | enter the first write-capable `single-project local semi-automatic loop` only with explicit follow-up approval |
+
+See the detailed execution plan: [reference/growware/development-plan.md](reference/growware/development-plan.md)
+
 ## Stages
 
 | Stage | Status | Goal | Unlocks | Exit Criteria |
@@ -18,6 +30,14 @@ For the detailed maintainer queue under these stages, use [reference/growware/de
 | [Stage 2 - Single-Project Local Semi-Automatic Loop](reference/growware/development-plan.md#stage-2-single-project-local-semi-automatic-loop) | experimental v0 in progress / deploy gated | implement the local observe -> report -> repair -> verify -> deploy baseline on Project 1 under the approved Growware daemon boundary | first runnable Growware baseline | `experiments/mock_runtime/` can consume the compiled machine layers and run a local mock loop while deploy remains approval-gated and non-production |
 | [Stage 3 - Detectors, Gates, and Low-Risk Automation](reference/growware/development-plan.md#stage-3-detectors-gates-and-low-risk-automation) | paper baseline complete / experiment hookup queued | add the first judge, deploy-gate, and low-risk automation layer | more stable loop | the Stage 3 judge, automation-band, and regression-asset rules are explicit and machine-compilable before production activation |
 | [Stage 4 - Multi-Project Onboarding and Isolation](reference/growware/development-plan.md#stage-4-multi-project-onboarding-and-isolation) | later | support more than one target project without cross-project contamination | reusable control layer | multiple projects can share Growware without channel, state, queue, or deploy collisions |
+
+## Current / Next / Later
+
+| Horizon | Focus | Exit Signal |
+| --- | --- | --- |
+| Current | keep the readonly bridge truthful, keep machine layers aligned to doc source, and avoid overclaiming Project 1 runtime completion | bridge review stays green, sync outputs stay aligned, and entry docs still describe a readonly boundary |
+| Next | decide whether to bind a write-capable executor for the first `single-project local semi-automatic loop` | explicit approval exists for a write-capable executor boundary and one repeatable local loop path is defined |
+| Later | onboard broader detector / automation work and eventually multi-project isolation | later expansion does not skip approval gates or cross-project isolation rules |
 
 ## Recommended First Pilot
 

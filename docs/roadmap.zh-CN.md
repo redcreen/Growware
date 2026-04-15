@@ -8,6 +8,18 @@
 
 这些阶段下面更细的维护者执行队列，请看 [reference/growware/development-plan.zh-CN.md](reference/growware/development-plan.zh-CN.md)。
 
+## 总体进展
+
+| 项目 | 当前值 |
+| --- | --- |
+| 主线进度 | Stage 0、Stage 1、Stage 1.5 和 readonly bridge checkpoint 已经足够收口，仓库已从纯纸面规划进入受限的真实项目桥接审查阶段 |
+| 当前阶段 | experimental runtime v0 加 project-bound readonly executor bridge |
+| 当前目标 | 保持 readonly bridge 真实可信，保持所有 machine layer 与文档源同步，且不夸大成 Project 1 已完成 runtime 接线 |
+| 明确下一步动作 | 在绑定任何 write-capable executor 前，先审查 readonly bridge 边界到底还是太窄还是太宽 |
+| 下一候选动作 | 只有在显式 follow-up approval 后，才进入第一条 write-capable 的 `single-project local semi-automatic loop` |
+
+查看详细执行计划：[reference/growware/development-plan.zh-CN.md](reference/growware/development-plan.zh-CN.md)
+
 ## 阶段
 
 | 阶段 | 状态 | 目标 | 解锁什么 | 退出条件 |
@@ -18,6 +30,14 @@
 | [Stage 2 - 单项目本地半自动闭环](reference/growware/development-plan.zh-CN.md#stage-2-single-project-local-semi-automatic-loop) | experimental v0 进行中 / deploy 仍受门禁 | 在批准过的 Growware daemon 边界之下，于项目 1 上实现一条本地 observe -> report -> repair -> verify -> deploy baseline 链路 | 第一个可运行 Growware 基线 | `experiments/mock_runtime/` 已能消费现有机器层并跑一条本地 mock 闭环，同时 deploy 仍然保持 approval-gated 且非生产 |
 | [Stage 3 - 检测器、门禁和低风险自动化](reference/growware/development-plan.zh-CN.md#stage-3-detectors-gates-and-low-risk-automation) | 纸面基线已完成 / experiment hookup 排队中 | 补齐第一版 judge、deploy gate 和低风险自动化层 | 更稳定的闭环 | Stage 3 的 judge、automation band 和 regression asset 规则已经显式且可编译，但尚未被生产 runtime 启用 |
 | [Stage 4 - 多项目接入与隔离](reference/growware/development-plan.zh-CN.md#stage-4-multi-project-onboarding-and-isolation) | 更后 | 支持多个项目并保持 channel、日志、队列、部署的隔离 | Growware 变成可复用控制层 | 多项目并行接入时不发生状态与发布污染 |
+
+## 当前 / 下一步 / 更后面
+
+| 时间层级 | 重点 | 退出信号 |
+| --- | --- | --- |
+| 当前 | 保持 readonly bridge 真实可信、保持 machine layer 与文档源同步，并避免夸大成 Project 1 runtime 已完成 | bridge review 持续为绿、sync 输出持续对齐、入口文档仍然明确这是 readonly 边界 |
+| 下一步 | 判断是否要为第一条 `single-project local semi-automatic loop` 绑定 write-capable executor | 已获得显式批准的 write-capable executor 边界，并定义出一条可重复的本地 loop 路径 |
+| 更后面 | 再逐步打开 detector / automation 工作和多项目隔离 | 后续扩展不会跳过 approval gate，也不会破坏跨项目隔离规则 |
 
 ## 推荐的第一条 Pilot
 

@@ -3,6 +3,7 @@
 [English](README.md) | [中文](README.zh-CN.md)
 
 ## Start Here
+- Human planning entry: [Roadmap](roadmap.md) and [Development Plan](reference/growware/development-plan.md)
 - Project overview: [README](../README.md)
 - Origin transcript: [reference/growware/origin-transcript-2026-04-13.md](reference/growware/origin-transcript-2026-04-13.md)
 - Feasibility assessment: [reference/growware/feasibility.md](reference/growware/feasibility.md)
@@ -10,6 +11,7 @@
 ## By Goal
 | Goal | Read This |
 | --- | --- |
+| Check overall progress, sub-item progress, and the clear next move | [roadmap.md](roadmap.md) then [reference/growware/development-plan.md](reference/growware/development-plan.md) |
 | Understand what Growware is | [README](../README.md) |
 | Review the exact starting conversation | [reference/growware/origin-transcript-2026-04-13.md](reference/growware/origin-transcript-2026-04-13.md) |
 | Evaluate feasibility and risks | [reference/growware/feasibility.md](reference/growware/feasibility.md) |

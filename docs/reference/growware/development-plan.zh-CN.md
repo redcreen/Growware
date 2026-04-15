@@ -4,7 +4,7 @@
 
 ## 目的
 
-这份文档是给维护者看的 durable 详细执行计划，位置在 `docs/roadmap` 之下、`.codex/plan.md` 之上。
+这份文档是给维护者看的 durable 详细执行计划，位置在 `docs/roadmap` 之下、内部控制面之上。
 
 它回答的不是“今天聊天里说了什么”，而是：
 
@@ -19,9 +19,28 @@
 
 ## 怎么使用这份计划
 
-1. 先看 roadmap，理解整体路线和当前里程碑。
-2. 再看这里的“当前位置”和“顺序执行队列”，理解今天该从哪里恢复。
-3. 需要具体约束时，再回到 `.codex/plan.md` 看实时执行控制面。
+1. 先看 roadmap，理解总体进展与下一阶段。
+2. 再看这里的“总体进展”“执行任务进度”和“顺序执行队列”，理解今天该从哪里恢复。
+3. 只有在维护自动化本身时，才需要继续下钻到内部控制文档。
+
+## 总体进展
+
+| 项目 | 当前值 |
+| --- | --- |
+| 主线进度 | 仓库已经从纯纸面规划进入受限的真实项目 readonly bridge 审查阶段 |
+| 当前阶段 | Stage 2 experimental runtime v0 加 project-bound readonly executor bridge |
+| 当前目标 | 扩展实验 runtime，让它在不突破当前沙箱声明的前提下，记录来自真实 Project 1 工作区的 readonly executor snapshot |
+| 明确下一步动作 | 在绑定任何 write-capable executor 前，先审查 readonly bridge 边界到底还是太窄还是太宽 |
+| 下一候选动作 | 只有在显式 follow-up approval 后，才进入第一条 write-capable 的 `single-project local semi-automatic loop` |
+
+## 执行任务进度
+
+| 顺序 | 任务 | 状态 |
+| --- | --- | --- |
+| 1 | EL-1 把 source-of-truth docs 和 control surface 扩到 project-bound readonly executor bridge 边界 | 已完成 |
+| 2 | EL-2 在 `experiments/mock_runtime/` 里实现 readonly target-project bridge commands | 已完成 |
+| 3 | EL-3 在 demo flow 和 smoke test 里记录 bridge snapshots | 已完成 |
+| 4 | EL-4 重新跑 bridge、runtime 和 machine-layer 校验 | 已完成 |
 
 ## 当前位置
 
@@ -31,6 +50,12 @@
 | 当前切片 | `project-bound-readonly-executor-bridge-v0` | 当前执行线绑定的切片 |
 | 当前执行线 | 扩展实验 runtime，让它在保持 deploy / rollback 继续受门禁的前提下，写下来自真实 Project 1 工作区的 readonly executor snapshot | 当前这轮真正要持续推进的工作 |
 | 当前验证 | `experiments/mock_runtime/*`、bridge snapshots、`.growware/*`、`.policy/*`、architecture、roadmap、development plan、test plan 与 `.codex/*` 都描述同一个实验边界 | 当前线如何证明已经进入可执行状态 |
+
+## 当前下一步
+
+| 下一步 | 为什么做 |
+| --- | --- |
+| 在绑定任何 write-capable executor 前，先审查 readonly bridge 边界到底还是太窄还是太宽 | readonly bridge 这条切片已经完成，下一类风险不再是“桥能不能跑”，而是没有显式批准就把能力范围往写入或部署面扩大。 |
 
 ## 阶段总览
 
